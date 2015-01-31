@@ -91,10 +91,11 @@ namespace prob
    static void maxContiguousProdTest()
    {
       std::vector<double> allOnes(10, 1);
-      auto expected = makeRange(cbegin(allOnes), cend(allOnes));
-      assert(expected == MaxContiguous::maxSum(allOnes));
+      assert(1. == product(MaxContiguous::maxProduct(allOnes), 1.));
 
-
+      std::vector<double> stdInputs = { 1, 0.87, 0.5, 1.1, 2, 0.9, 5, 0.5, 1.1 };
+      for (auto& r : MaxContiguous::maxProduct(stdInputs))
+         std::cout << r << std::endl;
    }
 
    void maxContiguousTest()

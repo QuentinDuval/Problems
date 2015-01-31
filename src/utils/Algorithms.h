@@ -43,4 +43,10 @@ namespace prob
    {
       return accumulate(c, v, std::plus<Val>());
    }
+
+   template<typename Container, typename Val>
+   Val product(Container& c, Val const& v)
+   {
+      return accumulate(c, v, std::multiplies<Val>());
+   }
 }
