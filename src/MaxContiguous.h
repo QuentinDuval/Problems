@@ -1,3 +1,5 @@
+#pragma once
+
 #include "utils/Range.h"
 #include <vector>
 #include <utility>

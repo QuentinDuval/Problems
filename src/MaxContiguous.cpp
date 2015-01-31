@@ -16,7 +16,7 @@ namespace prob
    * 2. We need to keep track of the longuest sub-sequence ending at k-1
    * 3. We need to keep track of the longuest sub-sequence as a whole
    *
-   * Recurrence relations:
+   * Recurrence relation:
    *
    * Max[k] = max of (
    * - max subsequence of Max[k-1]

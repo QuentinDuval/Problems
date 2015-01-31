@@ -32,6 +32,14 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
+   template<typename Container, typename Container2>
+   bool equal(Container const& cont, Container2 cont2)
+   {
+      return std::equal(begin(cont), end(cont), begin(cont2));
+   }
+
+   //--------------------------------------------------------------------------
+
    template<typename Container, typename Val, typename Acc>
    Val accumulate(Container& c, Val const& v, Acc acc)
    {
