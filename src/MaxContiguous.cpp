@@ -55,6 +55,7 @@ namespace prob
       return makeRange(maxBeg, maxEnd);
    }
 
+   //--------------------------------------------------------------------------
 
    void maxContiguousTest()
    {
@@ -62,7 +63,14 @@ namespace prob
       auto expected = makeRange(cbegin(allPositive), cend(allPositive));
       assert(expected == MaxContiguous::maxSum(allPositive));
 
-      std::vector<double> inputs = { 1, -1, 2, 3, 2, -7, 2, 5, -5, 10 };
-      assert(12 == sum(MaxContiguous::maxSum(inputs), 0.));
+      std::vector<double> allNegative(10, -1);
+      assert(MaxContiguous::maxSum(allNegative).empty());
+
+      std::vector<double> oscillator(10, -1);
+      generate(oscillator, -1., [](double d) { return -d; });
+      assert(1 == MaxContiguous::maxSum(oscillator).size());
+
+      std::vector<double> stdInputs = { 1, -1, 2, 3, 2, -7, 2, 5, -5, 10 };
+      assert(12 == sum(MaxContiguous::maxSum(stdInputs), 0.));
    }
 }
