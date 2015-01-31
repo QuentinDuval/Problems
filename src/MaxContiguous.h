@@ -7,7 +7,7 @@ namespace prob
 {
    struct MaxContiguousSum
    {
-      using Inputs = std::vector<int>;
+      using Inputs = std::vector<double>;
       using InputIt = Inputs::const_iterator;
 
       /** Find the contiguous sequence with the highest sum value */

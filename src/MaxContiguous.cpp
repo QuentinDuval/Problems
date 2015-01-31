@@ -21,14 +21,14 @@ namespace prob
    * - sub-sequence made of inputs[k] only (or empty sequence if input[k] < 0)
    * )
    */
-   Range<MaxContiguousSum::InputIt> MaxContiguousSum::find(std::vector<int> const& inputs)
+   Range<MaxContiguousSum::InputIt> MaxContiguousSum::find(std::vector<double> const& inputs)
    {
-      int maxValue = 0;
+      double maxValue = 0;
       InputIt maxBeg = begin(inputs);
       InputIt maxEnd = begin(inputs);
 
-      int maxSuffix = 0;
-      std::vector<int>::const_iterator maxSuffixBeg = begin(inputs);
+      double maxSuffix = 0;
+      InputIt maxSuffixBeg = begin(inputs);
 
       for (auto it = begin(inputs); it != end(inputs); ++it)
       {
@@ -56,9 +56,11 @@ namespace prob
 
    void maxContiguousTest()
    {
-      std::vector<int> inputs = { 1, -1, 2, 3, 2, -7, 2, 5, -5, 10 };
+      std::vector<double> inputs = { 1, -1, 2, 3, 2, -7, 2, 5, -5, 10 };
       auto result = MaxContiguousSum::find(inputs);
       for (auto& r : result)
          std::cout << r << std::endl;
+
+
    }
 }
