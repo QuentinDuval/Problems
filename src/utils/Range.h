@@ -23,6 +23,12 @@ namespace prob
    };
 
    template<typename Iterator>
+   bool operator== (Range<Iterator> const& lhs, Range<Iterator> const& rhs)
+   {
+      return begin(lhs) == begin(rhs) && end(lhs) == end(rhs);
+   }
+
+   template<typename Iterator>
    Range<Iterator> makeRange(Iterator first, Iterator last)
    {
       return Range<Iterator>(first, last);

@@ -1,5 +1,7 @@
 #include "MaxContiguous.h"
+#include "utils/Algorithms.h"
 
+#include <assert.h>
 #include <iostream>
 
 
@@ -21,7 +23,7 @@ namespace prob
    * - sub-sequence made of inputs[k] only (or empty sequence if input[k] < 0)
    * )
    */
-   Range<MaxContiguousSum::InputIt> MaxContiguousSum::find(std::vector<double> const& inputs)
+   Range<MaxContiguous::InputIt> MaxContiguous::maxSum(std::vector<double> const& inputs)
    {
       double maxValue = 0;
       InputIt maxBeg = begin(inputs);
@@ -56,11 +58,11 @@ namespace prob
 
    void maxContiguousTest()
    {
+      std::vector<double> allPositive(10, 1);
+      auto expected = makeRange(cbegin(allPositive), cend(allPositive));
+      assert(expected == MaxContiguous::maxSum(allPositive));
+
       std::vector<double> inputs = { 1, -1, 2, 3, 2, -7, 2, 5, -5, 10 };
-      auto result = MaxContiguousSum::find(inputs);
-      for (auto& r : result)
-         std::cout << r << std::endl;
-
-
+      assert(12 == sum(MaxContiguous::maxSum(inputs), 0.));
    }
 }
