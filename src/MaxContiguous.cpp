@@ -2,6 +2,7 @@
 #include "utils/Algorithms.h"
 
 #include <assert.h>
+#include <cmath>
 #include <iostream>
 
 
@@ -57,7 +58,20 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
-   void maxContiguousTest()
+   Range<MaxContiguous::InputIt> MaxContiguous::maxProduct(Inputs const& inputs)
+   {
+      Inputs logInputs(inputs.size());
+      transform(inputs, logInputs.begin(), [](double d) { return log(d); });
+      auto result = maxSum(logInputs);
+
+      auto b = begin(inputs) + std::distance(cbegin(logInputs), begin(result));
+      auto e = begin(inputs) + std::distance(cbegin(logInputs), end(result));
+      return makeRange(b, e);
+   }
+
+   //--------------------------------------------------------------------------
+
+   static void maxContiguousSumTest()
    {
       std::vector<double> allPositive(10, 1);
       auto expected = makeRange(cbegin(allPositive), cend(allPositive));
@@ -72,5 +86,20 @@ namespace prob
 
       std::vector<double> stdInputs = { 1, -1, 2, 3, 2, -7, 2, 5, -5, 10 };
       assert(12 == sum(MaxContiguous::maxSum(stdInputs), 0.));
+   }
+
+   static void maxContiguousProdTest()
+   {
+      std::vector<double> allOnes(10, 1);
+      auto expected = makeRange(cbegin(allOnes), cend(allOnes));
+      assert(expected == MaxContiguous::maxSum(allOnes));
+
+
+   }
+
+   void maxContiguousTest()
+   {
+      maxContiguousSumTest();
+      maxContiguousProdTest();
    }
 }

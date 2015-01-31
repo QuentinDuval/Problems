@@ -1,4 +1,6 @@
 #pragma once
+
+#include <algorithm>
 #include <numeric>
 
 
@@ -18,6 +20,14 @@ namespace prob
    void generate(Container& cont, ValueType const& val, NextFct next)
    {
       generate(begin(cont), end(cont), val, next);
+   }
+
+   //--------------------------------------------------------------------------
+
+   template<typename Container, typename Output, typename Tranformation>
+   Output transform(Container& c, Output out, Tranformation tf)
+   {
+      return std::transform(begin(c), end(c), out, tf);
    }
 
    //--------------------------------------------------------------------------

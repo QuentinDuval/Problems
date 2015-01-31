@@ -12,6 +12,9 @@ namespace prob
 
       /** Find the contiguous sequence with the highest sum value */
       static Range<InputIt> maxSum(Inputs const&);
+
+      /** Find the contiguous sequence with the highest sum value */
+      static Range<InputIt> maxProduct(Inputs const&);
    };
 
    /** Tests */
