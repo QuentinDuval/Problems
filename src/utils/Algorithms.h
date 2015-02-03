@@ -40,6 +40,15 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
+   template<typename Container, typename Val>
+   void erase(Container& cont, Val const& v)
+   {
+      auto it = std::remove(begin(cont), end(cont), v);
+      cont.erase(it, end(cont));
+   }
+
+   //--------------------------------------------------------------------------
+
    template<typename Container, typename Val, typename Acc>
    Val accumulate(Container& c, Val const& v, Acc acc)
    {
