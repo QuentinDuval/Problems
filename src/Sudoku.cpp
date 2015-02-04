@@ -1,6 +1,9 @@
 #include "Sudoku.h"
 
 #include "utils/Algorithms.h"
+#include "utils/Functors.h"
+
+#include <assert.h>
 #include <iostream>
 
 
@@ -8,11 +11,17 @@ namespace prob
 {
    SudokuPuzzle::SudokuPuzzle(std::initializer_list<size_t> const& init)
       : m_matrix(PUZZLE_SIZE, PUZZLE_SIZE, init)
+      , m_backtrackCount(0)
    {}
 
    Matrix<size_t> const& SudokuPuzzle::puzzle() const
    {
       return m_matrix;
+   }
+
+   size_t SudokuPuzzle::backtrackCount() const
+   {
+      return m_backtrackCount;
    }
 
    static size_t squareCoord(size_t x)
@@ -43,18 +52,50 @@ namespace prob
 
    bool SudokuPuzzle::solve()
    {
-      return solve(0);
+      std::vector<std::pair<size_t, size_t>> toFill;
+      Matrix<Choices> choices(PUZZLE_SIZE, PUZZLE_SIZE);
+
+      for (size_t y = 0; y < PUZZLE_SIZE; ++y)
+      {
+         for (size_t x = 0; x < PUZZLE_SIZE; ++x)
+         {
+            auto val = m_matrix.at(x, y);
+            if (val)
+               continue;
+
+            toFill.emplace_back(x, y);
+            choices.at(x, y) = choicesAt(x, y);
+         }
+      }
+
+      sortBy(toFill, comparingWith([&](Coord const& c) { return choices.at(c.first, c.second).size(); }));
+      return solve(begin(toFill), end(toFill));
    }
 
-   bool SudokuPuzzle::solve(size_t p)
+   bool SudokuPuzzle::solveDummy()
    {
-      if (p == PUZZLE_SIZE * PUZZLE_SIZE)
+      std::vector<std::pair<size_t, size_t>> toFill;
+      for (size_t y = 0; y < PUZZLE_SIZE; ++y)
+      {
+         for (size_t x = 0; x < PUZZLE_SIZE; ++x)
+         {
+            auto val = m_matrix.at(x, y);
+            if (!val)
+               toFill.emplace_back(x, y);
+         }
+      }
+      return solve(begin(toFill), end(toFill));
+   }
+
+   bool SudokuPuzzle::solve(CoordIt b, CoordIt e)
+   {
+      if (b == e)
          return true;
 
-      size_t x = p % PUZZLE_SIZE;
-      size_t y = p / PUZZLE_SIZE;
+      size_t x = b->first;
+      size_t y = b->second;
       if (m_matrix.at(x, y))
-         return solve(p + 1);
+         return solve(b + 1, e);
 
       Choices cs = choicesAt(x, y);
       if (cs.empty())
@@ -63,8 +104,9 @@ namespace prob
       for (auto c : cs)
       {
          m_matrix.at(x, y) = c;
-         if (solve(p + 1))
+         if (solve(b + 1, e))
             return true;
+         ++m_backtrackCount;
          m_matrix.at(x, y) = 0;
       }
       return false;
@@ -73,9 +115,17 @@ namespace prob
 
    //------------------------------------------------------------------------------------
 
+   template<typename ResolutionMethod>
+   void sudokuTest(SudokuPuzzle puzzle, SudokuPuzzle const& expected, ResolutionMethod solve)
+   {
+      bool success = solve(puzzle);
+      std::cout << " - " << (success ? "success" : "failure") << " with " << puzzle.backtrackCount() << " backtracks." << std::endl;
+      assert(expected.puzzle() == puzzle.puzzle());
+   }
+
    void sudokuTest()
    {
-      std::cout << std::endl << "Sudoku tests" << std::endl;
+      std::cout << std::endl << "[Sudoku tests]" << std::endl;
 
       SudokuPuzzle puzzle =
       {
@@ -92,12 +142,6 @@ namespace prob
          0, 0, 0,   0, 8, 0,   0, 7, 9
       };
 
-      for (auto c : puzzle.choicesAt(2, 0))
-         std::cout << c << std::endl;
-
-      bool success = puzzle.solve();
-      std::cout << (success ? "success" : "failure") << std::endl;
-
       SudokuPuzzle solution =
       {
          5, 3, 4,   6, 7, 8,   9, 1, 2,
@@ -113,7 +157,10 @@ namespace prob
          3, 4, 5,   2, 8, 6,   1, 7, 9
       };
 
-      if (solution.puzzle() == puzzle.puzzle())
-         std::cout << "ok" << std::endl;
+      std::cout << std::endl << "* No specific evaluation order:" << std::endl;
+      sudokuTest(puzzle, solution, [](SudokuPuzzle& p) { return p.solveDummy(); });
+
+      std::cout << std::endl << "* Element with lowest choices first:" << std::endl;
+      sudokuTest(puzzle, solution, [](SudokuPuzzle& p) { return p.solve(); });
    }
 }

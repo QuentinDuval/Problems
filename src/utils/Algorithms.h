@@ -32,6 +32,14 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
+   template<typename Container, typename Less>
+   void sortBy(Container& cont, Less less)
+   {
+      std::sort(begin(cont), end(cont), less);
+   }
+
+   //--------------------------------------------------------------------------
+
    template<typename Container, typename Container2>
    bool equal(Container const& cont, Container2 cont2)
    {
