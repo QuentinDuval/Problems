@@ -10,7 +10,7 @@ namespace prob
    /**
    * Observation:
    * 1. This looks a lot like the unbounded knapsack problem (in which you can take as many item as you want)
-   * 2. The recursion looks then like the one of this classic problem, with the value of item equal to 1
+   * 2. The recursion looks then like the one of this classic problem, with the value of item equal to -1
    *
    * Recursion:
    * - makingChange(0) = 0
