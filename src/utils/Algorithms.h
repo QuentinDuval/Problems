@@ -49,6 +49,14 @@ namespace prob
    //--------------------------------------------------------------------------
 
    template<typename Container, typename Val>
+   bool find(Container const& cont, Val val)
+   {
+      return std::find(begin(cont), end(cont), val);
+   }
+
+   //--------------------------------------------------------------------------
+
+   template<typename Container, typename Val>
    void erase(Container& cont, Val const& v)
    {
       auto it = std::remove(begin(cont), end(cont), v);
