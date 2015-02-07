@@ -104,16 +104,18 @@ namespace prob
 
 
    //--------------------------------------------------------------------------
-   // TARO CUTTING
+   // TARO CUTTING - Dummy implementation in factorial!
    //--------------------------------------------------------------------------
 
-   struct Cutting
+   struct DummyCutting
    {
-      Cutting(TaroCutting::Ints const& trees, TaroCutting::Ints const& growths, TaroCutting::Ints const& devices)
+      DummyCutting(TaroCutting::Ints const& trees, TaroCutting::Ints const& growths, TaroCutting::Ints const& devices)
          : m_trees(trees)
          , m_growths(growths)
          , m_devices(devices)
-      {}
+      {
+         std::sort(begin(m_devices), end(m_devices));
+      }
 
       size_t minLength(size_t nbDays)
       {
@@ -139,7 +141,7 @@ namespace prob
          for (size_t d = 0; d < m_devices.size(); ++d)
          {
             if (marked[d] || m_devices[d] >= (*first))
-               continue;
+               break;
 
             size_t backupHeight = *first;
             *first = m_devices[d];
@@ -168,9 +170,11 @@ namespace prob
       TaroCutting::Ints m_devices;
    };
 
+   //--------------------------------------------------------------------------
+
    size_t TaroCutting::minLength(Ints const& trees, Ints const& growths, Ints const& devices, size_t nbDays)
    {
-      Cutting cutting(trees, growths, devices);
+      DummyCutting cutting(trees, growths, devices);
       return cutting.minLength(nbDays);
    }
 
