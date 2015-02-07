@@ -1,5 +1,6 @@
 #include "TaroProblems.h"
 #include "utils/Algorithms.h"
+#include "utils/Functors.h"
 
 #include <algorithm>
 #include <assert.h>
@@ -170,11 +171,85 @@ namespace prob
       TaroCutting::Ints m_devices;
    };
 
+   /**
+    * --------------------------------------------------------------------------
+    * Cutting
+    * --------------------------------------------------------------------------
+    *
+    * Key observations:
+    * 
+    * 1. The ordering of the tree is meaningless: the devices will make them even.
+    * What really matters is which tools are used, what was the gain doing so.
+    * But the growth of the tree should follow their tree.
+    *
+    * 2. At the last remaining day, the greedy approach is the best. For other days,
+    * using the best devices for the highest tree is not necessarily optimal.
+    *
+    * 3. There is no reason to spare a device if it can be used on a tree.
+    * But if a tall tree is left alone at one iteration, it can be cut later.
+    */
+
+   struct Cutting
+   {
+      Cutting(TaroCutting::Ints const& trees, TaroCutting::Ints const& growths, TaroCutting::Ints const& devices)
+         : m_trees(trees)
+         , m_growths(growths)
+         , m_devices(devices)
+      {
+         std::sort(begin(m_devices), end(m_devices));
+      }
+
+      size_t minLength(size_t nbDays)
+      {
+         if (nbDays == 0)
+            return sum(m_trees, 0);
+
+         grow();
+         std::sort(begin(m_trees), end(m_trees), reverseComparison(std::less<size_t>()));
+
+         TaroCutting::Ints backUpTrees = m_trees;
+
+         //Start using tree at t...
+         size_t min = std::numeric_limits<size_t>::max();
+         for (size_t t = 0; t < m_trees.size(); ++t)
+         {
+            bool didCut = false;
+            for (size_t d = 0; d < m_devices.size(); ++d)
+            {
+               if (t + d >= m_trees.size()) break;
+               if (m_devices[d] >= m_trees[t + d]) break;
+
+               m_trees[t + d] = m_devices[d];
+               didCut = true;
+            }
+
+            size_t res = minLength(nbDays - 1);
+            min = std::min(min, res);
+            m_trees = backUpTrees;
+
+            if (!didCut)
+               break;
+         }
+
+         return min;
+      }
+
+      void grow()
+      {
+         for (size_t i = 0; i < m_trees.size(); ++i)
+            m_trees[i] += m_growths[i];
+      }
+
+      TaroCutting::Ints m_trees;
+      TaroCutting::Ints m_growths;
+      TaroCutting::Ints m_devices;
+   };
+
    //--------------------------------------------------------------------------
 
    size_t TaroCutting::minLength(Ints const& trees, Ints const& growths, Ints const& devices, size_t nbDays)
    {
-      DummyCutting cutting(trees, growths, devices);
+      Cutting cutting(trees, growths, devices);
       return cutting.minLength(nbDays);
    }
 
@@ -186,11 +261,17 @@ namespace prob
       std::cout << TaroCutting::minLength({ 4, 7 }, { 7, 1 }, { 7 }, 1) << std::endl;
       std::cout << TaroCutting::minLength({ 100, 50 }, { 75, 30 }, { 200, 100, 50 }, 2) << std::endl;
 
-      //Too long to compute
-      //std::cout << TaroCutting::minLength(
-      //   { 7, 10, 1, 7, 5, 4, 11, 5, 7, 9, 10, 8 },
-      //   { 1, 3, 4, 10, 2, 1, 6, 4, 8, 7, 5, 10 },
-      //   { 7, 1, 5, 10 },
-      //   3) << std::endl;
+      //Too long to compute for the dummy implementation
+      std::cout << TaroCutting::minLength(
+         { 7, 10, 1, 7, 5, 4, 11, 5, 7, 9, 10, 8 },
+         { 1, 3, 4, 10, 2, 1, 6, 4, 8, 7, 5, 10 },
+         { 7, 1, 5, 10 },
+         3) << std::endl;
+
+      std::cout << TaroCutting::minLength(
+         { 35, 45, 32, 8 },
+         { 2, 25, 31, 5 },
+         { 29, 28, 3, 11, 28, 37 },
+         8) << std::endl;
    }
 }
