@@ -5,6 +5,7 @@
 #include "LongestIncreasingSeq.h"
 #include "MakingChange.h"
 #include "MaxContiguous.h"
+#include "StringProblems.h"
 #include "Sudoku.h"
 #include "TaroProblems.h"
 #include <iostream>
@@ -21,6 +22,7 @@ int main()
    makingChangeTests();
    maxContiguousTest();
    longestIncreasingSeqTest();
+   testWordSplit();
 
    taroCoinsTests();
    taroGridTests();
