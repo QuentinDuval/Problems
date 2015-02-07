@@ -15,6 +15,14 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
+   struct MakePair
+   {
+      template<typename A, typename B>
+      std::pair<A, B> operator() (A const& a, B const& b) const { return std::make_pair(a, b); }
+   };
+
+   //--------------------------------------------------------------------------
+
    template<typename Predicate>
    struct LogicalNot
    {

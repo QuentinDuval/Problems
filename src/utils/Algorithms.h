@@ -30,6 +30,12 @@ namespace prob
       return std::transform(begin(c), end(c), out, tf);
    }
 
+   template<typename Container, typename Container2, typename Output, typename Tranformation>
+   Output zipWith(Container& c, Container2& c2, Output out, Tranformation tf)
+   {
+      return std::transform(begin(c), end(c), begin(c2), out, tf);
+   }
+
    //--------------------------------------------------------------------------
 
    template<typename Container, typename Less>

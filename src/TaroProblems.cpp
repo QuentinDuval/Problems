@@ -180,7 +180,7 @@ namespace prob
     * 
     * 1. The ordering of the tree is meaningless: the devices will make them even.
     * What really matters is which tools are used, what was the gain doing so.
-    * But the growth of the tree should follow their tree.
+    * !!! But the growth of the tree should follow their tree !!!
     *
     * 2. At the last remaining day, the greedy approach is the best. For other days,
     * using the best devices for the highest tree is not necessarily optimal.
@@ -191,23 +191,32 @@ namespace prob
 
    struct Cutting
    {
+      using Tree = std::pair<size_t, size_t>;
+      using Trees = std::vector<Tree>;
+
       Cutting(TaroCutting::Ints const& trees, TaroCutting::Ints const& growths, TaroCutting::Ints const& devices)
-         : m_trees(trees)
-         , m_growths(growths)
+         : m_trees(trees.size())
          , m_devices(devices)
       {
          std::sort(begin(m_devices), end(m_devices));
+         zipWith(trees, growths, begin(m_trees), MakePair());
       }
 
       size_t minLength(size_t nbDays)
       {
          if (nbDays == 0)
-            return sum(m_trees, 0);
+         {
+            size_t sum = 0;
+            for (size_t t = 0; t < m_trees.size(); ++t)
+               sum += m_trees[t].first;
+            return sum;
+         }
 
          grow();
-         std::sort(begin(m_trees), end(m_trees), reverseComparison(std::less<size_t>()));
+         std::sort(begin(m_trees), end(m_trees), reverseComparison(
+            comparingWith([](Tree const& t) { return t.first; })));
 
-         TaroCutting::Ints backUpTrees = m_trees;
+         Trees backUpTrees = m_trees;
 
          //Start using tree at t...
          size_t min = std::numeric_limits<size_t>::max();
@@ -217,9 +226,9 @@ namespace prob
             for (size_t d = 0; d < m_devices.size(); ++d)
             {
                if (t + d >= m_trees.size()) break;
-               if (m_devices[d] >= m_trees[t + d]) break;
+               if (m_devices[d] >= m_trees[t + d].first) break;
 
-               m_trees[t + d] = m_devices[d];
+               m_trees[t + d].first = m_devices[d];
                didCut = true;
             }
 
@@ -236,12 +245,11 @@ namespace prob
 
       void grow()
       {
-         for (size_t i = 0; i < m_trees.size(); ++i)
-            m_trees[i] += m_growths[i];
+         for (auto& t : m_trees)
+            t.first += t.second;
       }
 
-      TaroCutting::Ints m_trees;
-      TaroCutting::Ints m_growths;
+      Trees m_trees;
       TaroCutting::Ints m_devices;
    };
 
