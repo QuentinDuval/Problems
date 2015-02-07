@@ -1,6 +1,7 @@
 #include "TaroProblems.h"
 #include "utils/Algorithms.h"
 #include "utils/Functors.h"
+#include "utils/Matrix.h"
 
 #include <algorithm>
 #include <assert.h>
@@ -203,7 +204,7 @@ namespace prob
 
          for (size_t day = 0; day < T; day++)
          {
-            for (size_t tree = 0; tree <= treeCount; tree++)
+            for (size_t tree = 0; tree < treeCount; tree++)
             {
                for (size_t dev = 0; dev <= devices.size(); dev++)
                {
@@ -212,19 +213,16 @@ namespace prob
                    * - If we do not use an additional tool, the height of the tree will grow to
                    * its maximum size, which is its initial size + the growth over the days
                    */
-                  if (tree < treeCount)
-                  {
-                     solutions[day][tree + 1][dev] = std::min(
-                        solutions[day][tree + 1][dev],
-                        solutions[day][tree][dev] + trees[tree].first + T * trees[tree].second
-                        );
-                  }
+                  solutions[day][tree + 1][dev] = std::min(
+                     solutions[day][tree + 1][dev],
+                     solutions[day][tree][dev] + trees[tree].first + T * trees[tree].second
+                     );
 
                   /**
                    * - If we use an additional tool, then the height of the tree will grow to
                    * its cut size (the one of the device) + the growth over the remaining days
                    */
-                  if (dev < devices.size() && tree < treeCount)
+                  if (dev < devices.size())
                   {
                      solutions[day][tree + 1][dev + 1] = std::min(
                         solutions[day][tree + 1][dev + 1],
