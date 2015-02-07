@@ -105,89 +105,8 @@ namespace prob
 
 
    //--------------------------------------------------------------------------
-   // TARO CUTTING - Dummy implementation in factorial!
+   // TARO CUTTING
    //--------------------------------------------------------------------------
-
-   struct DummyCutting
-   {
-      DummyCutting(TaroCutting::Ints const& trees, TaroCutting::Ints const& growths, TaroCutting::Ints const& devices)
-         : m_trees(trees)
-         , m_growths(growths)
-         , m_devices(devices)
-      {
-         std::sort(begin(m_devices), end(m_devices));
-      }
-
-      size_t minLength(size_t nbDays)
-      {
-         std::vector<bool> marked(m_devices.size(), false);
-         return minLength(m_trees.begin(), marked, m_devices.size(), nbDays);
-      }
-
-      size_t minLength(TaroCutting::Ints::iterator first, std::vector<bool>& marked, size_t deviceCount, size_t nbDays)
-      {
-         if (!deviceCount || first == m_trees.end())
-         {
-            std::vector<bool> marked(m_devices.size(), false);
-            if (nbDays == 0)
-               return sum(m_trees, 0);
-
-            grow();
-            size_t min = minLength(m_trees.begin(), marked, m_devices.size(), nbDays - 1);
-            ungrow();
-            return min;
-         }
-
-         size_t min = minLength(first + 1, marked, deviceCount, nbDays); //No devices used
-         for (size_t d = 0; d < m_devices.size(); ++d)
-         {
-            if (marked[d] || m_devices[d] >= (*first))
-               break;
-
-            size_t backupHeight = *first;
-            *first = m_devices[d];
-            marked[d] = true;
-            min = std::min(min, minLength(first + 1, marked, deviceCount - 1, nbDays));
-            marked[d] = false;
-            *first = backupHeight;
-         }
-         return min;
-      }
-
-      void grow()
-      {
-         for (size_t i = 0; i < m_trees.size(); ++i)
-            m_trees[i] += m_growths[i];
-      }
-
-      void ungrow()
-      {
-         for (size_t i = 0; i < m_trees.size(); ++i)
-            m_trees[i] -= m_growths[i];
-      }
-
-      TaroCutting::Ints m_trees;
-      TaroCutting::Ints m_growths;
-      TaroCutting::Ints m_devices;
-   };
-
-   /**
-    * --------------------------------------------------------------------------
-    * Cutting
-    * --------------------------------------------------------------------------
-    *
-    * Key observations:
-    * 
-    * 1. The ordering of the tree is meaningless: the devices will make them even.
-    * What really matters is which tools are used, what was the gain doing so.
-    * !!! But the growth of the tree should follow their tree !!!
-    *
-    * 2. At the last remaining day, the greedy approach is the best. For other days,
-    * using the best devices for the highest tree is not necessarily optimal.
-    *
-    * 3. There is no reason to spare a device if it can be used on a tree.
-    * But if a tall tree is left alone at one iteration, it can be cut later.
-    */
 
    struct Cutting
    {
@@ -253,10 +172,82 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
+   static size_t solutions[155][155][155];
+
+   struct TaroCutting2
+   {
+      using Tree = std::pair<size_t, size_t>;
+      using Trees = std::vector<Tree>;
+
+      static int minLength(
+         std::vector<size_t> const& initialHeights,
+         std::vector<size_t> const& treeGrowth,
+         std::vector<size_t> devices, size_t T)
+      {
+         /** Sorting the trees by decreasing growth */
+         Trees trees(initialHeights.size());
+         zipWith(initialHeights, treeGrowth, begin(trees), MakePair());
+         std::sort(begin(trees), end(trees), reverseComparison(comparingWith(GetSecond())));
+
+         /** Sorting the devices by increasing size */
+         sort(devices.begin(), devices.end());
+
+         size_t treeCount = trees.size();
+         for (size_t day = 0; day <= T; day++)
+            for (size_t tree = 0; tree <= treeCount; tree++)
+               for (size_t dev = 0; dev <= devices.size(); dev++)
+                  solutions[day][tree][dev] = 1e9;
+
+         solutions[0][0][0] = 0;
+
+
+         for (size_t day = 0; day < T; day++)
+         {
+            for (size_t tree = 0; tree <= treeCount; tree++)
+            {
+               for (size_t dev = 0; dev <= devices.size(); dev++)
+               {
+                  /** - the best solution without devices at next day is the best of the solution at previous day */
+                  solutions[day + 1][tree][0] = std::min(solutions[day + 1][tree][0], solutions[day][tree][dev]);
+
+                  /**
+                  * Adding a tree to the problem:
+                  * - If we do not use an additional tool, the height of the tree will grow to
+                  * its maximum size, which is its initial size + the growth over the days
+                  */
+                  if (tree < treeCount)
+                  {
+                     solutions[day][tree + 1][dev] = std::min(
+                        solutions[day][tree + 1][dev],
+                        solutions[day][tree][dev] + trees[tree].first + T * trees[tree].second
+                        );
+                  }
+
+                  /**
+                  * - If we use an additional tool, then the height of the tree will grow to
+                  * its cut size (the one of the device) + the growth over the remaining days
+                  */
+                  if (dev < devices.size() && tree < treeCount)
+                  {
+                     solutions[day][tree + 1][dev + 1] = std::min(
+                        solutions[day][tree + 1][dev + 1],
+                        solutions[day][tree][dev] + devices[dev] + day * trees[tree].second
+                        );
+                  }
+               }
+            }
+         }
+
+         return solutions[T][treeCount][0];
+      }
+   };
+
    size_t TaroCutting::minLength(Ints const& trees, Ints const& growths, Ints const& devices, size_t nbDays)
    {
-      Cutting cutting(trees, growths, devices);
-      return cutting.minLength(nbDays);
+      //Cutting cutting(trees, growths, devices);
+      //return cutting.minLength(nbDays);
+
+      return TaroCutting2::minLength(trees, growths, devices, nbDays);
    }
 
    //--------------------------------------------------------------------------
