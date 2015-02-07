@@ -232,11 +232,12 @@ namespace prob
                         );
                   }
                }
+            }
 
-               /** The best solution without devices at next day is the best of the solution at previous day */
+            /** The best solution without devices at next day is the best of the solution at previous day */
+            for (size_t tree = 0; tree <= treeCount; tree++)
                for (size_t dev = 0; dev <= devices.size(); dev++)
                   solutions[day + 1][tree][0] = std::min(solutions[day + 1][tree][0], solutions[day][tree][dev]);
-            }
          }
 
          return solutions[T][treeCount][0];
