@@ -41,6 +41,13 @@ namespace prob
          return equal(lhs.m_data, rhs.m_data);
       }
 
+      void swap(Matrix<T>& other)
+      {
+         std::swap(other.m_width, m_width);
+         std::swap(other.m_height, m_height);
+         std::swap(other.m_data, m_data);
+      }
+
    private:
       size_t m_width;
       size_t m_height;
