@@ -213,8 +213,7 @@ namespace prob
          }
 
          grow();
-         std::sort(begin(m_trees), end(m_trees), reverseComparison(
-            comparingWith([](Tree const& t) { return t.first; })));
+         std::sort(begin(m_trees), end(m_trees), reverseComparison(comparingWith(GetFirst())));
 
          Trees backUpTrees = m_trees;
 

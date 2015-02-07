@@ -4,6 +4,15 @@
 
 namespace prob
 {
+   struct GetFirst
+   {
+      template<typename A, typename B>
+      A const& operator() (std::pair<A, B> const& p) const { return p.first; }
+
+      template<typename A, typename B>
+      A const& operator() (std::pair<A const, B> const& p) const { return p.first; }
+   };
+
    struct GetSecond
    {
       template<typename A, typename B>
