@@ -7,19 +7,16 @@
 
 namespace prob
 {
+   /**
+   * Provided a string as input, split it with words in the dictionary
+   * If several possibilities might exist, it will return one of them.
+   */
    class WordSplit
    {
    public:
       using Dict = std::unordered_set<std::string>;
 
-   public:
       WordSplit(Dict const& dict);
-      ~WordSplit() = default;
-
-      /**
-       * Provided a string as input, split it with words in the dictionary
-       * If several possibilities might exist, it will return one of them.
-       */
       std::vector<std::string> splitInWords(std::string const&);
 
    private:
@@ -27,4 +24,14 @@ namespace prob
    };
 
    void testWordSplit();
+
+   /**
+    * Taro string
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13006
+    */
+   struct TaroString
+   {
+      static std::string getAnswer(std::string const&);
+      static void tests();
+   };
 }

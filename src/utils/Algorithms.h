@@ -69,6 +69,13 @@ namespace prob
       cont.erase(it, end(cont));
    }
 
+   template<typename Container, typename Predicate>
+   void eraseIf(Container& cont, Predicate p)
+   {
+      auto it = std::remove_if(begin(cont), end(cont), p);
+      cont.erase(it, end(cont));
+   }
+
    //--------------------------------------------------------------------------
 
    template<typename Container, typename Val, typename Acc>

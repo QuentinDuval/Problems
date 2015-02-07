@@ -26,6 +26,7 @@ int main()
 
    taroCoinsTests();
    taroGridTests();
+   TaroString::tests();
    taroCuttingTests();
 
    sudokuTest();
