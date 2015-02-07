@@ -173,8 +173,6 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
-   static size_t solutions[155][155][155];
-
    struct TaroCutting2
    {
       using Tree = std::pair<size_t, size_t>;
@@ -194,13 +192,8 @@ namespace prob
          sort(devices.begin(), devices.end());
 
          size_t treeCount = trees.size();
-         for (size_t day = 0; day <= T; day++)
-            for (size_t tree = 0; tree <= treeCount; tree++)
-               for (size_t dev = 0; dev <= devices.size(); dev++)
-                  solutions[day][tree][dev] = 1e9;
-
-         solutions[0][0][0] = 0;
-
+         Matrix<size_t> solutions(treeCount + 1, devices.size() + 1, 1e9);
+         solutions.at(0, 0) = 0;
 
          for (size_t day = 0; day < T; day++)
          {
@@ -213,9 +206,9 @@ namespace prob
                    * - If we do not use an additional tool, the height of the tree will grow to
                    * its maximum size, which is its initial size + the growth over the days
                    */
-                  solutions[day][tree + 1][dev] = std::min(
-                     solutions[day][tree + 1][dev],
-                     solutions[day][tree][dev] + trees[tree].first + T * trees[tree].second
+                  solutions.at(tree + 1, dev) = std::min(
+                     solutions.at(tree + 1, dev),
+                     solutions.at(tree, dev) + trees[tree].first + T * trees[tree].second
                      );
 
                   /**
@@ -224,21 +217,22 @@ namespace prob
                    */
                   if (dev < devices.size())
                   {
-                     solutions[day][tree + 1][dev + 1] = std::min(
-                        solutions[day][tree + 1][dev + 1],
-                        solutions[day][tree][dev] + devices[dev] + day * trees[tree].second
+                     solutions.at(tree + 1, dev + 1) = std::min(
+                        solutions.at(tree + 1, dev + 1),
+                        solutions.at(tree, dev) + devices[dev] + day * trees[tree].second
                         );
                   }
                }
             }
 
             /** The best solution without devices at next day is the best of the solution at previous day */
+
             for (size_t tree = 0; tree <= treeCount; tree++)
                for (size_t dev = 0; dev <= devices.size(); dev++)
-                  solutions[day + 1][tree][0] = std::min(solutions[day + 1][tree][0], solutions[day][tree][dev]);
+                  solutions.at(tree, 0) = std::min(solutions.at(tree, 0), solutions.at(tree, dev));
          }
 
-         return solutions[T][treeCount][0];
+         return solutions.at(treeCount, 0);
       }
    };
 
