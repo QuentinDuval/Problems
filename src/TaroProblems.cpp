@@ -207,8 +207,7 @@ namespace prob
          if (nbDays == 0)
          {
             size_t sum = 0;
-            for (size_t t = 0; t < m_trees.size(); ++t)
-               sum += m_trees[t].first;
+            for (auto& t : m_trees) sum += t.first;
             return sum;
          }
 
