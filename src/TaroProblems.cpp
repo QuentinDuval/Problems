@@ -208,10 +208,10 @@ namespace prob
                for (size_t dev = 0; dev <= devices.size(); dev++)
                {
                   /**
-                  * Adding a tree to the problem:
-                  * - If we do not use an additional tool, the height of the tree will grow to
-                  * its maximum size, which is its initial size + the growth over the days
-                  */
+                   * Adding a tree to the problem:
+                   * - If we do not use an additional tool, the height of the tree will grow to
+                   * its maximum size, which is its initial size + the growth over the days
+                   */
                   if (tree < treeCount)
                   {
                      solutions[day][tree + 1][dev] = std::min(
@@ -221,9 +221,9 @@ namespace prob
                   }
 
                   /**
-                  * - If we use an additional tool, then the height of the tree will grow to
-                  * its cut size (the one of the device) + the growth over the remaining days
-                  */
+                   * - If we use an additional tool, then the height of the tree will grow to
+                   * its cut size (the one of the device) + the growth over the remaining days
+                   */
                   if (dev < devices.size() && tree < treeCount)
                   {
                      solutions[day][tree + 1][dev + 1] = std::min(
