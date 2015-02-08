@@ -1,5 +1,4 @@
 #include "ClassicDPProblemsTests.h"
-#include "MaxContiguous.h"
 #include "StringProblemsTests.h"
 #include "Sudoku.h"
 #include "TaroProblemsTests.h"

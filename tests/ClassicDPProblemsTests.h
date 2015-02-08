@@ -8,4 +8,5 @@ namespace prob
    void fiboTests();
    void longestIncreasingSeqTest();
    void makingChangeTests();
+   void maxContiguousTest();
 }

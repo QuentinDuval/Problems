@@ -1,4 +1,5 @@
 #pragma once
+#include "utils/Range.h"
 
 #include <string>
 #include <vector>
@@ -18,4 +19,16 @@ namespace prob
     * The coin values are strictly increasing and higher than 1 as we assume with have the coin 1 by default.
     */
    size_t makingChange(size_t amount, std::vector<size_t> const& coinValues);
+
+   struct MaxContiguous
+   {
+      using Inputs = std::vector<double>;
+      using InputIt = Inputs::const_iterator;
+
+      /** Find the contiguous sequence with the highest sum value */
+      static Range<InputIt> maxSum(Inputs const&);
+
+      /** Find the contiguous sequence with the highest sum value */
+      static Range<InputIt> maxProduct(Inputs const&);
+   };
 }

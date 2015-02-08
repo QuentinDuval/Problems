@@ -72,4 +72,39 @@ namespace prob
       assert(3 == makingChange(5, { 1, 2 }));
       assert(19 == makingChange(123, { 1, 3, 5, 7 }));
    }
+
+   //--------------------------------------------------------------------------
+
+   static void maxContiguousSumTest()
+   {
+      std::vector<double> allPositive(10, 1);
+      auto expected = makeRange(cbegin(allPositive), cend(allPositive));
+      assert(expected == MaxContiguous::maxSum(allPositive));
+
+      std::vector<double> allNegative(10, -1);
+      assert(MaxContiguous::maxSum(allNegative).empty());
+
+      std::vector<double> oscillator(10, -1);
+      generate(oscillator, -1., [](double d) { return -d; });
+      assert(1 == MaxContiguous::maxSum(oscillator).size());
+
+      std::vector<double> stdInputs = { 1, -1, 2, 3, 2, -7, 2, 5, -5, 10 };
+      assert(12 == sum(MaxContiguous::maxSum(stdInputs), 0.));
+   }
+
+   static void maxContiguousProdTest()
+   {
+      std::vector<double> allOnes(10, 1);
+      assert(1. == product(MaxContiguous::maxProduct(allOnes), 1.));
+
+      std::vector<double> stdInputs = { 1, 0.87, 0.5, 1.1, 2, 0.9, 5, 0.5, 1.1 };
+      for (auto& r : MaxContiguous::maxProduct(stdInputs))
+         std::cout << r << std::endl;
+   }
+
+   void maxContiguousTest()
+   {
+      maxContiguousSumTest();
+      maxContiguousProdTest();
+   }
 }
