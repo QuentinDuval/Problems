@@ -36,4 +36,63 @@ namespace prob
       }
       return distances.at(a.size(), b.size());
    }
+
+   //--------------------------------------------------------------------------
+
+   size_t fibo(size_t n)
+   {
+      if (n == 0)
+         return 0;
+
+      size_t prev = 0;
+      size_t curr = 1;
+      for (size_t i = 1; i < n; ++i)
+      {
+         size_t next = curr + prev;
+         prev = curr;
+         curr = next;
+      }
+      return curr;
+   }
+
+   /**
+   * --------------------------------------------------------------------------
+   * Longest[k] = max of:
+   * - max { i < k } { input[k] >= Longest[i] } of Longest[i] + 1
+   * - max { i < k } { input[k] <  Longest[i] } of Longest[i]
+   * --------------------------------------------------------------------------
+   */
+   std::vector<double> longestIncreasingSeq(std::vector<double> const& inputs)
+   {
+      size_t len = inputs.size();
+      std::vector<size_t> longest(len + 1, 0);
+      std::vector<size_t> previous(len + 1, 0);
+      std::vector<double> lastVal(len + 1, std::numeric_limits<double>::min());
+
+      for (size_t i = 0; i < len; ++i)
+      {
+         for (size_t j = 0; j <= i; ++j)
+         {
+            size_t incr = lastVal[j] > inputs[i] ? 0 : 1;
+            if (longest[j] + incr > longest[i + 1])
+            {
+               previous[i + 1] = j;
+               longest[i + 1] = longest[j] + incr;
+               lastVal[i + 1] = incr ? inputs[i] : lastVal[j];
+            }
+         }
+      }
+
+      std::vector<double> out;
+      for (size_t i = len; i != 0;)
+      {
+         size_t p = previous[i];
+         if (longest[i] > longest[p])
+            out.push_back(lastVal[i]);
+         i = p;
+      }
+
+      std::reverse(begin(out), end(out));
+      return out;
+   }
 }

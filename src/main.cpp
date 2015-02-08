@@ -1,6 +1,4 @@
 #include "ClassicDPProblemsTests.h"
-#include "Fibonacci.h"
-#include "LongestIncreasingSeq.h"
 #include "MakingChange.h"
 #include "MaxContiguous.h"
 #include "StringProblemsTests.h"
