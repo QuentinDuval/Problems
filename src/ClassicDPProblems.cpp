@@ -7,7 +7,6 @@ namespace prob
    size_t binomialCoeff(size_t k, size_t n)
    {
       Matrix<size_t> m(n + 1, n + 1, 1);
-
       for (size_t i = 1; i <= n; ++i)
          for (size_t j = 1; j < i && j <= k; ++j)
             m.at(j, i) = m.at(j - 1, i - 1) + m.at(j, i - 1);
