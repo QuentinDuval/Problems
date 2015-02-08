@@ -25,6 +25,9 @@ namespace prob
             splits.emplace_back(std::move(temp));
          }
       }
+
+      if (lastSplit != input.size())
+         return std::vector<std::string>();
       return splits;
    }
 
@@ -32,9 +35,9 @@ namespace prob
    {
       WordSplit::Dict dict = { "split", "into", "in", "to", "words" };
       WordSplit split(dict);
-      auto splits = split.splitInWords("splitintowords");
-      for (auto& s : splits)
-         std::cout << s << std::endl;
+
+      assert(true == split.splitInWords("splitintoword").empty());
+      assert(4 == split.splitInWords("splitintowords").size());
    }
 
    //--------------------------------------------------------------------------
