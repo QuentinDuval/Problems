@@ -190,4 +190,69 @@ namespace prob
       auto e = begin(inputs) + std::distance(cbegin(logInputs), end(result));
       return makeRange(b, e);
    }
+
+   /**
+   * --------------------------------------------------------------------------
+   * Sub-dividing the space of search into spaces [i..j]
+   * - T[i,j] = numbers of parenthesization from i to j leading to True
+   * - F[i,j] = numbers of parenthesization from i to j leading to False
+   * 
+   * Recurrence:
+   * - T[i,i] = 1 if input i is 'T', else 0
+   * - G[i,i] = 1 if input i is 'F', else 0
+   *
+   * - T[i, j+1] = sum { i <= k <= j } of
+   *   - "and": T[i, k] * T[k, j+1]
+   *   - "xor": T[i, k] * F[k, j+1] + F[i, k] * T[k, j+1]
+   *   - "or":  "and" + "xor"
+   *
+   * - F[i, j+1] = sum { i <= k <= j } of
+   *   - "or": F[i, k] * F[k, j+1]
+   *   - "xor": T[i, k] * F[k, j+1] + F[i, k] * T[k, j+1]
+   *   - "and":  "or" + "xor"
+   * --------------------------------------------------------------------------
+   */
+
+   size_t BooleanParenthesization::count(Variables const& vs, Connectors const& cs)
+   {
+      if (vs.empty()) return 0;
+      if (vs.size() - 1 != cs.size()) return 0;
+
+      Matrix<size_t> trueNb (vs.size(), vs.size(), 0);
+      Matrix<size_t> falseNb(vs.size(), vs.size(), 0);
+      for (size_t v = 0; v < vs.size(); ++v)
+      {
+         if (vs[v]) trueNb.at(v, v) = 1;
+         else       falseNb.at(v, v) = 1;
+      }
+
+      for (size_t gap = 1; gap < vs.size(); ++gap)
+      {
+         for (size_t i = 0; i < vs.size() - gap; ++i)
+         {
+            size_t j = i + gap;
+            for (size_t k = i; k < j; ++k)
+            {
+               const auto& c = cs[k];
+               if (c != "xor")
+               {
+                  trueNb.at(i, j) += trueNb.at(i, k) * trueNb.at(k + 1, j);
+                  falseNb.at(i, j) += falseNb.at(i, k) * falseNb.at(k + 1, j);
+               }
+               if (c != "and")
+               {
+                  trueNb.at(i, j) += trueNb.at(i, k) * falseNb.at(k + 1, j);
+                  trueNb.at(i, j) += falseNb.at(i, k) * trueNb.at(k + 1, j);
+               }
+               if (c != "or")
+               {
+                  falseNb.at(i, j) += trueNb.at(i, k) * falseNb.at(k + 1, j);
+                  falseNb.at(i, j) += falseNb.at(i, k) * trueNb.at(k + 1, j);
+               }
+            }
+         }
+      }
+
+      return trueNb.at(0, vs.size() - 1);
+   }
 }

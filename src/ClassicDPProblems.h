@@ -29,4 +29,21 @@ namespace prob
       static Range<InputIt> maxSum(Inputs const&);
       static Range<InputIt> maxProduct(Inputs const&);
    };
+
+   /**
+    * Counting the number of ways there are to parenthesize a boolean expression made of True and False
+    * to have it return True.
+    * Input:
+    * - a string made of N booleans: true or false
+    * - a vector made of N-1 strings: "or, "and" or "xor"
+    * Output:
+    * - The number of parenthesization that would make this expression evaluate to True
+    */
+   struct BooleanParenthesization
+   {
+      using Variables = std::vector<bool>;
+      using Connectors = std::vector<std::string>;
+
+      static size_t count(Variables const& vs, Connectors const& cs);
+   };
 }

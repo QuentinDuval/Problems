@@ -17,6 +17,7 @@ namespace prob
       longestIncreasingSeqTest();
       makingChangeTests();
       maxContiguousTest();
+      boolParenthesizationTest();
    }
 
    //--------------------------------------------------------------------------
@@ -118,5 +119,29 @@ namespace prob
    {
       maxContiguousSumTest();
       maxContiguousProdTest();
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicDPProblemsTests::boolParenthesizationTest()
+   {
+      for (auto& s : { "or", "and" })
+         assert(1 == BooleanParenthesization::count({ true, true }, { s }));
+      assert(0 == BooleanParenthesization::count({ true, true }, { "xor" }));
+
+      for (auto& s : { "or", "xor" })
+         assert(1 == BooleanParenthesization::count({ true, false }, { s }));
+      assert(0 == BooleanParenthesization::count({ true, false }, { "and" }));
+
+      for (auto& s : { "or", "xor", "and" })
+         assert(0 == BooleanParenthesization::count({ false, false }, { s }));
+
+      BooleanParenthesization::Variables vs = { true, false, true, true };
+      BooleanParenthesization::Connectors cs = { "or", "and", "xor" };
+      assert(2 == BooleanParenthesization::count(vs, cs));
+      
+      vs = { true, false, true, true, false };
+      cs = { "or", "and", "xor", "and" };
+      std::cout << "Bool (): " << BooleanParenthesization::count(vs, cs) << std::endl;
    }
 }

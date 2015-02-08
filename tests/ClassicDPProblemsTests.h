@@ -13,5 +13,6 @@ namespace prob
       static void longestIncreasingSeqTest();
       static void makingChangeTests();
       static void maxContiguousTest();
+      static void boolParenthesizationTest();
    };
 }
