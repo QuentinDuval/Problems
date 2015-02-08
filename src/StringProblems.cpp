@@ -32,13 +32,35 @@ namespace prob
       return splits;
    }
 
-   void testWordSplit()
-   {
-      WordSplit::Dict dict = { "split", "into", "in", "to", "words" };
-      WordSplit split(dict);
 
-      assert(true == split.splitInWords("splitintoword").empty());
-      assert(4 == split.splitInWords("splitintowords").size());
+   //--------------------------------------------------------------------------
+   // DOUBLE LETTERS
+   //--------------------------------------------------------------------------
+
+   bool doubleLetter(std::string const& s)
+   {
+      if (s.empty())
+         return true;
+
+      size_t prev = 0;
+      size_t curr = 1;
+      std::vector<bool> marked(s.size() + 1, false);
+
+      for (; curr <= s.size(); ++curr)
+      {
+         if (prev != 0 && s[curr - 1] == s[prev - 1])
+         {
+            marked[curr] = true;
+            marked[prev] = true;
+            do { --prev; } while (marked[prev]);
+         }
+         else
+         {
+            prev = curr;
+         }
+      }
+
+      return end(marked) == std::find(begin(marked) + 1, end(marked), false);
    }
 
 
@@ -60,19 +82,6 @@ namespace prob
       return combinations;
    }
    
-   void Parentheses::testCombinationNb()
-   {
-      assert(0 == Parentheses::combinationNb(0).size());
-      assert(1 == Parentheses::combinationNb(1).size());
-      assert(2 == Parentheses::combinationNb(2).size());
-      assert(4 == Parentheses::combinationNb(3).size());
-
-      std::vector<std::string> toShow;
-      auto result = Parentheses::combinationNb(4);
-      intersperse(result, std::back_inserter(toShow), ", ");
-      std::cout << sum(toShow, std::string("")) << std::endl;
-   }
-
 
    //--------------------------------------------------------------------------
    // BRACKET EXPRESSIONS
@@ -140,38 +149,15 @@ namespace prob
       return Brackets::bruteForce(expression, begin(expression));
    }
 
-   void BracketExpressions::tests()
-   {
-      assert(true == isPossible(""));
-      assert(true == isPossible("([]{})"));
-      assert(true == isPossible("(())[]"));
-      assert(true == isPossible("({X)"));
-      assert(false == isPossible("({])"));
-      assert(false == isPossible("[]X"));
-      assert(true == isPossible("([]X()[()]XX}[])X{{}}]"));
-   }
-
 
    //--------------------------------------------------------------------------
    // TARO STRING
    //--------------------------------------------------------------------------
 
-   static const char* possible = "\"Possible\"";
-   static const char* impossible = "\"Impossible\"";
-
-   std::string TaroString::getAnswer(std::string const& s)
+   bool TaroString::getAnswer(std::string const& s)
    {
       std::string cleanedS = s;
       eraseIf(cleanedS, [](char c){ return c != 'C' && c != 'A' && c != 'T'; });
-      return cleanedS == "CAT" ? possible : impossible;
-   }
-
-   void TaroString::tests()
-   {
-      assert(possible == TaroString::getAnswer("XCYAZTX"));
-      assert(impossible == TaroString::getAnswer("CTA"));
-      assert(impossible == TaroString::getAnswer("ACBBAT"));
-      assert(possible == TaroString::getAnswer("SGHDJHFIOPUFUHCHIOJBHAUINUIT"));
-      assert(impossible == TaroString::getAnswer("CCCATT"));
+      return cleanedS == "CAT";
    }
 }

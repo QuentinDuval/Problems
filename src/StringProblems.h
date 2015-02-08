@@ -23,8 +23,13 @@ namespace prob
       Dict const& m_dict;
    };
 
-   void testWordSplit();
 
+   /**
+   * Eliminate double letters starting from the leftmost occurence.
+   * Repeat as long as double letters can be found and return if the string is empty.
+   * http://community.topcoder.com/stat?c=problem_statement&pm=13378
+   */
+   bool doubleLetter(std::string const&);
 
    /**
    * Provided a number of parenthesis pairs input, return the different string possible.
@@ -33,7 +38,6 @@ namespace prob
    struct Parentheses
    {
       static std::vector<std::string> combinationNb(size_t nbPairs);
-      static void testCombinationNb();
    };
 
 
@@ -44,7 +48,6 @@ namespace prob
    struct BracketExpressions
    {
       static bool isPossible(std::string const&);
-      static void tests();
    };
 
 
@@ -54,7 +57,6 @@ namespace prob
     */
    struct TaroString
    {
-      static std::string getAnswer(std::string const&);
-      static void tests();
+      static bool getAnswer(std::string const&);
    };
 }
