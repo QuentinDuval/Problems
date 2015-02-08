@@ -2,6 +2,8 @@
 #include "utils/Algorithms.h"
 #include "utils/Matrix.h"
 
+#include <iterator>
+
 
 namespace prob
 {
@@ -156,5 +158,41 @@ namespace prob
       std::string cleanedS = s;
       eraseIf(cleanedS, [](char c){ return c != 'C' && c != 'A' && c != 'T'; });
       return cleanedS == "CAT";
+   }
+
+
+   //--------------------------------------------------------------------------
+   // WOLF DELAY MASTER
+   //--------------------------------------------------------------------------
+
+   bool wolfIsValid(std::string const& str, std::string::const_iterator first)
+   {
+      if (first == str.end())
+         return true;
+
+      auto it = first;
+      while (it != str.end() && *it == 'w')
+         ++it;
+
+      size_t wNb = std::distance(first, it);
+      if (wNb == 0)
+         return false;
+
+      if (std::distance(it, str.end()) < 3 * wNb)
+         return false;
+
+      for (auto c : { 'o', 'l', 'f' })
+      {
+         if (wNb != std::count(it, it + wNb, c))
+            return false;
+         it += wNb;
+      }
+
+      return wolfIsValid(str, it);
+   }
+
+   bool WolfDelaymaster::isValid(std::string const& str)
+   {
+      return wolfIsValid(str, str.begin());
    }
 }

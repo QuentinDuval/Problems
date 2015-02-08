@@ -15,6 +15,7 @@ namespace prob
       parenthesesCombinationNbTests();
       bracketExpressionsTests();
       taroStringTests();
+      wolfDelaymasterTests();
    }
 
    //--------------------------------------------------------------------------
@@ -78,5 +79,15 @@ namespace prob
       assert(false == TaroString::getAnswer("ACBBAT"));
       assert(true == TaroString::getAnswer("SGHDJHFIOPUFUHCHIOJBHAUINUIT"));
       assert(false == TaroString::getAnswer("CCCATT"));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::wolfDelaymasterTests()
+   {
+      assert(true == WolfDelaymaster::isValid("wolf"));
+      assert(false == WolfDelaymaster::isValid("wwolfolf"));
+      assert(true == WolfDelaymaster::isValid("wolfwwoollffwwwooolllfffwwwwoooollllffff"));
+      assert(false == WolfDelaymaster::isValid("flowolf"));
    }
 }

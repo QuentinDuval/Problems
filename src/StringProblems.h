@@ -59,4 +59,13 @@ namespace prob
    {
       static bool getAnswer(std::string const&);
    };
+
+   /**
+    * WolfDelaymaster
+    * http://community.topcoder.com/stat?c=problem_statement&pm=12778
+    */
+   struct WolfDelaymaster
+   {
+      static bool isValid(std::string const&);
+   };
 }
