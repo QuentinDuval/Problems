@@ -7,4 +7,5 @@ namespace prob
    void editDistanceTests();
    void fiboTests();
    void longestIncreasingSeqTest();
+   void makingChangeTests();
 }

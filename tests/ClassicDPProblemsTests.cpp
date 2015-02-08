@@ -62,4 +62,14 @@ namespace prob
       std::vector<double> expected = { 1, 2, 4, 4, 5, 11 };
       assert(equal(expected, longestIncreasingSeq(standardSeq)));
    }
+
+   //--------------------------------------------------------------------------
+
+   void makingChangeTests()
+   {
+      assert(1 == makingChange(1, { 1 }));
+      assert(5 == makingChange(5, { 1 }));
+      assert(3 == makingChange(5, { 1, 2 }));
+      assert(19 == makingChange(123, { 1, 3, 5, 7 }));
+   }
 }
