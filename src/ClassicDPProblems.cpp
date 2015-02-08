@@ -1,13 +1,22 @@
-#include "EditDistance.h"
+#include "ClassicDPProblems.h"
 #include "utils/Matrix.h"
-
-#include <algorithm>
-#include <assert.h>
-#include <iostream>
 
 
 namespace prob
 {
+   size_t binomialCoeff(size_t k, size_t n)
+   {
+      Matrix<size_t> m(n + 1, n + 1, 1);
+
+      for (size_t i = 1; i <= n; ++i)
+         for (size_t j = 1; j < i && j <= k; ++j)
+            m.at(j, i) = m.at(j - 1, i - 1) + m.at(j, i - 1);
+
+      return m.at(k, n);
+   }
+
+   //--------------------------------------------------------------------------
+
    size_t editDistance(std::string const& a, std::string const& b)
    {
       if (a.empty()) return b.size();
@@ -26,21 +35,5 @@ namespace prob
          }
       }
       return distances.at(a.size(), b.size());
-   }
-
-   //--------------------------------------------------------------------------
-
-   void editDistanceTests()
-   {
-      assert(0 == editDistance("", ""));
-      assert(2 == editDistance("", "ab"));
-      assert(2 == editDistance("ab", ""));
-      assert(0 == editDistance("ab", "ab"));
-
-      assert(1 == editDistance("ab", "abc"));
-      assert(1 == editDistance("abc", "ab"));
-      assert(1 == editDistance("abc", "abd"));
-
-      std::cout << "Edit distance: " << editDistance("I misspelt mine sentense", "I misspelled my sentence") << std::endl;
    }
 }

@@ -1,5 +1,4 @@
-#include "BinomialCoeff.h"
-#include "EditDistance.h"
+#include "ClassicDPProblemsTests.h"
 #include "Fibonacci.h"
 #include "LongestIncreasingSeq.h"
 #include "MakingChange.h"
