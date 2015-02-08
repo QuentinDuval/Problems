@@ -13,5 +13,6 @@ namespace prob
       static void bracketExpressionsTests();
       static void taroStringTests();
       static void wolfDelaymasterTests();
+      static void ipv444Tests();
    };
 }

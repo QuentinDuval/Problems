@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <string>
 #include <unordered_set>
 #include <vector>
@@ -67,5 +68,17 @@ namespace prob
    struct WolfDelaymaster
    {
       static bool isValid(std::string const&);
+   };
+
+   /**
+    * IPv444
+    * http://community.topcoder.com/stat?c=problem_statement&pm=11378
+    */
+   struct IPv444
+   {
+      using Addr = std::array<int, 4>;
+      static Addr parseAddress(std::string const& request);
+
+      static long maxAmount(std::vector<std::string> const& requests, std::vector<int> const& prices);
    };
 }

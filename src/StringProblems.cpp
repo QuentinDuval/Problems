@@ -195,4 +195,31 @@ namespace prob
    {
       return wolfIsValid(str, str.begin());
    }
+
+   //--------------------------------------------------------------------------
+
+   IPv444::Addr IPv444::parseAddress(std::string const& request)
+   {
+      Addr out;
+      size_t start = 0;
+      for (size_t i = 0; i < 4; ++i)
+      {
+         size_t end = start + 1;
+         while (end != request.size() && request[end] != '.')
+            ++end;
+
+         std::string subStr = request.substr(start, end - start);
+         if (subStr == "*")
+            out[i] = 1000;
+         else
+            out[i] = atoi(subStr.c_str());
+         start = end + 1;
+      }
+      return out;
+   }
+
+   long IPv444::maxAmount(std::vector<std::string> const& requests, std::vector<int> const& prices)
+   {
+      return 0;
+   }
 }

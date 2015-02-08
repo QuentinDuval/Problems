@@ -16,6 +16,7 @@ namespace prob
       bracketExpressionsTests();
       taroStringTests();
       wolfDelaymasterTests();
+      ipv444Tests();
    }
 
    //--------------------------------------------------------------------------
@@ -89,5 +90,27 @@ namespace prob
       assert(false == WolfDelaymaster::isValid("wwolfolf"));
       assert(true == WolfDelaymaster::isValid("wolfwwoollffwwwooolllfffwwwwoooollllffff"));
       assert(false == WolfDelaymaster::isValid("flowolf"));
+   }
+
+   //--------------------------------------------------------------------------
+
+   static void ipv444ParsingTests()
+   {
+      IPv444::Addr addr = IPv444::parseAddress("123.25.7.986");
+      assert(123 == addr[0]);
+      assert(25 == addr[1]);
+      assert(7 == addr[2]);
+      assert(986 == addr[3]);
+
+      addr = IPv444::parseAddress("0.1.*.*");
+      assert(0 == addr[0]);
+      assert(1 == addr[1]);
+      assert(1000 == addr[2]);
+      assert(1000 == addr[3]);
+   }
+
+   void StringProblemsTests::ipv444Tests()
+   {
+      ipv444ParsingTests();
    }
 }
