@@ -2,13 +2,14 @@
 #include "StringProblemsTests.h"
 #include "Sudoku.h"
 #include "TaroProblemsTests.h"
-#include <iostream>
 
-using namespace prob;
+#include <iostream>
 
 
 int main()
 {
+   using namespace prob;
+
    ClassicDPProblemsTests::allTests();
    StringProblemsTests::allTests();
    TaroProblemsTests::allTests();
