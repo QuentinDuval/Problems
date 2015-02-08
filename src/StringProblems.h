@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 
@@ -77,8 +78,9 @@ namespace prob
    struct IPv444
    {
       using Addr = std::array<int, 4>;
-      static Addr parseAddress(std::string const& request);
+      using AddrPrice = std::pair<Addr, int>;
 
-      static long maxAmount(std::vector<std::string> const& requests, std::vector<int> const& prices);
+      static Addr parseAddress(std::string const& request);
+      static long long maxAmount(std::vector<std::string> const& requests, std::vector<int> const& prices);
    };
 }

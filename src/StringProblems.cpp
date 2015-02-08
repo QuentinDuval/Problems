@@ -1,8 +1,10 @@
 #include "StringProblems.h"
 #include "utils/Algorithms.h"
+#include "utils/Functors.h"
 #include "utils/Matrix.h"
 
 #include <iterator>
+#include <set>
 
 
 namespace prob
@@ -210,7 +212,7 @@ namespace prob
 
          std::string subStr = request.substr(start, end - start);
          if (subStr == "*")
-            out[i] = 1000;
+            out[i] = -1;
          else
             out[i] = atoi(subStr.c_str());
          start = end + 1;
@@ -218,8 +220,42 @@ namespace prob
       return out;
    }
 
-   long IPv444::maxAmount(std::vector<std::string> const& requests, std::vector<int> const& prices)
+   long long maxAmountRec(std::vector<IPv444::AddrPrice> const& pricedRequests, size_t depth)
    {
-      return 0;
+      if (pricedRequests.empty())
+         return 0;
+
+      if (depth == 4)
+         return maxBy(pricedRequests, comparingWith(GetSecond()))->second;
+
+      std::set<int> addrParts;
+      for (auto& r : pricedRequests)
+         addrParts.insert(r.first[depth]);
+
+      long long amount = 0;
+      for (int a : addrParts)
+      {
+         std::vector<IPv444::AddrPrice> matchingReqs;
+         for (auto& r : pricedRequests)
+         {
+            if (r.first[depth] == -1 || r.first[depth] == a)
+               matchingReqs.push_back(r);
+         }
+
+         auto res = maxAmountRec(matchingReqs, depth + 1);
+         if (a == -1) //For addresses only covered by a "*", compound by their number
+            res *= (1001 - addrParts.size());
+         amount += res;
+      }
+      return amount;
+   }
+
+   long long IPv444::maxAmount(std::vector<std::string> const& requests, std::vector<int> const& prices)
+   {
+      std::vector<AddrPrice> pricedRequests;
+      for (size_t i = 0; i < requests.size(); ++i)
+         pricedRequests.emplace_back(parseAddress(requests[i]), prices[i]);
+
+      return maxAmountRec(pricedRequests, 0);
    }
 }
