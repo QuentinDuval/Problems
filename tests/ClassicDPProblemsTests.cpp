@@ -9,7 +9,19 @@
 
 namespace prob
 {
-   void binomialCoeffTests()
+   void ClassicDPProblemsTests::allTests()
+   {
+      binomialCoeffTests();
+      editDistanceTests();
+      fiboTests();
+      longestIncreasingSeqTest();
+      makingChangeTests();
+      maxContiguousTest();
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicDPProblemsTests::binomialCoeffTests()
    {
       for (size_t n = 1; n < 10; ++n)
       {
@@ -25,7 +37,7 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
-   void editDistanceTests()
+   void ClassicDPProblemsTests::editDistanceTests()
    {
       assert(0 == editDistance("", ""));
       assert(2 == editDistance("", "ab"));
@@ -41,7 +53,7 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
-   void fiboTests()
+   void ClassicDPProblemsTests::fiboTests()
    {
       std::vector<size_t> expected{ 0, 1, 1, 2, 3, 5, 8, 13, 21 };
       for (size_t i = 0; i < expected.size(); ++i)
@@ -50,7 +62,7 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
-   void longestIncreasingSeqTest()
+   void ClassicDPProblemsTests::longestIncreasingSeqTest()
    {
       std::vector<double> increasingSeq = { 1, 2, 3, 4 };
       assert(equal(increasingSeq, longestIncreasingSeq(increasingSeq)));
@@ -65,7 +77,7 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
-   void makingChangeTests()
+   void ClassicDPProblemsTests::makingChangeTests()
    {
       assert(1 == makingChange(1, { 1 }));
       assert(5 == makingChange(5, { 1 }));
@@ -102,7 +114,7 @@ namespace prob
          std::cout << r << std::endl;
    }
 
-   void maxContiguousTest()
+   void ClassicDPProblemsTests::maxContiguousTest()
    {
       maxContiguousSumTest();
       maxContiguousProdTest();

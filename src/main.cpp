@@ -9,16 +9,9 @@ using namespace prob;
 
 int main()
 {
-   binomialCoeffTests();
-   editDistanceTests();
-   fiboTests();
-   makingChangeTests();
-   maxContiguousTest();
-   longestIncreasingSeqTest();
-
+   ClassicDPProblemsTests::allTests();
    StringProblemsTests::allTests();
    TaroProblemsTests::allTests();
-
    sudokuTest();
 
    system("PAUSE");
