@@ -40,6 +40,34 @@ namespace prob
       assert(4 == split.splitInWords("splitintowords").size());
    }
 
+
+   //--------------------------------------------------------------------------
+   // Parentheses
+   //--------------------------------------------------------------------------
+
+   std::vector<std::string> Parentheses::combinationNb(size_t nbPairs)
+   {
+      std::vector<std::string> combinations;
+      if (nbPairs == 0) return combinations;
+      if (nbPairs == 1) return { "()" };
+
+      for (auto&s : combinationNb(nbPairs - 1))
+      {
+         combinations.push_back(s + "()");
+         combinations.push_back("()" + s);
+         combinations.push_back("(" + s + ")");
+      }
+      return combinations;
+   }
+   
+   void Parentheses::testCombinationNb()
+   {
+      assert(0 == Parentheses::combinationNb(0).size());
+      assert(1 == Parentheses::combinationNb(1).size());
+      assert(3 == Parentheses::combinationNb(2).size());
+      assert(9 == Parentheses::combinationNb(3).size());
+   }
+
    //--------------------------------------------------------------------------
    // TARO STRING
    //--------------------------------------------------------------------------

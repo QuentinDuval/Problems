@@ -25,6 +25,18 @@ namespace prob
 
    void testWordSplit();
 
+
+   /**
+   * Provided a number of parenthesis pairs input, return the different string possible.
+   * Ex: 2 should yield 2 possibilities "()()" and "(())".
+   */
+   struct Parentheses
+   {
+      static std::vector<std::string> combinationNb(size_t nbPairs);
+      static void testCombinationNb();
+   };
+
+
    /**
     * Taro string
     * http://community.topcoder.com/stat?c=problem_statement&pm=13006

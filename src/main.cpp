@@ -23,6 +23,7 @@ int main()
    maxContiguousTest();
    longestIncreasingSeqTest();
    testWordSplit();
+   Parentheses::testCombinationNb();
 
    taroCoinsTests();
    taroGridTests();
