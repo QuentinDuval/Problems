@@ -2,9 +2,6 @@
 #include "utils/Algorithms.h"
 #include "utils/Matrix.h"
 
-#include <assert.h>
-#include <iostream>
-
 
 namespace prob
 {

@@ -11,7 +11,6 @@ namespace prob
     * http://community.topcoder.com/stat?c=problem_statement&pm=12856
     */
    long taroCoins(long long n);
-   void taroCoinsTests();
 
 
    /**
@@ -21,11 +20,10 @@ namespace prob
     * http://community.topcoder.com/stat?c=problem_statement&pm=13394
     */
    size_t taroGrid(std::vector<std::string> const&);
-   void taroGridTests();
 
 
    /**
-    * 
+    * TaroCutting
     * http://community.topcoder.com/stat?c=problem_statement&pm=13319
     */
    struct TaroCutting
@@ -33,6 +31,4 @@ namespace prob
       using Ints = std::vector<size_t>;
       static size_t minLength(Ints const& heights, Ints const& growths, Ints const& deviceSizes, size_t nbDays);
    };
-
-   void taroCuttingTests();
 }

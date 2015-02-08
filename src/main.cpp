@@ -6,7 +6,7 @@
 #include "MaxContiguous.h"
 #include "StringProblemsTests.h"
 #include "Sudoku.h"
-#include "TaroProblems.h"
+#include "TaroProblemsTests.h"
 #include <iostream>
 
 using namespace prob;
@@ -22,10 +22,7 @@ int main()
    longestIncreasingSeqTest();
 
    StringProblemsTests::allTests();
-
-   taroCoinsTests();
-   taroGridTests();
-   taroCuttingTests();
+   TaroProblemsTests::allTests();
 
    sudokuTest();
 
