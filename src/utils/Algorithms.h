@@ -84,6 +84,24 @@ namespace prob
       return std::accumulate(begin(c), end(c), v, acc);
    }
 
+   template<typename Container, typename Output, typename Val>
+   void intersperse(Container& cont, Output out, Val const& v)
+   {
+      bool first = true;
+      for (auto& c : cont)
+      {
+         if (!first)
+         {
+            *out = v;
+            ++out;
+         }
+
+         first = false;
+         *out = c;
+         ++out;
+      }
+   }
+
    template<typename Container, typename Val>
    Val sum(Container& c, Val const& v)
    {

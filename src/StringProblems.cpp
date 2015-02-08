@@ -54,7 +54,6 @@ namespace prob
       for (auto&s : combinationNb(nbPairs - 1))
       {
          combinations.push_back(s + "()");
-         combinations.push_back("()" + s);
          combinations.push_back("(" + s + ")");
       }
       return combinations;
@@ -64,8 +63,13 @@ namespace prob
    {
       assert(0 == Parentheses::combinationNb(0).size());
       assert(1 == Parentheses::combinationNb(1).size());
-      assert(3 == Parentheses::combinationNb(2).size());
-      assert(9 == Parentheses::combinationNb(3).size());
+      assert(2 == Parentheses::combinationNb(2).size());
+      assert(4 == Parentheses::combinationNb(3).size());
+
+      std::vector<std::string> toShow;
+      auto result = Parentheses::combinationNb(4);
+      intersperse(result, std::back_inserter(toShow), ", ");
+      std::cout << sum(toShow, std::string("")) << std::endl;
    }
 
    //--------------------------------------------------------------------------
