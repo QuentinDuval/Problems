@@ -38,6 +38,17 @@ namespace prob
 
 
    /**
+    * Bracket expressions
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13243
+    */
+   struct BracketExpressions
+   {
+      static bool isPossible(std::string const&);
+      static void tests();
+   };
+
+
+   /**
     * Taro string
     * http://community.topcoder.com/stat?c=problem_statement&pm=13006
     */

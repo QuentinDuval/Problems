@@ -1,4 +1,5 @@
 #include "StringProblems.h"
+#include "utils/Algorithms.h"
 #include "utils/Matrix.h"
 
 #include <assert.h>
@@ -71,6 +72,85 @@ namespace prob
       intersperse(result, std::back_inserter(toShow), ", ");
       std::cout << sum(toShow, std::string("")) << std::endl;
    }
+
+
+   //--------------------------------------------------------------------------
+   // BRACKET EXPRESSIONS
+   // 
+   // 1. Brute force approach: have a way to check the correctness of an
+   // epxression and try all X replacement, which means 6^X possibilities.
+   // Because X is given as lower than 5 in the problem it can be done.
+   // 
+   // 2. Other approach is to maintain a stack of open parentheses.
+   // If a X is found, then we can make it lower a stack level, or increase it.
+   // It should lower the worst number of attempt to 4^X.
+   //
+   //--------------------------------------------------------------------------
+
+   struct Brackets
+   {
+      using string_it = std::string::iterator;
+
+      static bool isClosing(char c1, char c2)
+      {
+         if (c1 == '(' && c2 == ')') return true;
+         if (c1 == '[' && c2 == ']') return true;
+         if (c1 == '{' && c2 == '}') return true;
+         return false;
+      }
+
+      static bool isValid(std::string const& expr)
+      {
+         std::vector<char> stack;
+         for (char c : expr)
+         {
+            if (c == '(' || c == '[' || c == '{')
+               stack.push_back(c);
+            else if (stack.empty())
+               return false;
+            else if (isClosing(stack.back(), c))
+               stack.pop_back();
+            else
+               return false;
+         }
+         return stack.empty();
+      }
+
+      static bool bruteForce(std::string& expr, string_it it)
+      {
+         it = std::find(it, end(expr), 'X');
+         if (it == expr.end())
+            return isValid(expr);
+
+         static const char possibles[] = { '(', '[', '{', '}', ']', ')' };
+         for (char c : possibles)
+         {
+            *it = c;
+            if (bruteForce(expr, it + 1))
+               return true;
+            *it = 'X';
+         }
+         return false;
+      }
+   };
+
+   bool BracketExpressions::isPossible(std::string const& expr)
+   {
+      std::string expression = expr;
+      return Brackets::bruteForce(expression, begin(expression));
+   }
+
+   void BracketExpressions::tests()
+   {
+      assert(true == isPossible(""));
+      assert(true == isPossible("([]{})"));
+      assert(true == isPossible("(())[]"));
+      assert(true == isPossible("({X)"));
+      assert(false == isPossible("({])"));
+      assert(false == isPossible("[]X"));
+      assert(true == isPossible("([]X()[()]XX}[])X{{}}]"));
+   }
+
 
    //--------------------------------------------------------------------------
    // TARO STRING

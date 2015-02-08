@@ -24,6 +24,7 @@ int main()
    longestIncreasingSeqTest();
    testWordSplit();
    Parentheses::testCombinationNb();
+   BracketExpressions::tests();
 
    taroCoinsTests();
    taroGridTests();
