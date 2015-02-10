@@ -11,8 +11,10 @@ namespace prob
    size_t editDistance(std::string const& a, std::string const& b);
    size_t fibo(size_t n);
 
+
    /** Find the longest sub-sequence of increasing numbers */
    std::vector<double> longestIncreasingSeq(std::vector<double> const&);
+
 
    /**
     * Find the minimum amount of coins needed to exchange the amount with the given coin values.
@@ -30,6 +32,7 @@ namespace prob
       static Range<InputIt> maxProduct(Inputs const&);
    };
 
+
    /**
     * Counting the number of ways there are to parenthesize a boolean expression made of True and False
     * to have it return True.
@@ -46,4 +49,16 @@ namespace prob
 
       static size_t count(Variables const& vs, Connectors const& cs);
    };
+
+
+   /**
+    * Partitioning tasks
+    * TODO
+    */
+
+
+   /**
+    * Parsing a context free grammar
+    * TODO
+    */
 }

@@ -83,4 +83,22 @@ namespace prob
       static Addr parseAddress(std::string const& request);
       static long long maxAmount(std::vector<std::string> const& requests, std::vector<int> const& prices);
    };
+
+   /**
+    * AB
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13642
+    */
+   struct AB
+   {
+      static std::string createString(size_t size, size_t nbPairs);
+   };
+
+   /**
+   * ABC
+   * http://community.topcoder.com/stat?c=problem_statement&pm=13645
+   */
+   struct ABC
+   {
+      static std::string createString(size_t size, size_t nbPairs);
+   };
 }

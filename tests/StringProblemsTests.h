@@ -14,5 +14,7 @@ namespace prob
       static void taroStringTests();
       static void wolfDelaymasterTests();
       static void ipv444Tests();
+      static void abTests();
+      static void abcTests();
    };
 }

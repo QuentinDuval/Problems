@@ -258,4 +258,76 @@ namespace prob
 
       return maxAmountRec(pricedRequests, 0);
    }
+
+   //--------------------------------------------------------------------------
+   // AB
+   //--------------------------------------------------------------------------
+
+   std::string AB::createString(size_t size, size_t expectedPairCount)
+   {
+      for (size_t nbA = 1; nbA < size; ++nbA)
+      {
+         auto result = std::string(size - nbA, 'B') + std::string(nbA, 'A');
+
+         size_t pairCount = 0;
+         while (pairCount < expectedPairCount)
+         {
+            auto i = result.find("BA");
+            if (i == std::string::npos)
+               break;
+
+            std::swap(result[i], result[i + 1]);
+            ++pairCount;
+         }
+
+         if (pairCount == expectedPairCount)
+            return result;
+      }
+
+      return "";
+   }
+
+
+   //--------------------------------------------------------------------------
+   // ABC
+   //--------------------------------------------------------------------------
+
+   struct AbcString
+   {
+      AbcString(size_t size, size_t expectedCount)
+         : m_result(size, 'A')
+         , m_expectedCount(expectedCount)
+      {}
+      
+      std::string m_result;
+      size_t m_expectedCount;
+
+      bool create(size_t index, size_t nbA, size_t nbB, size_t currentCount)
+      {
+         if (currentCount == m_expectedCount) return true;
+         if (index == m_result.size() || currentCount > m_expectedCount) return false;
+
+         m_result[index] = 'A';
+         if (create(index + 1, nbA + 1, nbB, currentCount))
+            return true;
+
+         m_result[index] = 'B';
+         if (create(index + 1, nbA, nbB + 1, currentCount + nbA))
+            return true;
+
+         m_result[index] = 'C';
+         if (create(index + 1, nbA, nbB, currentCount + nbA + nbB))
+            return true;
+
+         return false;
+      }
+   };
+
+   std::string ABC::createString(size_t size, size_t expectedPairCount)
+   {
+      AbcString abcString(size, expectedPairCount);
+      if (abcString.create(0, 0, 0, 0))
+         return abcString.m_result;
+      return "";
+   }
 }

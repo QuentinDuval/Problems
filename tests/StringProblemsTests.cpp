@@ -17,6 +17,8 @@ namespace prob
       taroStringTests();
       wolfDelaymasterTests();
       ipv444Tests();
+      abTests();
+      abcTests();
    }
 
    //--------------------------------------------------------------------------
@@ -126,5 +128,25 @@ namespace prob
       assert(1361957076132 == IPv444::maxAmount(
          { "127.0.0.1", "*.0.0.*", "*.*.255.255", "192.68.*.*" },
          { 999999, 629851, 294016, 438090 }));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::abTests()
+   {
+      assert("ABB" == AB::createString(3, 2));
+      assert("BA" == AB::createString(2, 0));
+      assert("" == AB::createString(5, 8));
+      assert("ABBBBABBBB" == AB::createString(10, 12));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::abcTests()
+   {
+      assert("ABC" == ABC::createString(3, 3));
+      assert("AAA" == ABC::createString(3, 0));
+      assert("" == ABC::createString(5, 10));
+      assert("AAAAAAAAAAAABBB" == ABC::createString(15, 36));
    }
 }
