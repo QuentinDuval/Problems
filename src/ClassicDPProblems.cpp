@@ -255,4 +255,99 @@ namespace prob
 
       return trueNb.at(0, vs.size() - 1);
    }
+
+   //--------------------------------------------------------------------------
+
+   size_t longestZigZag(std::vector<int> const& sequence, bool increaseByDefault)
+   {
+      if (sequence.empty())
+         return 0;
+
+      std::vector<size_t> longest(sequence.size(), 1);
+      std::vector<bool> lastWasIncrease(sequence.size(), increaseByDefault);
+
+      for (size_t curr = 1; curr < sequence.size(); ++curr)
+      {
+         for (size_t prev = 0; prev < curr; ++prev)
+         {
+            //Do not waste time
+            if (longest[prev] < longest[curr])
+               continue;
+
+            if ((sequence[prev] > sequence[curr] && lastWasIncrease[prev])
+             || (sequence[prev] < sequence[curr] && !lastWasIncrease[prev]))
+            {
+               longest[curr] = longest[prev] + 1;
+               lastWasIncrease[curr] = !lastWasIncrease[prev];
+            }
+         }
+      }
+
+      return *std::max_element(begin(longest), end(longest));
+   }
+
+   size_t ZigZag::longest(std::vector<int> const& sequence)
+   {
+      size_t withZag = longestZigZag(sequence, true);
+      size_t withZig = longestZigZag(sequence, false);
+      return std::max(withZag, withZig);
+   }
+
+   //--------------------------------------------------------------------------
+
+   static bool intersect(int b1, int w1, int b2, int w2)
+   {
+      if (b1 <= b2 && b2 <= w1) return true;
+      if (b1 <= w2 && w2 <= w1) return true;
+      if (b2 <= b1 && b1 <= w2) return true;
+      if (b2 <= w1 && w1 <= w2) return true;
+      return false;
+   }
+
+   FlowerGarden::Ints FlowerGarden::getOrdering(Ints heights, Ints blooms, Ints wilts)
+   {
+      if (heights.empty())
+         return Ints();
+
+      for (size_t f = 1; f < heights.size(); ++f)
+      {
+         int h = heights[f];
+         auto b = blooms[f];
+         auto w = wilts[f];
+
+         size_t lowerBound = 0;
+         size_t upperBound = f;
+         for (size_t i = 0; i < f; ++i)
+         {
+            if (!intersect(b, w, blooms[i], wilts[i]))
+               continue;
+
+            if (h > heights[i])
+            {
+               lowerBound = i + 1;
+            }
+            else
+            {
+               upperBound = i;
+               break;
+            }
+         }
+
+         size_t i = lowerBound;
+         for (; i < upperBound; ++i)
+         {
+            if (h > heights[i])
+               break;
+         }
+
+         if (i != f)
+         {
+            std::rotate(begin(heights) + i, begin(heights) + f, begin(heights) + f + 1);
+            std::rotate(begin(blooms) + i, begin(blooms) + f, begin(blooms) + f + 1);
+            std::rotate(begin(wilts) + i, begin(wilts) + f, begin(wilts) + f + 1);
+         }
+      }
+
+      return heights;
+   }
 }

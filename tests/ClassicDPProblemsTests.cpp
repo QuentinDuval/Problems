@@ -18,6 +18,8 @@ namespace prob
       makingChangeTests();
       maxContiguousTest();
       boolParenthesizationTest();
+      zigZagTests();
+      flowerGardenTests();
    }
 
    //--------------------------------------------------------------------------
@@ -143,5 +145,45 @@ namespace prob
       vs = { true, false, true, true, false };
       cs = { "or", "and", "xor", "and" };
       std::cout << "Bool (): " << BooleanParenthesization::count(vs, cs) << std::endl;
+   }
+
+   //--------------------------------------------------------------------------
+   
+   void ClassicDPProblemsTests::zigZagTests()
+   {
+      assert(6 == ZigZag::longest({ 1, 7, 4, 9, 2, 5 }));
+      assert(7 == ZigZag::longest({ 1, 17, 5, 10, 13, 15, 10, 5, 16, 8 }));
+      assert(1 == ZigZag::longest({ 44 }));
+      assert(2 == ZigZag::longest({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }));
+      assert(8 == ZigZag::longest({ 70, 55, 13, 2, 99, 2, 80, 80, 80, 80, 100, 19, 7, 5, 5, 5, 1000, 32, 32 }));
+      assert(36 == ZigZag::longest(
+      { 374, 40, 854, 203, 203, 156, 362, 279, 812, 955,
+        600, 947, 978, 46, 100, 953, 670, 862, 568, 188,
+        67, 669, 810, 704, 52, 861, 49, 640, 370, 908,
+        477, 245, 413, 109, 659, 401, 483, 308, 609, 120,
+        249, 22, 176, 279, 23, 22, 617, 462, 459, 244 }));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicDPProblemsTests::flowerGardenTests()
+   {
+      auto res0 = FlowerGarden::getOrdering({ 5, 4, 3, 2, 1 }, {1, 1, 1, 1, 1}, {365, 365, 365, 365, 365});
+      assert(equal(FlowerGarden::Ints{ 1, 2, 3, 4, 5 }, res0));
+
+      auto res1 = FlowerGarden::getOrdering({ 5, 4, 3, 2, 1 }, {1, 5, 10, 15, 20}, {4, 9, 14, 19, 24});
+      assert(equal(FlowerGarden::Ints{ 5, 4, 3, 2, 1 }, res1));
+
+      auto res2 = FlowerGarden::getOrdering({ 5, 4, 3, 2, 1 }, {1, 5, 10, 15, 20}, {5, 10, 15, 20, 25});
+      assert(equal(FlowerGarden::Ints{ 1, 2, 3, 4, 5 }, res2));
+
+      auto res3 = FlowerGarden::getOrdering({ 5, 4, 3, 2, 1 }, {1, 5, 10, 15, 20}, {5, 10, 14, 20, 25});
+      assert(equal(FlowerGarden::Ints{ 3, 4, 5, 1, 2 }, res3));
+
+      auto res4 = FlowerGarden::getOrdering({ 1, 2, 3, 4, 5, 6 }, {1, 3, 1, 3, 1, 3}, {2, 4, 2, 4, 2, 4});
+      assert(equal(FlowerGarden::Ints{ 2, 4, 6, 1, 3, 5 }, res4));
+
+      auto res5 = FlowerGarden::getOrdering({ 3, 2, 5, 4 }, {1, 2, 11, 10}, {4, 3, 12, 13});
+      assert(equal(FlowerGarden::Ints{ 4, 5, 2, 3 }, res5));
    }
 }

@@ -52,6 +52,26 @@ namespace prob
 
 
    /**
+    * Zig Zag
+    * http://community.topcoder.com/stat?c=problem_statement&pm=1259
+    */
+   struct ZigZag
+   {
+      static size_t longest(std::vector<int> const& sequence);
+   };
+
+   /**
+   * FlowerGarden
+   * http://community.topcoder.com/stat?c=problem_statement&pm=1918
+   */
+   struct FlowerGarden
+   {
+      using Ints = std::vector<int>;
+      static Ints getOrdering(Ints heights, Ints blooms, Ints wilts);
+   };
+
+
+   /**
     * Partitioning tasks
     * TODO
     */

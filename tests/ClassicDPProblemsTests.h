@@ -14,5 +14,7 @@ namespace prob
       static void makingChangeTests();
       static void maxContiguousTest();
       static void boolParenthesizationTest();
+      static void zigZagTests();
+      static void flowerGardenTests();
    };
 }
