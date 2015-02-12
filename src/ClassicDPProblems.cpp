@@ -350,4 +350,23 @@ namespace prob
 
       return heights;
    }
+
+   //--------------------------------------------------------------------------
+
+   size_t CollectingApples::findMax(Matrix<size_t> const& field)
+   {
+      Matrix<size_t> bestCounts(field.width(), field.height(), 0);
+      bestCounts.at(0, 0) = field.at(0, 0);
+
+      for (size_t x = 0; x < field.width(); ++x)
+      {
+         for (size_t y = 0; y < field.height(); ++y)
+         {
+            auto& best = bestCounts.at(x, y);
+            if (x > 0) best = std::max(best, bestCounts.at(x - 1, y) + field.at(x, y));
+            if (y > 0) best = std::max(best, bestCounts.at(x, y - 1) + field.at(x, y));
+         }
+      }
+      return bestCounts.at(field.width() - 1, field.height() - 1);
+   }
 }

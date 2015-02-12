@@ -1,4 +1,5 @@
 #pragma once
+#include "utils/Matrix.h"
 #include "utils/Range.h"
 
 #include <string>
@@ -68,6 +69,19 @@ namespace prob
    {
       using Ints = std::vector<int>;
       static Ints getOrdering(Ints heights, Ints blooms, Ints wilts);
+   };
+
+
+   /**
+    * Collecting apples:
+    * - some apples are position on the field
+    * - a man can only go down and right
+    * - the man starts from the top left corner
+    * Collect as much appels as possible
+    */
+   struct CollectingApples
+   {
+      static size_t findMax(Matrix<size_t> const& field);
    };
 
 

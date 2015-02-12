@@ -3,9 +3,11 @@
 #include "utils/Algorithms.h"
 #include "utils/Functors.h"
 
+#include <array>
 #include <iterator>
 #include <limits>
 #include <set>
+#include <sstream>
 
 
 namespace prob
@@ -83,7 +85,7 @@ namespace prob
    {
       struct IntersectionEvent
       {
-         enum type { HStart, HEnd, VLine };
+         enum type { HStart, VLine, HEnd };
 
          type m_type;
          double m_xCoord;
@@ -104,7 +106,9 @@ namespace prob
       {
          events.push_back({ IntersectionEvent::VLine, l.m_x, l.m_segment });
       }
-      sortBy(events, comparingWith([](IntersectionEvent const& e) { return e.m_xCoord; }));
+
+      //Sort by x coordinate, but by type too as start should be considered before vertical lines, and ends after
+      sortBy(events, comparingWith([](IntersectionEvent const& e) { return std::make_pair(e.m_xCoord, e.m_type); }));
 
       std::set<double> validHLines;
       std::vector<Point> intersections;
@@ -128,4 +132,48 @@ namespace prob
       return intersections;
    }
 
+   //--------------------------------------------------------------------------
+
+   static std::string digitToStr(int i)
+   {
+      static std::array<std::string, 10> str = { "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+      return str[i];
+   }
+
+   static std::string twoDigitsToStr(int i)
+   {
+      static std::array<std::string, 10> tens = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fiveteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+      static std::array<std::string, 8> secondDigit = { "Twenty", "Thirty", "Fourty", "Fivety", "Sixty", "Seventy", "Eighty", "Ninety" };
+
+      int d = i / 10;
+      int u = i % 10;
+      if (d == 0) return digitToStr(i);
+      if (d == 1) return tens[u];
+      
+      auto s = secondDigit[d - 2];
+      if (u) s += digitToStr(u);
+      return s;
+   }
+
+   static void spellShortNb(std::ostream& os, int i)
+   {
+      int h = i / 100;
+      int d = (i % 100);
+      os << digitToStr(h) << " Hundred and " << twoDigitsToStr(d);
+   }
+
+   std::string spellNumber(int i)
+   {
+      if (i < 0 || i > 1e6)
+         return "I can't spell this";
+
+      int belowThousand = i % 1000;
+      int aboveThousand = i / 1000;
+
+      std::ostringstream output;
+      spellShortNb(output, aboveThousand);
+      output << " Thousands, ";
+      spellShortNb(output, belowThousand);
+      return output.str();
+   }
 }

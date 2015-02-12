@@ -1,6 +1,7 @@
 #include "ClassicDPProblemsTests.h"
 #include "ClassicDPProblems.h"
 #include "utils/Algorithms.h"
+#include "utils/Matrix.h"
 
 #include <assert.h>
 #include <iostream>
@@ -20,6 +21,7 @@ namespace prob
       boolParenthesizationTest();
       zigZagTests();
       flowerGardenTests();
+      collectingAppleTests();
    }
 
    //--------------------------------------------------------------------------
@@ -105,6 +107,9 @@ namespace prob
 
       std::vector<double> stdInputs = { 1, -1, 2, 3, 2, -7, 2, 5, -5, 10 };
       assert(12 == sum(MaxContiguous::maxSum(stdInputs), 0.));
+
+      std::vector<double> ccInputs = { 2, -8, 3, -2, 4, -10 };
+      assert(5 == sum(MaxContiguous::maxSum(ccInputs), 0.));
    }
 
    static void maxContiguousProdTest()
@@ -185,5 +190,19 @@ namespace prob
 
       auto res5 = FlowerGarden::getOrdering({ 3, 2, 5, 4 }, {1, 2, 11, 10}, {4, 3, 12, 13});
       assert(equal(FlowerGarden::Ints{ 4, 5, 2, 3 }, res5));
+   }
+
+   //--------------------------------------------------------------------------
+   
+   void ClassicDPProblemsTests::collectingAppleTests()
+   {
+      assert(3 == CollectingApples::findMax(Matrix<size_t>(2, 2, { 1, 1, 1, 1 })));
+      assert(4 == CollectingApples::findMax(Matrix<size_t>(2, 2, { 1, 2, 1, 1 })));
+      assert(11 == CollectingApples::findMax(Matrix<size_t>(4, 4, {
+         0, 2, 1, 1,
+         0, 2, 1, 5,
+         0, 2, 0, 0,
+         0, 2, 1, 1
+      })));
    }
 }

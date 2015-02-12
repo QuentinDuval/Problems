@@ -13,6 +13,8 @@ namespace prob
       gcdTests();
       closestPairsTests();
       lineIntersectionsTests();
+      spellingNumberTests();
+      randomShuffleTests();
    }
 
    //--------------------------------------------------------------------------
@@ -51,5 +53,20 @@ namespace prob
       assert(2 == res.size());
       assert(LineIntersection::Point(6, 2) == res.at(0));
       assert(LineIntersection::Point(8, 0) == res.at(1));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicNumericProblemsTests::spellingNumberTests()
+   {
+      std::cout << 910313 << ": " << spellNumber(910313) << std::endl;
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicNumericProblemsTests::randomShuffleTests()
+   {
+      std::vector<std::string> strings = { "a", "ab", "c", "ac", "b", "bc" };
+      randomShuffle(strings);
    }
 }

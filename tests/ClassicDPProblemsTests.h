@@ -16,5 +16,6 @@ namespace prob
       static void boolParenthesizationTest();
       static void zigZagTests();
       static void flowerGardenTests();
+      static void collectingAppleTests();
    };
 }

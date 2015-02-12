@@ -17,5 +17,7 @@ int main()
    TaroProblemsTests::allTests();
    sudokuTest();
 
+   //TODO - Eight queens
+
    system("PAUSE");
 }

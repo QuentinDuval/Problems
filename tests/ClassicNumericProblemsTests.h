@@ -10,5 +10,7 @@ namespace prob
       static void gcdTests();
       static void closestPairsTests();
       static void lineIntersectionsTests();
+      static void spellingNumberTests();
+      static void randomShuffleTests();
    };
 }
