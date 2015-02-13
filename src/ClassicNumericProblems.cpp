@@ -8,6 +8,7 @@
 #include <limits>
 #include <set>
 #include <sstream>
+#include <unordered_set>
 
 
 namespace prob
@@ -175,5 +176,31 @@ namespace prob
       output << " Thousands, ";
       spellShortNb(output, belowThousand);
       return output.str();
+   }
+
+   //--------------------------------------------------------------------------
+
+   std::vector<AllSummingPairs::Pair> AllSummingPairs::findPairs(std::vector<int> const& values, int sum)
+   {
+      std::vector<Pair> pairs;
+      if (values.size() < 2)
+         return pairs;
+
+      std::unordered_set<int> banned;
+      std::unordered_multiset<int> sorted(begin(values), end(values));
+
+      for (size_t i = 0; i < values.size(); ++i)
+      {
+         banned.insert(values[i]);
+         int remaining = sum - values[i];
+         if (end(banned) != banned.find(remaining))
+            continue;
+
+         auto range = sorted.equal_range(remaining);
+         auto count = std::distance(range.first, range.second);
+         for (size_t c = 0; c < count; ++c)
+            pairs.emplace_back(values[i], remaining);
+      }
+      return pairs;
    }
 }

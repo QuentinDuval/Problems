@@ -12,5 +12,6 @@ namespace prob
       static void lineIntersectionsTests();
       static void spellingNumberTests();
       static void randomShuffleTests();
+      static void allSummingPairsTests();
    };
 }

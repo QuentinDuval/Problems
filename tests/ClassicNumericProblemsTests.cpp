@@ -15,6 +15,7 @@ namespace prob
       lineIntersectionsTests();
       spellingNumberTests();
       randomShuffleTests();
+      allSummingPairsTests();
    }
 
    //--------------------------------------------------------------------------
@@ -68,5 +69,14 @@ namespace prob
    {
       std::vector<std::string> strings = { "a", "ab", "c", "ac", "b", "bc" };
       randomShuffle(strings);
+   }
+
+   //--------------------------------------------------------------------------
+   
+   void ClassicNumericProblemsTests::allSummingPairsTests()
+   {
+      std::vector<int> values{ 1, 1, -1, 2, 5, -3, -5, 11, -1 };
+      auto pairs = AllSummingPairs::findPairs(values, 0);
+      assert(5 == pairs.size());
    }
 }

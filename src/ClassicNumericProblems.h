@@ -52,4 +52,12 @@ namespace prob
          std::swap(values[i], values[j]);
       }
    }
+
+
+   /** All pairs summing to a given value */
+   struct AllSummingPairs
+   {
+      using Pair = std::pair<int, int>;
+      static std::vector<Pair> findPairs(std::vector<int> const&, int sum);
+   };
 }
