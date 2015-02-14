@@ -1,5 +1,6 @@
 #include "ClassicDPProblemsTests.h"
 #include "ClassicNumericProblemsTests.h"
+#include "NumericProblemsTests.h"
 #include "StringProblemsTests.h"
 #include "Sudoku.h"
 #include "TaroProblemsTests.h"
@@ -13,6 +14,7 @@ int main()
 
    ClassicDPProblemsTests::allTests();
    ClassicNumericProblemsTests::allTests();
+   NumericProblemsTests::allTests();
    StringProblemsTests::allTests();
    TaroProblemsTests::allTests();
    sudokuTest();
