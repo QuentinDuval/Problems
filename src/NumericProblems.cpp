@@ -8,8 +8,22 @@
 namespace prob
 {
    /**
+    * -------------------------------------------------------------------------
+    * Observation:
+    * -------------------------------------------------------------------------
+    *
     * Lun the dog will always by the cheapest apple.
     * We need to keep track of what price was the last apple he bought.
+    *
+    * Because the price goes from 1 to K one by one, before reaching the point where
+    * the Kth price is the stricly lowest price, we need to buy: K + K/2 + ... + 1 apples.
+    * So before reaching K:
+    * - after 1 buy, the prices goes up by 1
+    * - after 2 additional buys, the prices goes up by 1
+    * - etc.
+    * 
+    * After this first time buying the Kth value, all values are comprised between ]K, 2*K].
+    * So each period between a doubling of all values will be of exactly K buys.
     */
    static const int MOD = 1000000007;
    using ModPrice = std::pair<int, int>;
