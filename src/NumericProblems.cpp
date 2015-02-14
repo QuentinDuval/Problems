@@ -49,7 +49,7 @@ namespace prob
       for (int i = 0; i < k; ++i)
          prices[i] = makeModPrice(i + 1);
 
-      long long mostExpensive = 0;
+      int mostExpensive = 0;
       auto comp = std::greater<ModPrice>();
       std::make_heap(begin(prices), end(prices), comp);
 
