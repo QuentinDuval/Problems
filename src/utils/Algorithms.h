@@ -69,9 +69,9 @@ namespace prob
    //--------------------------------------------------------------------------
 
    template<typename Container, typename Val>
-   bool find(Container const& cont, Val val)
+   bool contains(Container const& cont, Val val)
    {
-      return std::find(begin(cont), end(cont), val);
+      return end(cont) != std::find(begin(cont), end(cont), val);
    }
 
    //--------------------------------------------------------------------------
