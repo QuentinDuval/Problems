@@ -413,6 +413,7 @@ namespace prob
          partPoints.push_back(point);
          point = maxPartPoint.at(point, partitionCount - p - 1);
       }
+      std::reverse(begin(partPoints), end(partPoints));
       return partPoints;
    }
 }

@@ -211,8 +211,13 @@ namespace prob
 
    void ClassicDPProblemsTests::partitioningTests()
    {
-      auto res = TaskPartitioning::find({ 100, 200, 300, 500 }, 2);
-      assert(1 == res.size());
-      assert(2 == res[0]);
+      auto res1 = TaskPartitioning::find({ 100, 200, 300, 500 }, 2);
+      assert(1 == res1.size());
+      assert(2 == res1[0]);
+
+      auto res2 = TaskPartitioning::find({ 100, 200, 300, 500, 400, 100 }, 3);
+      assert(2 == res2.size());
+      assert(2 == res2[0]);
+      assert(3 == res2[1]);
    }
 }
