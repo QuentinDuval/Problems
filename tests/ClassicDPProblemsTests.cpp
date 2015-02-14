@@ -22,6 +22,7 @@ namespace prob
       zigZagTests();
       flowerGardenTests();
       collectingAppleTests();
+      partitioningTests();
    }
 
    //--------------------------------------------------------------------------
@@ -204,5 +205,14 @@ namespace prob
          0, 2, 0, 0,
          0, 2, 1, 1
       })));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicDPProblemsTests::partitioningTests()
+   {
+      auto res = TaskPartitioning::find({ 100, 200, 300, 500 }, 2);
+      assert(1 == res.size());
+      assert(2 == res[0]);
    }
 }

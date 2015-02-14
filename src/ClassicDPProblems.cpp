@@ -369,4 +369,50 @@ namespace prob
       }
       return bestCounts.at(field.width() - 1, field.height() - 1);
    }
+
+   //--------------------------------------------------------------------------
+
+   std::vector<size_t> TaskPartitioning::find(std::vector<int> const& costs, size_t partitionCount)
+   {
+      std::vector<size_t> sumTo(costs.size(), costs[0]);
+      for (size_t i = 1; i < costs.size(); ++i)
+         sumTo[i] = sumTo[i - 1] + costs[i];
+
+      Matrix<size_t> maxPartVal(costs.size(), partitionCount, 0);
+      Matrix<size_t> maxPartPoint(costs.size(), partitionCount);
+
+      for (size_t i = 0; i < costs.size(); ++i)
+         maxPartVal.at(i, 0) = sumTo[i];
+
+      for (size_t p = 1; p < partitionCount; ++p)
+      {
+         for (size_t n = p; n < costs.size(); ++n)
+         {
+            size_t partPoint = 0;
+            size_t best = std::numeric_limits<size_t>::max();
+
+            for (size_t k = p - 1; k < n; ++k)
+            {
+               size_t val = std::max(maxPartVal.at(k, p - 1), sumTo[n] - sumTo[k]);
+               if (val < best)
+               {
+                  best = val;
+                  partPoint = k;
+               }
+            }
+
+            maxPartVal.at(n, p) = best;
+            maxPartPoint.at(n, p) = partPoint;
+         }
+      }
+
+      std::vector<size_t> partPoints;
+      size_t point = maxPartPoint.at(costs.size() - 1, partitionCount - 1);
+      for (size_t p = 1; p < partitionCount; ++p)
+      {
+         partPoints.push_back(point);
+         point = maxPartPoint.at(point, partitionCount - p - 1);
+      }
+      return partPoints;
+   }
 }

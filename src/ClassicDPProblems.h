@@ -86,9 +86,16 @@ namespace prob
 
 
    /**
-    * Partitioning tasks
-    * TODO
+    * Partitioning tasks:
+    * - Given a list of tasks 1..N and associated costs C[i]
+    * - Find the best partitioning in K sub-set of tasks
+    * - Tasks cannot be re-ordered
+    * Returns the points of partitioning
     */
+   struct TaskPartitioning
+   {
+      static std::vector<size_t> find(std::vector<int> const& costs, size_t k);
+   };
 
 
    /**

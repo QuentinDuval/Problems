@@ -17,5 +17,6 @@ namespace prob
       static void zigZagTests();
       static void flowerGardenTests();
       static void collectingAppleTests();
+      static void partitioningTests();
    };
 }
