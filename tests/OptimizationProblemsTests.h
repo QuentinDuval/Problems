@@ -8,5 +8,6 @@ namespace prob
       static void allTests();
 
       static void jumpFurtherTests();
+      static void consecutiveIntegersDivOneTests();
    };
 }
