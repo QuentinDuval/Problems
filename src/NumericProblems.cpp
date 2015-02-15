@@ -63,4 +63,37 @@ namespace prob
 
       return mostExpensive;
    }
+
+
+   //--------------------------------------------------------------------------
+   // THE KINGS FACTORIZATION
+   //--------------------------------------------------------------------------
+
+   std::vector<long> TheKingsFactorization::getVector(long number, std::vector<long> const& knownPrimes)
+   {
+      std::vector<long> primes;
+      for (auto p : knownPrimes)
+         number /= p;
+
+      primes.push_back(knownPrimes[0]);
+      for (size_t i = 1; i < knownPrimes.size(); ++i)
+      {
+         long low = knownPrimes[i - 1];
+         long high = knownPrimes[i];
+         for (long p = low; p <= high; ++p)
+         {
+            if (number % p)
+               continue;
+
+            primes.push_back(p);
+            number /= p;
+            break;
+         }
+         primes.push_back(knownPrimes[i]);
+      }
+
+      if (1 != number)
+         primes.push_back(number);
+      return primes;
+   }
 }
