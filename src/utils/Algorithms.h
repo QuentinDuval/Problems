@@ -74,6 +74,12 @@ namespace prob
       return end(cont) != std::find(begin(cont), end(cont), val);
    }
 
+   template<typename Container, typename Predicate>
+   bool containsIf(Container const& cont, Predicate pred)
+   {
+      return end(cont) != std::find_if(begin(cont), end(cont), pred);
+   }
+
    //--------------------------------------------------------------------------
 
    template<typename Container, typename Val>

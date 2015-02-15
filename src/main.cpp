@@ -1,5 +1,6 @@
 #include "ClassicDPProblemsTests.h"
 #include "ClassicNumericProblemsTests.h"
+#include "EightQueens.h"
 #include "NumericProblemsTests.h"
 #include "OptimizationProblemsTests.h"
 #include "StringProblemsTests.h"
@@ -19,9 +20,9 @@ int main()
    OptimizationProblemsTests::allTests();
    StringProblemsTests::allTests();
    TaroProblemsTests::allTests();
+   
+   EightQueens::tests();
    sudokuTest();
-
-   //TODO - Eight queens
 
    system("PAUSE");
 }
