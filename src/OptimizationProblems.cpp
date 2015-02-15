@@ -50,4 +50,72 @@ namespace prob
 
       return minDist;
    }
+
+
+   //--------------------------------------------------------------------------
+   // JanuszTheBusinessman
+   // Several promotion attribution policies:
+   //
+   // 1. Give the promotion to the ones intersection the most
+   // Issues with the case of 5 clients intersecting prev and next. How to decide?
+   //
+   // 2. Give the promotion to the ones staying the longest. Same issue.
+   //
+   // 3. Analyze the clients in order or arrival. 
+   // For each non-satisfied customer, find all intersecting customers.
+   // And give a promotion to the one intersecting the most.
+   // Mark the colliding and repeat.
+   //
+   //--------------------------------------------------------------------------
+
+   using Duration = std::pair<int, int>;
+
+   static std::vector<size_t> collidingWith(std::vector<Duration> const& durations, size_t client)
+   {
+      std::vector<size_t> colliding;
+      for (size_t c = 0; c < durations.size(); ++c)
+      {
+         if (std::max(durations[c].first, durations[client].first)
+            <= std::min(durations[c].second, durations[client].second))
+            colliding.push_back(c);
+      }
+      return colliding;
+   }
+
+   int JanuszTheBusinessman::minPromotions(std::vector<int> const& arrivals, std::vector<int> const& departures)
+   {
+      std::vector<Duration> durations(arrivals.size());
+      zipWith(arrivals, departures, begin(durations), MakePair());
+      sortBy(durations, comparingWith(GetFirst()));
+
+      int promotionCount = 0;
+      std::vector<bool> satisfied(durations.size(), false);
+
+      for (size_t client = 0; client < durations.size(); ++client)
+      {
+         if (satisfied[client])
+            continue;
+
+         size_t selected = client;
+         int end = durations[client].second;
+
+         for (size_t next = 1; next < durations.size(); ++next)
+         {
+            if (durations[next].first > durations[client].second)
+               break;
+
+            if (durations[next].second > end)
+            {
+               selected = next;
+               end = durations[next].second;
+            }
+         }
+
+         ++promotionCount;
+         for (size_t i : collidingWith(durations, selected))
+            satisfied[i] = true;
+      }
+
+      return promotionCount;
+   }
 }

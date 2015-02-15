@@ -26,4 +26,13 @@ namespace prob
    {
       static int find(std::vector<int> const& numbers, int k);
    };
+
+   /**
+    * JanuszTheBusinessman
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13603
+    */
+   struct JanuszTheBusinessman
+   {
+      static int minPromotions(std::vector<int> const& arrivals, std::vector<int> const& departures);
+   };
 }

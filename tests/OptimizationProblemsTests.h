@@ -9,5 +9,6 @@ namespace prob
 
       static void jumpFurtherTests();
       static void consecutiveIntegersDivOneTests();
+      static void januszTheBusinessmanTests();
    };
 }
