@@ -102,9 +102,8 @@ namespace prob
          if (satisfied[client])
             continue;
 
-         std::vector<size_t> maxCollisions = collidingWith(durations, satisfied, client);
-
-         for (size_t next = 1; next < durations.size(); ++next)
+         std::vector<size_t> maxCollisions;
+         for (size_t next = 0; next < durations.size(); ++next)
          {
             if (durations[next].first > durations[client].second)
                break;
