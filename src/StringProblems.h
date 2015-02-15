@@ -101,4 +101,14 @@ namespace prob
    {
       static std::string createString(size_t size, size_t nbPairs);
    };
+
+
+   /**
+    * Decipherability
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13656
+    */
+   struct Decipherability
+   {
+      static bool check(std::string const&, int K);
+   };
 }

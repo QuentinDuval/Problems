@@ -16,5 +16,6 @@ namespace prob
       static void ipv444Tests();
       static void abTests();
       static void abcTests();
+      static void decipherabilityTests();
    };
 }

@@ -19,6 +19,7 @@ namespace prob
       ipv444Tests();
       abTests();
       abcTests();
+      decipherabilityTests();
    }
 
    //--------------------------------------------------------------------------
@@ -148,5 +149,18 @@ namespace prob
       assert("AAA" == ABC::createString(3, 0));
       assert("" == ABC::createString(5, 10));
       assert("AAAAAAAAAAAABBB" == ABC::createString(15, 36));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::decipherabilityTests()
+   {
+      assert(true == Decipherability::check("snuke", 2));
+      assert(true == Decipherability::check("aba", 1));
+      assert(false == Decipherability::check("aba", 2));
+      assert(true == Decipherability::check("abcdabcd", 3));
+      assert(false == Decipherability::check("koukyoukoukokukikou", 2));
+      assert(false == Decipherability::check("wolfsothe", 8));
+      assert(true == Decipherability::check("aa", 2));
    }
 }

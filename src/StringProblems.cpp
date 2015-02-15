@@ -330,4 +330,26 @@ namespace prob
          return abcString.m_result;
       return "";
    }
+
+
+   //--------------------------------------------------------------------------
+   // DECIPHERABILITY
+   //--------------------------------------------------------------------------
+
+   bool Decipherability::check(std::string const& input, int removedNb)
+   {
+      if (input.size() == removedNb)
+         return true;
+
+      std::vector<int> lastIndices(UCHAR_MAX + 1, - (removedNb + 1));
+      for (size_t i = 0; i < input.size(); ++i)
+      {
+         char c = input[i];
+         if (i - lastIndices[c] <= removedNb)
+            return false;
+
+         lastIndices[c] = i;
+      }
+      return true;
+   }
 }
