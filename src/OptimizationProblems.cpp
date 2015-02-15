@@ -70,11 +70,17 @@ namespace prob
 
    using Duration = std::pair<int, int>;
 
-   static std::vector<size_t> collidingWith(std::vector<Duration> const& durations, size_t client)
+   static std::vector<size_t> collidingWith(
+      std::vector<Duration> const& durations,
+      std::vector<bool> const& satisfied,
+      size_t client)
    {
       std::vector<size_t> colliding;
       for (size_t c = 0; c < durations.size(); ++c)
       {
+         if (satisfied[c])
+            continue;
+
          if (std::max(durations[c].first, durations[client].first)
             <= std::min(durations[c].second, durations[client].second))
             colliding.push_back(c);
@@ -96,23 +102,20 @@ namespace prob
          if (satisfied[client])
             continue;
 
-         size_t selected = client;
-         int end = durations[client].second;
+         std::vector<size_t> maxCollisions = collidingWith(durations, satisfied, client);
 
          for (size_t next = 1; next < durations.size(); ++next)
          {
             if (durations[next].first > durations[client].second)
                break;
 
-            if (durations[next].second > end)
-            {
-               selected = next;
-               end = durations[next].second;
-            }
+            std::vector<size_t> collisions = collidingWith(durations, satisfied, next);
+            if (collisions.size() > maxCollisions.size())
+               std::swap(collisions, maxCollisions);
          }
 
          ++promotionCount;
-         for (size_t i : collidingWith(durations, selected))
+         for (size_t i : maxCollisions)
             satisfied[i] = true;
       }
 

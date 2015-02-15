@@ -41,7 +41,7 @@ namespace prob
 
    void OptimizationProblemsTests::januszTheBusinessmanTests()
    {
-      //assert(1 == JanuszTheBusinessman::minPromotions({ 0, 1, 4 }, { 5, 3, 10 }));
+      assert(1 == JanuszTheBusinessman::minPromotions({ 0, 1, 4 }, { 5, 3, 10 }));
 
       assert(2 == JanuszTheBusinessman::minPromotions({ 2, 10, 6 }, { 6, 11, 9 }));
       assert(1 == JanuszTheBusinessman::minPromotions({ 2, 10, 23, 34, 45, 123, 1 }, { 25, 12, 40, 50, 48, 187, 365 }));
