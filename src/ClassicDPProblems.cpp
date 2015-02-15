@@ -297,11 +297,7 @@ namespace prob
 
    static bool intersect(int b1, int w1, int b2, int w2)
    {
-      if (b1 <= b2 && b2 <= w1) return true;
-      if (b1 <= w2 && w2 <= w1) return true;
-      if (b2 <= b1 && b1 <= w2) return true;
-      if (b2 <= w1 && w1 <= w2) return true;
-      return false;
+      return std::max(b1, b2) <= std::min(w1, w2);
    }
 
    FlowerGarden::Ints FlowerGarden::getOrdering(Ints heights, Ints blooms, Ints wilts)
