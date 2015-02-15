@@ -69,20 +69,19 @@ namespace prob
    //--------------------------------------------------------------------------
 
    using Duration = std::pair<int, int>;
+   using Durations = std::vector<Duration>;
 
-   static std::vector<size_t> collidingWith(
-      std::vector<Duration> const& durations,
-      std::vector<bool> const& satisfied,
-      size_t client)
+   static bool intersect(Durations const& durations, size_t i, size_t j)
+   {
+      return std::max(durations[i].first, durations[j].first) <= std::min(durations[i].second, durations[j].second);
+   }
+
+   static std::vector<size_t> collidingWith(Durations const& durations, std::vector<bool> const& satisfied, size_t client)
    {
       std::vector<size_t> colliding;
       for (size_t c = 0; c < durations.size(); ++c)
       {
-         if (satisfied[c])
-            continue;
-
-         if (std::max(durations[c].first, durations[client].first)
-            <= std::min(durations[c].second, durations[client].second))
+         if (!satisfied[c] && intersect(durations, c, client))
             colliding.push_back(c);
       }
       return colliding;
@@ -90,7 +89,7 @@ namespace prob
 
    int JanuszTheBusinessman::minPromotions(std::vector<int> const& arrivals, std::vector<int> const& departures)
    {
-      std::vector<Duration> durations(arrivals.size());
+      Durations durations(arrivals.size());
       zipWith(arrivals, departures, begin(durations), MakePair());
       sortBy(durations, comparingWith(GetFirst()));
 
