@@ -119,4 +119,34 @@ namespace prob
 
       return promotionCount;
    }
+
+   //--------------------------------------------------------------------------
+   // BuildingTowersEasy
+   //
+   // In this problem, each of the restriction carves the search space, removing some possible solutions.
+   // The goal is to remove the forbidden spaces, defined by affine functions.
+   // The take the maximum of the possible solutions.
+   //--------------------------------------------------------------------------
+
+   int BuildingTowersEasy::maxHeight(int n, std::vector<int> const& restrictionIndices, std::vector<int> const& restrictions)
+   {
+      //Initial restriction due to building 1 being of size 0
+      std::vector<int> heights(n);
+      for (size_t i = 0; i < heights.size(); ++i)
+         heights[i] = i;
+      
+      //Adding the other restrictions
+      for (int building = 0; building < n; ++building)
+      {
+         for (size_t restriction = 0; restriction < restrictionIndices.size(); ++restriction)
+         {
+            int target = restrictionIndices[restriction];
+            int limit = restrictions[restriction] + abs(building - target + 1);
+            heights[building] = std::min(heights[building], limit);
+         }
+      }
+
+      //Return the highest building of all
+      return *std::max_element(begin(heights), end(heights));
+   }
 }

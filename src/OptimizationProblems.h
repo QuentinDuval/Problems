@@ -35,4 +35,21 @@ namespace prob
    {
       static int minPromotions(std::vector<int> const& arrivals, std::vector<int> const& departures);
    };
+
+
+   /**
+    * TheKingsArmyDiv1
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13526
+    */
+
+
+   /**
+    * BuildingTowersEasy
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13634
+    */
+   struct BuildingTowersEasy
+   {
+      static int maxHeight(int n, std::vector<int> const& restrictionIndices, std::vector<int> const& restrictions);
+   };
+
 }
