@@ -352,4 +352,71 @@ namespace prob
       }
       return true;
    }
+
+   //--------------------------------------------------------------------------
+   // TaroFillingAStringDiv1
+   //--------------------------------------------------------------------------
+   
+   /** 
+    * OBSERVATIONS:
+    *
+    * If the gap between 2 chosen letters is:
+    * - pair between different letters => 1 way not to increase
+    * - impair between similar letters => 1 way not to increase
+    *
+    * - impair between different letters:
+    *    A?B => 2 choices
+    *    A???B => 4 choices (ABA, BAA, BAB, BBA)
+    *    A?{2*N+1}?B
+    *       => A..A * {impair similar letter = 1}
+    *       => B..B * {impair similar letter = 1}
+    *       => B..A * {impair different letter = recursion}
+    *    
+    * - pair between similar letters:
+    *    A??A => 3 choices (AB, BA, BB)
+    *    A?{2*N}?A
+    *       => A..B * {different letters 2N = 1}
+    *       => B..A * {different letters 2N = 1}
+    *       => B..B * {similar letters 2N = recursion}
+    *
+    * Both look like:
+    * F(GapSize) = 2 + F(GapSize - 2) with F(1) = 1 and F(0) = 1
+    */
+
+   static int possibilities(int n)
+   {
+      if (n == 0) return 1;
+      if (n == 1) return 2;
+      return 2 + possibilities(n - 2);
+   }
+
+   int TaroFillingAStringDiv1::getNumber(int size, std::vector<int> const& positions, std::string const& values)
+   {
+      //Start by sorting the inputs (and moving back to 0-based index)
+      std::vector<std::pair<int, char>> knownPositions;
+      zipWith(positions, values, std::back_inserter(knownPositions), [](int i, char c) { return std::make_pair(i - 1, c); });
+      sortBy(knownPositions, comparingWith(GetFirst()));
+
+      //What is before and after, known positions does not increase (we can always find a unique solution)
+      int n = 1;
+      for (size_t k = 1; k < knownPositions.size(); ++k)
+      {
+         auto gapStart = knownPositions[k - 1];
+         auto gapEnd = knownPositions[k];
+         bool differentBorder = gapEnd.second != gapStart.second;
+         if (gapStart.first + 1 == gapEnd.first)
+            continue;
+         
+         int gapSize = gapEnd.first - gapStart.first - 1;
+         bool impairGap = gapSize % 2;
+
+         if ((differentBorder && impairGap) || (!differentBorder && !impairGap))
+         {
+            int possiblities = possibilities(gapSize);
+            n = (n % MOD) * (possiblities % MOD);
+         }
+      }
+
+      return n;
+   }
 }

@@ -20,6 +20,7 @@ namespace prob
       abTests();
       abcTests();
       decipherabilityTests();
+      taroFillingAStringDiv1Tests();
    }
 
    //--------------------------------------------------------------------------
@@ -162,5 +163,17 @@ namespace prob
       assert(false == Decipherability::check("koukyoukoukokukikou", 2));
       assert(false == Decipherability::check("wolfsothe", 8));
       assert(true == Decipherability::check("aa", 2));
+   }
+   
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::taroFillingAStringDiv1Tests()
+   {
+      assert(2 == TaroFillingAStringDiv1::getNumber(3, { 1, 3 }, "AB"));
+      assert(1 == TaroFillingAStringDiv1::getNumber(4, { 2, 1, 3, 4 }, "ABBA"));
+      assert(1 == TaroFillingAStringDiv1::getNumber(25, { 23, 4, 8, 1, 24, 9, 16, 17, 6, 2, 25, 15, 14, 7, 13 }, "ABBBBABABBAAABA"));
+      assert(43068480 == TaroFillingAStringDiv1::getNumber(305,
+         {183, 115, 250, 1, 188, 193, 163, 221, 144, 191, 92, 192, 58, 215, 157, 187, 227, 177, 206, 15, 272, 232, 49, 11, 178, 59, 189, 246},
+         "ABAABBABBAABABBBBAAAABBABBBA"));
    }
 }

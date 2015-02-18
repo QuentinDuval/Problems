@@ -102,7 +102,6 @@ namespace prob
       static std::string createString(size_t size, size_t nbPairs);
    };
 
-
    /**
     * Decipherability
     * http://community.topcoder.com/stat?c=problem_statement&pm=13656
@@ -110,5 +109,15 @@ namespace prob
    struct Decipherability
    {
       static bool check(std::string const&, int K);
+   };
+
+   /**
+    * TaroFillingAStringDiv1
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13669
+    */
+   struct TaroFillingAStringDiv1
+   {
+      static const int MOD = 1000000007;
+      static int getNumber(int n, std::vector<int> const& positions, std::string const& values);
    };
 }
