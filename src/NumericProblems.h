@@ -19,4 +19,13 @@ namespace prob
    {
       static std::vector<long> getVector(long n, std::vector<long> const& primes);
    };
+
+   /**
+    * WaitingForBus
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13540
+    */
+   struct WaitingForBus
+   {
+      static double whenWillBusArrive(std::vector<int> const& travelTimes, std::vector<int> const& departureProb, int time);
+   };
 }

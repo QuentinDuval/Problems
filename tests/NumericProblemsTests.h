@@ -9,5 +9,6 @@ namespace prob
 
       static void kitayutaMartTests();
       static void kingsFactorizationTests();
+      static void waitingForBusTests();
    };
 }

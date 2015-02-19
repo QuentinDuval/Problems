@@ -36,6 +36,12 @@ namespace prob
       return std::transform(begin(c), end(c), begin(c2), out, tf);
    }
 
+   template<typename Container, typename Output>
+   Output copyTo(Container& c, Output out)
+   {
+      return std::copy(begin(c), end(c), out);
+   }
+
    //--------------------------------------------------------------------------
 
    template<typename Container, typename Less>

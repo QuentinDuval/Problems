@@ -96,4 +96,63 @@ namespace prob
          primes.push_back(number);
       return primes;
    }
+
+
+   //--------------------------------------------------------------------------
+   // WAITING FOR BUS
+   //--------------------------------------------------------------------------
+
+   /** Recursive implementation: lead to stack overflow and exponential number of computations */
+   //double WaitingForBus::whenWillBusArrive(std::vector<int> const& travelTimes, std::vector<int> const& departureProb, int time)
+   //{
+   //   if (0. == time)
+   //      return 0.;
+
+   //   double waitTime = 0.;
+   //   for (size_t bus = 0; bus < travelTimes.size(); ++bus)
+   //   {
+   //      double prob = departureProb[bus] / 100.;
+   //      double remaining = time - travelTimes[bus];
+
+   //      if (0. < remaining)
+   //      {
+   //         waitTime = waitTime + prob * whenWillBusArrive(travelTimes, departureProb, remaining);
+   //      }
+   //      else
+   //      {
+   //         waitTime = waitTime - prob * remaining;
+   //      }
+   //   }
+   //   return waitTime;
+   //}
+
+   /** Using dynamic programming */
+   double WaitingForBus::whenWillBusArrive(std::vector<int> const& travelTimes, std::vector<int> const& departureProb, int arrivalTime)
+   {
+      std::vector<double> waitingTimes(arrivalTime + 1, 0.);
+
+      for (int time = 1; time <= arrivalTime; ++time)
+      {
+         double waitTime = 0.;
+         for (size_t bus = 0; bus < travelTimes.size(); ++bus)
+         {
+            double prob = (departureProb[bus] / 100.);
+            double remaining = time - travelTimes[bus];
+
+            if (0. < remaining)
+            {
+               waitTime = waitTime + prob * waitingTimes[remaining];
+            }
+            else
+            {
+               waitTime = waitTime - prob * remaining;
+            }
+         }
+
+         waitingTimes[time] = waitTime;
+      }
+
+      return waitingTimes[arrivalTime];
+   }
+
 }

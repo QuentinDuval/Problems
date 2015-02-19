@@ -11,5 +11,6 @@ namespace prob
       static void consecutiveIntegersDivOneTests();
       static void januszTheBusinessmanTests();
       static void buildingTowersEasyTests();
+      static void buildingRoutesTests();
    };
 }

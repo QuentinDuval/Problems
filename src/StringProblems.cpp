@@ -380,7 +380,7 @@ namespace prob
     *       => B..B * {similar letters 2N = recursion}
     *
     * Both look like:
-    * F(GapSize) = 2 + F(GapSize - 2) with F(1) = 1 and F(0) = 1
+    * F(GapSize) = 2 + F(GapSize - 2) with F(1) = 2 and F(0) = 1
     */
 
    static int possibilities(int n)

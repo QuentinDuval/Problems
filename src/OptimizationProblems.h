@@ -52,4 +52,13 @@ namespace prob
       static int maxHeight(int n, std::vector<int> const& restrictionIndices, std::vector<int> const& restrictions);
    };
 
+   /**
+    * BuildingRoutes
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13193
+    */
+   struct BuildingRoutes
+   {
+      static int build(std::vector<std::string> const& distances, int safeThreshold);
+   };
+
 }
