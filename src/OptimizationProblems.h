@@ -61,4 +61,13 @@ namespace prob
       static int build(std::vector<std::string> const& distances, int safeThreshold);
    };
 
+   /**
+    * ZooExchangeProgram
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13268
+    */
+   struct ZooExchangeProgram
+   {
+      static int minGroup(std::vector<int> const& labels, int lower, int upper);
+   };
+
 }

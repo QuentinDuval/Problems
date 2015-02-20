@@ -242,11 +242,61 @@ namespace prob
       }
    };
 
-
-
    int BuildingRoutes::build(std::vector<std::string> const& distances, int safeThreshold)
    {
       BuildingRoutesImpl impl(distances.size());
       return impl.build(distances, safeThreshold);
+   }
+
+
+   //--------------------------------------------------------------------------
+   // ZOO EXCHANGE PROGRAM
+   //--------------------------------------------------------------------------
+
+   static bool isInRange(int val, int lower, int upper)
+   {
+      return (lower <= val) && (val <= upper);
+   }
+
+   int ZooExchangeProgram::minGroup(std::vector<int> const& labels, int lower, int upper)
+   {
+      //Pre-processing: identifying the groups, take as big as possible
+      std::vector<std::set<int>> groups(1);
+      for (size_t animal = 0; animal < labels.size(); ++animal)
+      {
+         int label = labels[animal];
+         if (isInRange(label, lower, upper))
+            groups.back().insert(label);
+         else if (!groups.back().empty())
+            groups.emplace_back();
+      }
+
+      //Initialization
+      std::set<int> searched;
+      for (int label = lower; label <= upper; ++label)
+         searched.insert(label);
+
+      //Order group by decreasing order
+      auto sizeComparison = comparingWith([](std::set<int> const& s) { return s.size(); });
+
+      //Greedy approach
+      int count = 0;
+      while (!searched.empty())
+      {
+         eraseIf(groups, [](std::set<int> const& s) { return s.empty(); });
+         auto it = maxBy(groups, sizeComparison);
+         if (it == end(groups))
+            return -1;
+
+         std::vector<int> toRemove(it->begin(), it->end());
+         for (auto label : toRemove)
+         {
+            searched.erase(label);
+            for (auto& g : groups)
+               g.erase(label);
+         }
+         ++count;
+      }
+      return count;
    }
 }

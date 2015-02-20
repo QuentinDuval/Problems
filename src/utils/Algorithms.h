@@ -64,6 +64,18 @@ namespace prob
       return std::max_element(begin(cont), end(cont), less);
    }
 
+   template<typename Container, typename Less>
+   typename Container::iterator minBy(Container& cont, Less less)
+   {
+      return std::min_element(begin(cont), end(cont), less);
+   }
+
+   template<typename Container, typename Less>
+   typename Container::iterator maxBy(Container& cont, Less less)
+   {
+      return std::max_element(begin(cont), end(cont), less);
+   }
+
    //--------------------------------------------------------------------------
 
    template<typename Container, typename Container2>

@@ -12,5 +12,6 @@ namespace prob
       static void januszTheBusinessmanTests();
       static void buildingTowersEasyTests();
       static void buildingRoutesTests();
+      static void zooExchangeProgramTests();
    };
 }

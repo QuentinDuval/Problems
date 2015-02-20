@@ -15,6 +15,7 @@ namespace prob
       januszTheBusinessmanTests();
       buildingTowersEasyTests();
       buildingRoutesTests();
+      zooExchangeProgramTests();
    }
 
    //--------------------------------------------------------------------------
@@ -110,5 +111,17 @@ namespace prob
          "57939045",
          "12345608",
          "68647640" }, 3));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void OptimizationProblemsTests::zooExchangeProgramTests()
+   {
+      assert(1 == ZooExchangeProgram::minGroup({ 2, 1, 3 }, 1, 3));
+      assert(2 == ZooExchangeProgram::minGroup({ 3, 4, 1, 3, 4, 2 }, 1, 3));
+      assert(2 == ZooExchangeProgram::minGroup({ 3, 4, 3, 1, 6, 2, 5, 7, 5, 2 }, 2, 6));
+      assert(-1 == ZooExchangeProgram::minGroup({ 3, 1, 4 }, 2, 4));
+      assert(1 == ZooExchangeProgram::minGroup({ 2, 1, 3, 1, 4 }, 1, 4));
+      assert(3 == ZooExchangeProgram::minGroup({ 7, 12, 2, 12, 10, 13, 6, 5, 3, 3, 4, 11, 12, 4, 3, 1, 8, 11, 4, 7, 6, 5, 47 }, 2, 7));
    }
 }
