@@ -419,4 +419,71 @@ namespace prob
 
       return n;
    }
+
+
+   //--------------------------------------------------------------------------
+   // INTERNET SECURITY
+   //--------------------------------------------------------------------------
+
+   InternetSecurity::Keywords split(std::string const& s)
+   {
+      InternetSecurity::Keywords keywords(1, "");
+      for (char c : s)
+      {
+         if (c == ' ') keywords.emplace_back();
+         else keywords.back() += c;
+      }
+      return keywords;
+   }
+
+   size_t intersection(InternetSecurity::Keywords const& s1, InternetSecurity::Keywords const& s2)
+   {
+      //Better idea would be to sort one collection to do binary searches in it
+      size_t count = 0;
+      for (size_t i = 0; i < s1.size(); ++i)
+      {
+         auto it = std::find(begin(s2), end(s2), s1[i]);
+         if (it != end(s2)) ++count;
+      }
+      return count;
+   }
+
+   InternetSecurity::Addresses InternetSecurity::determineWebsite(Addresses const& addresses, Keywords const& keywords, Keywords const& dangerous, int threshold)
+   {
+      //Group the sites with their associated keywords
+      std::vector<bool> markedDangerous(addresses.size(), false);
+      std::vector<Keywords> sitesKeywords(keywords.size());
+      std::transform(begin(keywords), end(keywords), begin(sitesKeywords), split);
+
+      //While there are some changes
+      Keywords dangerousKeywords = dangerous;
+      while (true)
+      {
+         bool additionalSite = false;
+         for (size_t site = 0; site < addresses.size(); ++site)
+         {
+            if (markedDangerous[site])
+               continue;
+
+            if (threshold <= intersection(sitesKeywords[site], dangerousKeywords))
+            {
+               additionalSite = true;
+               markedDangerous[site] = true;
+               for (auto& k : sitesKeywords[site])
+                  dangerousKeywords.push_back(k);
+            }
+         }
+         if (!additionalSite)
+            break;
+      }
+
+      //Contruct the result
+      Keywords output;
+      for (size_t site = 0; site < addresses.size(); ++site)
+      {
+         if (markedDangerous[site])
+            output.push_back(addresses[site]);
+      }
+      return output;
+   }
 }

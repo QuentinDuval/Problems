@@ -21,6 +21,7 @@ namespace prob
       abcTests();
       decipherabilityTests();
       taroFillingAStringDiv1Tests();
+      internetSecurityTests();
    }
 
    //--------------------------------------------------------------------------
@@ -175,5 +176,17 @@ namespace prob
       assert(43068480 == TaroFillingAStringDiv1::getNumber(305,
          {183, 115, 250, 1, 188, 193, 163, 221, 144, 191, 92, 192, 58, 215, 157, 187, 227, 177, 206, 15, 272, 232, 49, 11, 178, 59, 189, 246},
          "ABAABBABBAABABBBBAAAABBABBBA"));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::internetSecurityTests()
+   {
+      auto res = InternetSecurity::determineWebsite(
+      { "www.topcoder.com", "www.sindicate_of_evil.com", "www.happy_citizens.com" },
+      { "hack encryption decryption internet algorithm", "signal interference evil snake poison algorithm", "flower baloon topcoder blue sky sea" },
+      {"hack", "encryption", "decryption", "interference", "signal", "internet"}, 3);
+
+      assert(equal(InternetSecurity::Addresses{ "www.topcoder.com", "www.sindicate_of_evil.com" }, res));
    }
 }

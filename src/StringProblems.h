@@ -120,4 +120,15 @@ namespace prob
       static const int MOD = 1000000007;
       static int getNumber(int n, std::vector<int> const& positions, std::string const& values);
    };
+
+   /**
+    * InternetSecurity
+    * http://community.topcoder.com/stat?c=problem_statement&pm=11064
+    */
+   struct InternetSecurity
+   {
+      using Addresses = std::vector<std::string>;
+      using Keywords = std::vector<std::string>;
+      static Addresses determineWebsite(Addresses const& addresses, Keywords const& keywords, Keywords const& dangerous, int threshold);
+   };
 }
