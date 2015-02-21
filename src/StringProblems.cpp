@@ -613,9 +613,11 @@ namespace prob
       int count = 0;
       while (!disks.empty())
       {
-         if (disks.back() == searchingDisk) return count;
-         ++count;
+         if (disks.back() == searchingDisk)
+            return count;
+
          disks.pop_back();
+         ++count;
       }
       return -1;
    }
