@@ -20,5 +20,6 @@ namespace prob
       static void taroFillingAStringDiv1Tests();
       static void internetSecurityTests();
       static void kingSortTests();
+      static void busAwaitingTests();
    };
 }

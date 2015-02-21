@@ -141,4 +141,13 @@ namespace prob
       using KingNames = std::vector<std::string>;
       static KingNames getSortedList(KingNames const&);
    };
+
+   /**
+    * BusAwaiting
+    * http://community.topcoder.com/stat?c=problem_statement&pm=8608
+    */
+   struct BusAwaiting
+   {
+      static int waitingTime(std::vector<std::string> const& buses, int arrivalTime);
+   };
 }

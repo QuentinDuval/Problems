@@ -22,6 +22,7 @@ namespace prob
       decipherabilityTests();
       taroFillingAStringDiv1Tests();
       internetSecurityTests();
+      busAwaitingTests();
    }
 
    //--------------------------------------------------------------------------
@@ -231,6 +232,30 @@ namespace prob
 
       res = KingSort::getSortedList({ "Philippe II", "Philip II" });
       assert(equal(KingSort::KingNames{ "Philippe II", "Philip II" }, res));
+   }
 
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::busAwaitingTests()
+   {
+      assert(15 == BusAwaiting::waitingTime({ "150 50 10" }, 285));
+      assert(0 == BusAwaiting::waitingTime({ "123456 10000 1" }, 123456));
+      
+      assert(121163 == BusAwaiting::waitingTime(
+         { "270758 196 67",
+         "904526 8930 66",
+         "121164 3160 56" },1 ));
+
+      assert(-1 == BusAwaiting::waitingTime(
+         { "718571 2557 74",
+         "480573 9706 54",
+         "16511 6660 90" }, 1000000));
+
+      assert(1776 == BusAwaiting::waitingTime(
+         { "407917 8774 24",
+         "331425 4386 58",
+         "502205 9420 32",
+         "591461 1548 79",
+         "504695 8047 53" }, 395439));
    }
 }

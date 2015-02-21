@@ -541,7 +541,6 @@ namespace prob
       int m_number;
    };
 
-
    KingSort::KingNames KingSort::getSortedList(KingNames const& kingFullNames)
    {
       std::vector<King> kings(kingFullNames.size());
@@ -551,5 +550,49 @@ namespace prob
       KingSort::KingNames orderedFullNames(kingFullNames.size());
       std::transform(begin(kings), end(kings), begin(orderedFullNames), [](King const& k) { return k.getFullName(); });
       return orderedFullNames;
+   }
+
+
+   //--------------------------------------------------------------------------
+   // BUS AWAITING
+   //--------------------------------------------------------------------------
+
+   struct BusTiming
+   {
+      BusTiming() = default;
+      BusTiming(std::string const& b)
+      {
+         auto sep1 = b.find(' ');
+         auto sep2 = b.find(' ', sep1 + 1);
+         m_arrival = atoi(std::string(b, 0, sep1).c_str());
+         m_interval = atoi(std::string(b, sep1, sep2).c_str());
+         m_count = atoi(std::string(b, sep2).c_str());
+      }
+
+      int m_arrival;
+      int m_interval;
+      int m_count;
+   };
+
+   int BusAwaiting::waitingTime(std::vector<std::string> const& buses, int arrivalTime)
+   {
+      std::vector<BusTiming> timings(buses.size());
+      std::copy(begin(buses), end(buses), begin(timings));
+
+      int waitingTime = -1;
+      for (auto& timing : timings)
+      {
+         for (int c = 0; c < timing.m_count; ++c)
+         {
+            int nextArrival = timing.m_arrival + timing.m_interval * c;
+            if (nextArrival < arrivalTime)
+               continue;
+            
+            int wait = nextArrival - arrivalTime;
+            if (waitingTime < 0) waitingTime = wait;
+            else waitingTime = std::min(waitingTime, wait);
+         }
+      }
+      return waitingTime;
    }
 }
