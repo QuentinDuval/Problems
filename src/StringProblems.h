@@ -150,4 +150,13 @@ namespace prob
    {
       static int waitingTime(std::vector<std::string> const& buses, int arrivalTime);
    };
+
+   /**
+    * SearchDisks
+    * http://community.topcoder.com/stat?c=problem_statement&pm=7525
+    */
+   struct SearchDisks
+   {
+      static int numberToTakeOut(std::string const& diskNames, std::string const& searchingDisk);
+   };
 }

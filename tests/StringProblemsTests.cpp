@@ -23,6 +23,7 @@ namespace prob
       taroFillingAStringDiv1Tests();
       internetSecurityTests();
       busAwaitingTests();
+      searchDisksTests();
    }
 
    //--------------------------------------------------------------------------
@@ -257,5 +258,15 @@ namespace prob
          "502205 9420 32",
          "591461 1548 79",
          "504695 8047 53" }, 395439));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::searchDisksTests()
+   {
+      assert(0 == SearchDisks::numberToTakeOut("beatles queen abba", "abba"));
+      assert(2 == SearchDisks::numberToTakeOut("beatles queen abba", "beatles"));
+      assert(1 == SearchDisks::numberToTakeOut("a b c", "b"));
+      assert(11 == SearchDisks::numberToTakeOut("t k o h z s v r i c e d n f a m u w p g j q x y l", "f"));
    }
 }

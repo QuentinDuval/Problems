@@ -595,4 +595,28 @@ namespace prob
       }
       return waitingTime;
    }
+
+
+   //--------------------------------------------------------------------------
+   // SEARCH DISKS
+   //--------------------------------------------------------------------------
+
+   int SearchDisks::numberToTakeOut(std::string const& diskNames, std::string const& searchingDisk)
+   {
+      std::vector<std::string> disks(1, "");
+      for (char c : diskNames)
+      {
+         if (c != ' ') disks.back() += c;
+         else disks.emplace_back();
+      }
+
+      int count = 0;
+      while (!disks.empty())
+      {
+         if (disks.back() == searchingDisk) return count;
+         ++count;
+         disks.pop_back();
+      }
+      return -1;
+   }
 }

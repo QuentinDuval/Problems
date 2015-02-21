@@ -21,5 +21,6 @@ namespace prob
       static void internetSecurityTests();
       static void kingSortTests();
       static void busAwaitingTests();
+      static void searchDisksTests();
    };
 }
