@@ -2,6 +2,7 @@
 #include "utils/Algorithms.h"
 #include "utils/Functors.h"
 #include "utils/Matrix.h"
+#include <functional>
 #include <set>
 
 
@@ -304,13 +305,15 @@ namespace prob
    // SHOPPING SURVEY
    //--------------------------------------------------------------------------
 
-   int ShoppingSurveyDiv1::minValue(int customers, int bigShopperThreshold, std::vector<int> const& sellCounts)
+   int ShoppingSurveyDiv1::minValue(int customers, int bigShopperThreshold, std::vector<int> const& inputSellCounts)
    {
       std::vector<int> customerCounts(customers, 0);
       auto endBig = begin(customerCounts);
       auto nextLow = begin(customerCounts);
       auto last = end(customerCounts);
 
+      std::vector<int> sellCounts(inputSellCounts);
+      std::sort(begin(sellCounts), end(sellCounts), std::greater<int>());
       for (int count : sellCounts)
       {
          //Always attribute goods to big customer (once it went above the threshold)
