@@ -186,7 +186,27 @@ namespace prob
       { "www.topcoder.com", "www.sindicate_of_evil.com", "www.happy_citizens.com" },
       { "hack encryption decryption internet algorithm", "signal interference evil snake poison algorithm", "flower baloon topcoder blue sky sea" },
       {"hack", "encryption", "decryption", "interference", "signal", "internet"}, 3);
-
       assert(equal(InternetSecurity::Addresses{ "www.topcoder.com", "www.sindicate_of_evil.com" }, res));
+
+      res = InternetSecurity::determineWebsite(
+      { "brokenlink", "flowerpower.net", "purchasedomain.com" },
+      {"broken", "rose tulips", "cheap free domain biggest greatest"},
+      {"biggest", "enemy", "hideout"},
+      2);
+      assert(0 == res.size());
+
+      res = InternetSecurity::determineWebsite(
+      { "a..a.ab.", "...aa.b" },
+      { "a bc def", "def ghij klmno" },
+      { "a", "b", "c", "d", "e" },
+      1);
+      assert(equal(InternetSecurity::Addresses{ "a..a.ab.", "...aa.b" }, res));
+
+      res = InternetSecurity::determineWebsite(
+      { "www.tsa.gov" },
+      { "information assurance signal intelligence research" },
+      { "signal", "assurance", "penguin" },
+      2);
+      assert(equal(InternetSecurity::Addresses{ "www.tsa.gov" }, res));
    }
 }
