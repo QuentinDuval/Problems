@@ -486,4 +486,70 @@ namespace prob
       }
       return output;
    }
+
+
+   //--------------------------------------------------------------------------
+   // KING SORT
+   //--------------------------------------------------------------------------
+
+   static int romanNumberToInt(std::string const& romanNb)
+   {
+      int value = 0;
+      if (romanNb.empty())
+         return value;
+
+      char prev = ' ';
+      for (size_t i = 0; i < romanNb.size(); ++i)
+      {
+         char curr = romanNb[i];
+         if (curr == 'I') value += 1;
+         else if (curr == 'V') value += (prev == 'I') ? 3 : 5;
+         else if (curr == 'X') value += (prev == 'I') ? 8 : 10;
+         else if (curr == 'L') value += (prev == 'X') ? 30 : 50;
+         prev = curr;
+      }
+      return value;
+   }
+
+   class King
+   {
+   public:
+      King() = default;
+      King(std::string const& fullName)
+         : m_fullName(fullName)
+      {
+         auto index = m_fullName.find(' ');
+         m_name = std::string(m_fullName, 0, index);
+         std::string nbStr(m_fullName, index + 1);
+         m_number = romanNumberToInt(nbStr);
+      }
+
+      std::string const& getFullName() const
+      {
+         return m_fullName;
+      }
+
+      friend bool operator< (King const& lhs, King const& rhs)
+      {
+         if (lhs.m_name != rhs.m_name) return lhs.m_name < rhs.m_name;
+         return lhs.m_number < rhs.m_number;
+      }
+
+   private:
+      std::string m_fullName;
+      std::string m_name;
+      int m_number;
+   };
+
+
+   KingSort::KingNames KingSort::getSortedList(KingNames const& kingFullNames)
+   {
+      std::vector<King> kings(kingFullNames.size());
+      std::copy(begin(kingFullNames), end(kingFullNames), begin(kings));
+      std::sort(begin(kings), end(kings));
+
+      KingSort::KingNames orderedFullNames(kingFullNames.size());
+      std::transform(begin(kings), end(kings), begin(orderedFullNames), [](King const& k) { return k.getFullName(); });
+      return orderedFullNames;
+   }
 }

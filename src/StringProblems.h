@@ -131,4 +131,14 @@ namespace prob
       using Keywords = std::vector<std::string>;
       static Addresses determineWebsite(Addresses const& addresses, Keywords const& keywords, Keywords const& dangerous, int threshold);
    };
+
+   /**
+    * KingSort
+    * http://community.topcoder.com/stat?c=problem_statement&pm=11740
+    */
+   struct KingSort
+   {
+      using KingNames = std::vector<std::string>;
+      static KingNames getSortedList(KingNames const&);
+   };
 }

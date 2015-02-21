@@ -19,5 +19,6 @@ namespace prob
       static void decipherabilityTests();
       static void taroFillingAStringDiv1Tests();
       static void internetSecurityTests();
+      static void kingSortTests();
    };
 }

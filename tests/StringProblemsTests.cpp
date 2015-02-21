@@ -209,4 +209,28 @@ namespace prob
       2);
       assert(equal(InternetSecurity::Addresses{ "www.tsa.gov" }, res));
    }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::kingSortTests()
+   {
+      auto res = KingSort::getSortedList({ "Louis IX", "Louis VIII" });
+      assert(equal(KingSort::KingNames{ "Louis VIII", "Louis IX" }, res));
+
+      res = KingSort::getSortedList({ "Louis IX", "Philippe II" });
+      assert(equal(KingSort::KingNames{ "Louis IX", "Philippe II" }, res));
+
+      res = KingSort::getSortedList({ "Richard III", "Richard I", "Richard II" });
+      assert(equal(KingSort::KingNames{ "Richard I", "Richard II", "Richard III" }, res));
+
+      res = KingSort::getSortedList({ "John X", "John I", "John L", "John V" });
+      assert(equal(KingSort::KingNames{ "John I", "John V", "John X", "John L" }, res));
+
+      res = KingSort::getSortedList({ "Philippe VI", "Jean II", "Charles V", "Charles VI", "Charles VII", "Louis XI" });
+      assert(equal(KingSort::KingNames{ "Charles V", "Charles VI", "Charles VII", "Jean II", "Louis XI", "Philippe VI" }, res));
+
+      res = KingSort::getSortedList({ "Philippe II", "Philip II" });
+      assert(equal(KingSort::KingNames{ "Philippe II", "Philip II" }, res));
+
+   }
 }
