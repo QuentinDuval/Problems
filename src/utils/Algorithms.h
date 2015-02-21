@@ -79,8 +79,9 @@ namespace prob
    //--------------------------------------------------------------------------
 
    template<typename Container, typename Container2>
-   bool equal(Container const& cont, Container2 cont2)
+   bool equal(Container const& cont, Container2 const& cont2)
    {
+      if (cont.size() != cont2.size()) return false;
       return std::equal(begin(cont), end(cont), begin(cont2));
    }
 
