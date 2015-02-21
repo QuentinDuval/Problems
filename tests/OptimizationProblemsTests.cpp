@@ -16,6 +16,7 @@ namespace prob
       buildingTowersEasyTests();
       buildingRoutesTests();
       zooExchangeProgramTests();
+      shoppingSurveyDiv1Tests();
    }
 
    //--------------------------------------------------------------------------
@@ -123,5 +124,17 @@ namespace prob
       assert(-1 == ZooExchangeProgram::minGroup({ 3, 1, 4 }, 2, 4));
       assert(1 == ZooExchangeProgram::minGroup({ 2, 1, 3, 1, 4 }, 1, 4));
       assert(3 == ZooExchangeProgram::minGroup({ 7, 12, 2, 12, 10, 13, 6, 5, 3, 3, 4, 11, 12, 4, 3, 1, 8, 11, 4, 7, 6, 5, 47 }, 2, 7));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void OptimizationProblemsTests::shoppingSurveyDiv1Tests()
+   {
+      assert(0 == ShoppingSurveyDiv1::minValue(10, 2, { 1, 2, 3 }));
+      assert(1 == ShoppingSurveyDiv1::minValue(5, 2, { 1, 2, 3 }));
+      assert(2 == ShoppingSurveyDiv1::minValue(4, 4, { 4, 4, 4, 2 }));
+      assert(10 == ShoppingSurveyDiv1::minValue(20, 3, { 1, 10, 3, 4, 8, 15, 3, 16, 18, 2, 7, 3 }));
+      assert(2 == ShoppingSurveyDiv1::minValue(4, 2, { 1, 2, 1, 1, 3, 1, 2, 2, 1, 2, 1 }));
+      assert(1 == ShoppingSurveyDiv1::minValue(2, 3, { 1, 1, 1, 2 }));
    }
 }

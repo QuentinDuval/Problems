@@ -299,4 +299,35 @@ namespace prob
       }
       return count;
    }
+
+   //--------------------------------------------------------------------------
+   // SHOPPING SURVEY
+   //--------------------------------------------------------------------------
+
+   int ShoppingSurveyDiv1::minValue(int customers, int bigShopperThreshold, std::vector<int> const& sellCounts)
+   {
+      std::vector<int> customerCounts(customers, 0);
+      auto endBig = begin(customerCounts);
+      auto nextLow = begin(customerCounts);
+      auto last = end(customerCounts);
+
+      for (int count : sellCounts)
+      {
+         //Always attribute goods to big customer (once it went above the threshold)
+         count = std::max(0, count - std::distance(begin(customerCounts), endBig));
+
+         //Distribute the rest the most evenly possible
+         for (size_t s = 0; s < count; ++s)
+         {
+            if (nextLow == last) nextLow = endBig;
+            *nextLow += 1;
+            ++nextLow;
+         }
+
+         //Update of the big customers
+         endBig = std::find_if(endBig, last, [bigShopperThreshold](int s) { return s < bigShopperThreshold; });
+      }
+
+      return std::distance(begin(customerCounts), endBig);
+   }
 }

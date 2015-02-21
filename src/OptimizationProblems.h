@@ -70,4 +70,14 @@ namespace prob
       static int minGroup(std::vector<int> const& labels, int lower, int upper);
    };
 
+
+   /**
+    * ShoppingSurveyDiv1
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13455
+    */
+   struct ShoppingSurveyDiv1
+   {
+      static int minValue(int customerCount, int bigShopperThreshold, std::vector<int> const& sellCounts);
+   };
+
 }

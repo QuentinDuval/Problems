@@ -13,5 +13,6 @@ namespace prob
       static void buildingTowersEasyTests();
       static void buildingRoutesTests();
       static void zooExchangeProgramTests();
+      static void shoppingSurveyDiv1Tests();
    };
 }
