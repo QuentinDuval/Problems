@@ -256,6 +256,69 @@ namespace prob
       return trueNb.at(0, vs.size() - 1);
    }
 
+
+   //--------------------------------------------------------------------------
+   // OptimalGameStrategy
+   //--------------------------------------------------------------------------
+
+   int OptimalGameStrategy::bestScore(Coins const& values)
+   {
+      //Initialization
+      size_t n = values.size();
+      std::vector<int> bestGains(n * n, std::numeric_limits<int>::min());
+      for (size_t i = 0; i < values.size() - 1; ++i)
+      {
+         size_t j = i + 1;
+         bestGains.at(i + j * n) = std::max(values[i], values[j]);
+      }
+
+      //Increasing the gap
+      for (size_t gap = 3; gap < n; gap = gap + 2)
+      {
+         for (size_t i = 0; i < n - gap; ++i)
+         {
+            size_t j = i + gap;
+            auto& best = bestGains.at(i + j * n);
+            best = std::max(best, values[i] + bestGains.at(i + 1 + (j - 1) * n));
+            best = std::max(best, values[i] + bestGains.at(i + 2 + j * n));
+            best = std::max(best, values[j] + bestGains.at(i + (j - 2) * n));
+            best = std::max(best, values[j] + bestGains.at(i + 1 + (j - 1) * n));
+         }
+      }
+
+      //Best result for (0, n - 1)
+      return bestGains[(n - 1) * n];
+   }
+
+   int OptimalGameStrategy::bestDifferential(Coins const& values)
+   {
+      //Initialization
+      size_t n = values.size();
+      std::vector<int> bestGains(n * n, std::numeric_limits<int>::min());
+      for (size_t i = 0; i < values.size() - 1; ++i)
+      {
+         size_t j = i + 1;
+         bestGains.at(i + j * n) = abs(values[i] - values[j]);
+      }
+
+      //Increasing the gap
+      for (size_t gap = 3; gap < n; gap = gap + 2)
+      {
+         for (size_t i = 0; i < n - gap; ++i)
+         {
+            size_t j = i + gap;
+            auto& best = bestGains.at(i + j * n);
+            best = std::max(best, abs(values[i] - values[j]) + bestGains.at(i + 1 + (j - 1) * n));
+            best = std::max(best, values[i] - values[i+1] + bestGains.at(i + 2 + j * n));
+            best = std::max(best, values[j] - values[j-1] + bestGains.at(i + (j - 2) * n));
+         }
+      }
+
+      //Best result for (0, n - 1)
+      return bestGains[(n - 1) * n];
+   }
+
+
    //--------------------------------------------------------------------------
 
    size_t longestZigZag(std::vector<int> const& sequence, bool increaseByDefault)

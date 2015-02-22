@@ -53,6 +53,22 @@ namespace prob
 
 
    /**
+    * Given a row of n coins of values v(1) ... v(n), where n is even, we play a game against an opponent by alternating turns.
+    * At each turn, a player selects either the first or last coin from the row, removes it, and receives the value of the coin.
+    */
+   struct OptimalGameStrategy
+   {
+      using Coins = std::vector<int>;
+
+      /** Find the maximum possible amount of point we can gain win if we move first. */
+      static int bestScore(Coins const&);
+
+      /** Find the maximum gain difference we can have with our oponent if we move first. */
+      static int bestDifferential(Coins const&);
+   };
+
+
+   /**
     * Zig Zag
     * http://community.topcoder.com/stat?c=problem_statement&pm=1259
     */
