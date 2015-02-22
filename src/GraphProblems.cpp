@@ -122,16 +122,40 @@ namespace prob
       return tree;
    }
 
-   static bool contains(DoubleTree::Nodes const& nodes, int n)
+   struct DoubleTreeImpl
    {
-      return end(nodes) != std::find(begin(nodes), end(nodes), n);
-   }
+      DoubleTreeImpl(std::vector<int> const& values) : m_values(values) {}
+      std::vector<int> const& m_values;
+      using Nodes = DoubleTree::Nodes;
 
-   static int maxScore(std::vector<DoubleTree::Nodes> const& tree1, std::vector<DoubleTree::Nodes> const& tree2, size_t root)
-   {
-      //TODO - some kind of dfs on two trees and keep the best score in mind
-      return 0;
-   }
+      int maxScore(std::vector<Nodes> const& tree1, std::vector<Nodes> const& tree2, int root)
+      {
+         Nodes selected(1, root);
+         return maxScore(tree1, tree2, selected);
+      }
+
+      int maxScore(std::vector<Nodes> const& tree1, std::vector<Nodes> const& tree2, Nodes& selected)
+      {
+         int root = selected.back();
+         int bestScore = m_values[root];
+         for (int next : tree1[root])
+         {
+            if (contains(selected, next) || !contains(tree2[root], next))
+               continue;
+
+            selected.push_back(next);
+            int incr = maxScore(tree1, tree2, selected);
+            selected.pop_back();
+            bestScore = std::max(bestScore, bestScore + incr);
+         }
+         return bestScore;
+      }
+
+      static bool contains(Nodes const& nodes, int n)
+      {
+         return end(nodes) != std::find(begin(nodes), end(nodes), n);
+      }
+   };
 
    int DoubleTree::maximalScore(Nodes const& src1, Nodes const& dst1, Nodes const& src2, Nodes const& dst2, std::vector<int> const& values)
    {
@@ -142,8 +166,9 @@ namespace prob
 
       //Try all possible roots
       int best = std::numeric_limits<int>::min();
-      for (size_t root = 0; root < n; ++root)
-         best = std::max(best, maxScore(tree1, tree2, root));
+      DoubleTreeImpl doubleTreeImpl(values);
+      for (int root = 0; root < n; ++root)
+         best = std::max(best, doubleTreeImpl.maxScore(tree1, tree2, root));
       return best;
    }
 }

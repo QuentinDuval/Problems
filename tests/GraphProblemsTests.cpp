@@ -49,19 +49,19 @@ namespace prob
    
    void GraphProblemsTests::doubleTreeTests()
    {
-      //assert(1024 == DoubleTree::maximalScore(
-      //   { 0, 0, 1 },
-      //   { 1, 3, 2 },
-      //   { 0, 0, 3 },
-      //   { 1, 3, 2 },
-      //   { 1000, 24, 100, -200 }));
+      assert(1024 == DoubleTree::maximalScore(
+         { 0, 0, 1 },
+         { 1, 3, 2 },
+         { 0, 0, 3 },
+         { 1, 3, 2 },
+         { 1000, 24, 100, -200 }));
 
-      //assert(1324 == DoubleTree::maximalScore(
-      //   { 0, 0, 1 },
-      //   { 1, 3, 2 },
-      //   { 0, 0, 3 },
-      //   { 1, 3, 2 },
-      //   { 1000, 24, 100, 200 }));
+      assert(1324 == DoubleTree::maximalScore(
+         { 0, 0, 1 },
+         { 1, 3, 2 },
+         { 0, 0, 3 },
+         { 1, 3, 2 },
+         { 1000, 24, 100, 200 }));
    }
 
 }
