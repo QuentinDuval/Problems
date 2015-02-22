@@ -145,8 +145,10 @@ namespace prob
 
             selected.push_back(next);
             int incr = maxScore(tree1, tree2, selected);
-            selected.pop_back();
-            bestScore = std::max(bestScore, bestScore + incr);
+            if (incr > 0)
+               bestScore += incr;
+            else
+               selected.pop_back();
          }
          return bestScore;
       }
