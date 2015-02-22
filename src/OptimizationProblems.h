@@ -53,15 +53,6 @@ namespace prob
    };
 
    /**
-    * BuildingRoutes
-    * http://community.topcoder.com/stat?c=problem_statement&pm=13193
-    */
-   struct BuildingRoutes
-   {
-      static int build(std::vector<std::string> const& distances, int safeThreshold);
-   };
-
-   /**
     * ZooExchangeProgram
     * http://community.topcoder.com/stat?c=problem_statement&pm=13268
     */

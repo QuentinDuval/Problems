@@ -14,7 +14,6 @@ namespace prob
       consecutiveIntegersDivOneTests();
       januszTheBusinessmanTests();
       buildingTowersEasyTests();
-      buildingRoutesTests();
       zooExchangeProgramTests();
       shoppingSurveyDiv1Tests();
    }
@@ -81,37 +80,6 @@ namespace prob
          { 16610, 6, 497, 14, 42892, 31, 79, 1203, 518, 31147, 597, 7846, 1396, 8309, 12, 14, 1148,
          433, 23693, 13, 1939, 244, 19, 46, 27, 611, 412, 10, 27023, 19141, 34, 15667, 588, 10, 229,
          83, 390, 14, 38441, 16021, 4, 39386 }));
-   }
-
-   //--------------------------------------------------------------------------
-
-   void OptimizationProblemsTests::buildingRoutesTests()
-   {
-      assert(6 == BuildingRoutes::build(
-       { "011",
-         "101",
-         "110" }, 1));
-
-      assert(12 == BuildingRoutes::build(
-       { "033",
-         "309",
-         "390" }, 1));
-
-      assert(5 == BuildingRoutes::build(
-      { "0123",
-        "1023",
-        "1203",
-        "1230" }, 2));
-
-      assert(40 == BuildingRoutes::build(
-      {  "05789654",
-         "10347583",
-         "65085479",
-         "55602398",
-         "76590934",
-         "57939045",
-         "12345608",
-         "68647640" }, 3));
    }
 
    //--------------------------------------------------------------------------
