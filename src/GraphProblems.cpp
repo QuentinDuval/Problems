@@ -155,6 +155,7 @@ namespace prob
 
       static bool reachableFrom(std::vector<Nodes> const& tree, Nodes& selected, int searched)
       {
+         //TODO - Use DFS on tree 2 instead...
          for (int node : selected)
          {
             if (contains(tree[node], searched))
