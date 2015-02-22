@@ -8,5 +8,6 @@ namespace prob
       static void allTests();
 
       static void buildingRoutesTests();
+      static void doubleTreeTests();
    };
 }

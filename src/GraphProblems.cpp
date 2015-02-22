@@ -105,4 +105,45 @@ namespace prob
       BuildingRoutesImpl impl(distances.size());
       return impl.build(distances, safeThreshold);
    }
+
+
+   //--------------------------------------------------------------------------
+   // DOUBLE TREE
+   //--------------------------------------------------------------------------
+
+   static std::vector<DoubleTree::Nodes> makeTree(DoubleTree::Nodes const& src, DoubleTree::Nodes const& dst)
+   {
+      std::vector<DoubleTree::Nodes> tree(src.size() + 1);
+      for (size_t i = 0; i < src.size(); ++i)
+      {
+         tree[src[i]].push_back(dst[i]);
+         tree[dst[i]].push_back(src[i]);
+      }
+      return tree;
+   }
+
+   static bool contains(DoubleTree::Nodes const& nodes, int n)
+   {
+      return end(nodes) != std::find(begin(nodes), end(nodes), n);
+   }
+
+   static int maxScore(std::vector<DoubleTree::Nodes> const& tree1, std::vector<DoubleTree::Nodes> const& tree2, size_t root)
+   {
+      //TODO - some kind of dfs on two trees and keep the best score in mind
+      return 0;
+   }
+
+   int DoubleTree::maximalScore(Nodes const& src1, Nodes const& dst1, Nodes const& src2, Nodes const& dst2, std::vector<int> const& values)
+   {
+      //Contruct the trees
+      std::vector<Nodes> tree1 = makeTree(src1, dst1);
+      std::vector<Nodes> tree2 = makeTree(src2, dst2);
+      const size_t n = tree1.size();
+
+      //Try all possible roots
+      int best = std::numeric_limits<int>::min();
+      for (size_t root = 0; root < n; ++root)
+         best = std::max(best, maxScore(tree1, tree2, root));
+      return best;
+   }
 }
