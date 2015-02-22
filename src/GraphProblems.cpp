@@ -150,7 +150,7 @@ namespace prob
             else
                selected.pop_back();
          }
-         return bestScore;
+         return std::max(0, bestScore);
       }
 
       static bool reachableFrom(std::vector<Nodes> const& tree, Nodes& selected, int searched)
