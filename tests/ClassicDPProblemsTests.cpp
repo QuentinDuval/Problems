@@ -19,6 +19,7 @@ namespace prob
       makingChangeTests();
       maxContiguousTest();
       boolParenthesizationTest();
+      optimalGameStrategyTests();
       zigZagTests();
       flowerGardenTests();
       collectingAppleTests();
@@ -151,6 +152,15 @@ namespace prob
       vs = { true, false, true, true, false };
       cs = { "or", "and", "xor", "and" };
       std::cout << "Bool (): " << BooleanParenthesization::count(vs, cs) << std::endl;
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicDPProblemsTests::optimalGameStrategyTests()
+   {
+      OptimalGameStrategy::Coins coins = { 1, 2, 1, 3, 1, 2, 1, 1 };
+      assert(8 == OptimalGameStrategy::bestScore(coins));
+      assert(4 == OptimalGameStrategy::bestDifferential(coins));
    }
 
    //--------------------------------------------------------------------------
