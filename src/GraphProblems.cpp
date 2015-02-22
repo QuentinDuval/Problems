@@ -140,7 +140,7 @@ namespace prob
          int bestScore = m_values[root];
          for (int next : tree1[root])
          {
-            if (contains(selected, next) || !contains(tree2[root], next))
+            if (contains(selected, next) || !reachableFrom(tree2, selected, next))
                continue;
 
             selected.push_back(next);
@@ -151,6 +151,16 @@ namespace prob
                selected.pop_back();
          }
          return bestScore;
+      }
+
+      static bool reachableFrom(std::vector<Nodes> const& tree, Nodes& selected, int searched)
+      {
+         for (int node : selected)
+         {
+            if (contains(tree[node], searched))
+               return true;
+         }
+         return false;
       }
 
       static bool contains(Nodes const& nodes, int n)
