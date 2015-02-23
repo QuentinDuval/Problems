@@ -3,6 +3,7 @@
 #include "utils/Functors.h"
 #include "utils/Matrix.h"
 
+#include <functional>
 #include <iterator>
 #include <set>
 #include <vector>
@@ -64,20 +65,20 @@ namespace prob
             for (size_t i = 0; i < m_cityCount; ++i)
                for (size_t j = 0; j < m_cityCount; ++j)
                {
-               if (i == j || i == k || k == j)
-                  continue;
+                  if (i == j || i == k || k == j)
+                     continue;
 
-               int dist = shortestPaths[index(i, k)] + shortestPaths[index(k, j)];
-               if (dist < shortestPaths[index(i, j)])
-               {
-                  shortestPaths[index(i, j)] = dist;
-                  nextOnPath[index(i, j)] = nextOnPath[index(i, k)];
-               }
-               else if (dist == shortestPaths[index(i, j)])
-               {
-                  for (auto n : nextOnPath[index(i, k)])
-                     nextOnPath[index(i, j)].insert(n);
-               }
+                  int dist = shortestPaths[index(i, k)] + shortestPaths[index(k, j)];
+                  if (dist < shortestPaths[index(i, j)])
+                  {
+                     shortestPaths[index(i, j)] = dist;
+                     nextOnPath[index(i, j)] = nextOnPath[index(i, k)];
+                  }
+                  else if (dist == shortestPaths[index(i, j)])
+                  {
+                     for (auto n : nextOnPath[index(i, k)])
+                        nextOnPath[index(i, j)].insert(n);
+                  }
                }
          }
 
@@ -183,5 +184,137 @@ namespace prob
       for (int root = 0; root < n; ++root)
          best = std::max(best, doubleTreeImpl.maxScore(tree1, tree2, root));
       return best;
+   }
+
+
+   //--------------------------------------------------------------------------
+   // FAMILY
+   //--------------------------------------------------------------------------
+
+   class DFS
+   {
+   public:
+      using Graph = std::vector<std::vector<int>>;
+
+      DFS(Graph const& graph)
+         : m_graph(graph)
+         , m_marked(graph.size(), false)
+         , m_gender(graph.size(), false)
+      {}
+
+      void searchFrom(int from, std::function<void()> onImpossible, bool gender = false)
+      {
+         if (m_marked[from])
+         {
+            if (m_gender[from] != gender)
+               onImpossible();
+            return;
+         }
+
+         m_marked[from] = true;
+         m_gender[from] = gender;
+         for (int adjacent : m_graph[from])
+            searchFrom(adjacent, onImpossible, !gender);
+      }
+
+   private:
+      Graph const& m_graph;
+      std::vector<bool> m_marked;
+      std::vector<bool> m_gender;
+   };
+
+
+   bool Family::isFamily(std::vector<int> const& parent1, std::vector<int> const& parent2)
+   {
+      //What is insteresting here are the relationship between the parents, so let us build a graph for this
+      std::vector<std::vector<int>> parentRelations(parent1.size());
+      for (size_t p = 0; p < parent1.size(); ++p)
+      {
+         if (parent1[p] == -1 || parent2[p] == -1)
+            continue;
+
+         parentRelations[parent1[p]].push_back(parent2[p]);
+         parentRelations[parent2[p]].push_back(parent1[p]);
+      }
+
+      //What we need to find is cycles between the parents
+      //If the cycles are made of an event number of parents, then we cannot have a family tree
+      for (int v = 0; v < parentRelations.size(); ++v)
+      {
+         bool impairCycle = false;
+         DFS dfs(parentRelations);
+         dfs.searchFrom(v, [&impairCycle]() { impairCycle = true; });
+         if (impairCycle)
+            return false;
+      }
+      return true;
+   }
+
+
+   //--------------------------------------------------------------------------
+   // HEXAGONAL BOARD
+   //--------------------------------------------------------------------------
+
+   static std::vector<int> adjacents(int coord, int size)
+   {
+      int x = coord % size;
+      int y = coord / size;
+      std::vector<std::pair<int, int>> adjPoints{
+         { x - 1, y }, { x, y - 1 }, { x + 1, y - 1 },
+         { x - 1, y + 1 }, { x, y + 1 }, { x + 1, y } };
+
+      std::vector<int> adjList;
+      for (size_t i = 0; i < adjPoints.size(); ++i)
+      {
+         auto& p = adjPoints[i];
+         if (0 <= p.first && p.first < size && 0 <= p.second && p.second < size)
+            adjList.push_back(p.first + size * p.second);
+      }
+      return adjList;
+   }
+
+   int HexagonalBoard::minColors(std::vector<std::string> const& board)
+   {
+      //Identify the cells that should be colored
+      int size = board.size();
+      std::vector<bool> toColor(size * size, false);
+      for (int y = 0; y < size; ++y)
+      {
+         for (int x = 0; x < size; ++x)
+         {
+            toColor.at(x + size * y) = 'X' == board[y][x];
+         }
+      }
+
+      //If there are no vertices to color, no colors are needed
+      if (end(toColor) == std::find(begin(toColor), end(toColor), true))
+         return 0;
+
+      //Build the graph, but only add the element in the board we care about
+      std::vector<std::vector<int>> graph(toColor.size());
+      for (int v = 0; v < toColor.size(); ++v)
+      {
+         if (!toColor[v])
+            continue;
+
+         std::vector<int> adjList = adjacents(v, size);
+         auto last = std::remove_if(begin(adjList), end(adjList), [&](int w) { return !toColor[w]; });
+         std::copy(begin(adjList), last, std::back_inserter(graph[v]));
+      }
+
+      //If there are no links between vertices, then we need 1 color
+      if (std::all_of(begin(graph), end(graph), [](std::vector<int> const& adjList) { return adjList.empty(); }))
+         return 1;
+
+      //If we can two color the vertex (via dfs), then we need 2 colors, otherwise we need 3 colors at most
+      for (int v = 0; v < toColor.size(); ++v)
+      {
+         DFS dfs(graph);
+         bool twoColorable = true;
+         dfs.searchFrom(v, [&]() { twoColorable = false; });
+         if (!twoColorable)
+            return 3;
+      }
+      return 2;
    }
 }

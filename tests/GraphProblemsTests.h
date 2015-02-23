@@ -9,5 +9,7 @@ namespace prob
 
       static void buildingRoutesTests();
       static void doubleTreeTests();
+      static void familyTests();
+      static void hexagonalBoardTests();
    };
 }
