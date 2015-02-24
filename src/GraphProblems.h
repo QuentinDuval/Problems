@@ -43,4 +43,13 @@ namespace prob
    {
       static int minColors(std::vector<std::string> const& board);
    };
+
+   /**
+    * Egalitarianism
+    * http://community.topcoder.com/stat?c=problem_statement&pm=12613
+    */
+   struct Egalitarianism
+   {
+      static int maxDifference(std::vector<std::string> const& isFriend, int diff);
+   };
 }

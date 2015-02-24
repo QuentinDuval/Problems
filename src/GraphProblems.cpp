@@ -5,6 +5,7 @@
 
 #include <functional>
 #include <iterator>
+#include <queue>
 #include <set>
 #include <vector>
 
@@ -316,5 +317,80 @@ namespace prob
             return 3;
       }
       return 2;
+   }
+
+
+   //--------------------------------------------------------------------------
+   // EGALITARIANISM
+   //--------------------------------------------------------------------------
+
+   class EgalitarianismBFS
+   {
+   public:
+      using Graph = std::vector<std::vector<size_t>>;
+
+   public:
+      explicit EgalitarianismBFS(Graph const& graph)
+         : m_graph(graph)
+         , m_marked(graph.size(), false)
+         , m_distanceTo(graph.size(), std::numeric_limits<size_t>::max())
+      {}
+
+      void searchFrom(size_t vertex)
+      {
+         std::queue<size_t> queue;
+         m_distanceTo[vertex] = 0;
+         queue.push(vertex);
+
+         while (!queue.empty())
+         {
+            size_t curr = queue.front();
+            queue.pop();
+            m_marked[curr] = true;
+
+            for (size_t adj : m_graph[curr])
+            if (!m_marked[adj])
+            {
+               m_distanceTo[adj] = m_distanceTo[curr] + 1;
+               queue.push(adj);
+            }
+         }
+      }
+
+      bool isConnected() const
+      {
+         return end(m_marked) == std::find(begin(m_marked), end(m_marked), false);
+      }
+
+      size_t maxDistance() const
+      {
+         return *std::max_element(begin(m_distanceTo), end(m_distanceTo));
+      }
+
+   private:
+      Graph const& m_graph;
+      std::vector<bool> m_marked;
+      std::vector<size_t> m_distanceTo;
+   };
+
+   int Egalitarianism::maxDifference(std::vector<std::string> const& isFriend, int diff)
+   {
+      //Build the friendship graph
+      size_t citizenCount = isFriend.size();
+      std::vector<std::vector<size_t>> friendGraph(citizenCount);
+      for (size_t i = 0; i < citizenCount; ++i)
+      for (size_t j = 0; j < citizenCount; ++j)
+      {
+         if ('Y' == isFriend[i][j])
+            friendGraph[i].push_back(j);
+      }
+
+      //Compute the max difference
+      EgalitarianismBFS bfs(friendGraph);
+      bfs.searchFrom(0);
+      if (!bfs.isConnected())
+         return -1;
+
+      return bfs.maxDistance() * diff;
    }
 }

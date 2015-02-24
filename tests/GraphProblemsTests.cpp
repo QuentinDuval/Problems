@@ -14,6 +14,7 @@ namespace prob
       doubleTreeTests();
       familyTests();
       hexagonalBoardTests();
+      egalitarianismTests();
    }
 
    //--------------------------------------------------------------------------
@@ -147,5 +148,59 @@ namespace prob
       , "XX-X-XX"
       , "-X-XX-X"
       , "-XX-XX-" }));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void GraphProblemsTests::egalitarianismTests()
+   {
+      assert(20 == Egalitarianism::maxDifference(
+      { "NYN",
+        "YNY",
+        "NYN" }, 10));
+
+      assert(-1 == Egalitarianism::maxDifference({ "NN", "NN" }, 10));
+      assert(0  == Egalitarianism::maxDifference({ "NY", "YN" }, 0));
+
+      assert(3000 == Egalitarianism::maxDifference
+      ({ "NNYNNN",
+         "NNYNNN",
+         "YYNYNN",
+         "NNYNYY",
+         "NNNYNN",
+         "NNNYNN" }, 1000));
+
+      assert(-1 == Egalitarianism::maxDifference
+      ({ "NNYN",
+         "NNNY",
+         "YNNN",
+         "NYNN" }, 584));
+
+      assert(20 == Egalitarianism::maxDifference
+      ({ "NYNYYYN",
+         "YNNYYYN",
+         "NNNNYNN",
+         "YYNNYYN",
+         "YYYYNNN",
+         "YYNYNNY",
+         "NNNNNYN" }, 5));
+
+
+      assert(2988 == Egalitarianism::maxDifference
+      ({ "NYYNNNNYYYYNNNN",
+         "YNNNYNNNNNNYYNN",
+         "YNNYNYNNNNYNNNN",
+         "NNYNNYNNNNNNNNN",
+         "NYNNNNYNNYNNNNN",
+         "NNYYNNYNNYNNNYN",
+         "NNNNYYNNYNNNNNN",
+         "YNNNNNNNNNYNNNN",
+         "YNNNNNYNNNNNYNN",
+         "YNNNYYNNNNNNNNY",
+         "YNYNNNNYNNNNNNN",
+         "NYNNNNNNNNNNNNY",
+         "NYNNNNNNYNNNNYN",
+         "NNNNNYNNNNNNYNN",
+         "NNNNNNNNNYNYNNN" }, 747));
    }
 }
