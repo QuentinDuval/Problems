@@ -402,4 +402,44 @@ namespace prob
       }
       return maxDifference;
    }
+
+
+   //--------------------------------------------------------------------------
+   // DANCING FOXES
+   //--------------------------------------------------------------------------
+
+   int DancingFoxes::minimalDays(std::vector<std::string> const& friendship)
+   {
+      //Building the friendship graph
+      size_t count = friendship.size();
+      const int outOfReach = count;
+      std::vector<int> adjMatrix(count * count, outOfReach);
+      for (size_t i = 0; i < count; ++i)
+      {
+         for (size_t j = 0; j < count; ++j)
+         {
+            if (friendship[i][j] == 'Y')
+               adjMatrix[i + j * count] = 1;
+         }
+      }
+
+      //Ford-Fulkerson to get the minimum distance
+      for (size_t k = 0; k < count; ++k)
+      {
+         for (size_t i = 0; i < count; ++i)
+         {
+            for (size_t j = 0; j < count; ++j)
+            {
+               int newDist = adjMatrix[i + k * count] + adjMatrix[k + j * count];
+               adjMatrix[i + j * count] = std::min(adjMatrix[i + j * count], newDist);
+            }
+         }
+      }
+
+      //Return the best distance between Fox Ciel (index 0) and Fox Jiro (index 1)
+      int minDist = adjMatrix[count];
+      if (minDist == outOfReach)
+         return -1;
+      return minDist - 1; //First day does not count
+   }
 }

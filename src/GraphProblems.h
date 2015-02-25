@@ -52,4 +52,13 @@ namespace prob
    {
       static int maxDifference(std::vector<std::string> const& isFriend, int diff);
    };
+
+   /**
+    * DancingFoxes
+    * http://community.topcoder.com/stat?c=problem_statement&pm=12548
+    */
+   struct DancingFoxes
+   {
+      static int minimalDays(std::vector<std::string> const& friendship);
+   };
 }

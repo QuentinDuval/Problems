@@ -15,6 +15,7 @@ namespace prob
       familyTests();
       hexagonalBoardTests();
       egalitarianismTests();
+      dancingFoxesTests();
    }
 
    //--------------------------------------------------------------------------
@@ -202,5 +203,43 @@ namespace prob
          "NYNNNNNNYNNNNYN",
          "NNNNNYNNNNNNYNN",
          "NNNNNNNNNYNYNNN" }, 747));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void GraphProblemsTests::dancingFoxesTests()
+   {
+      assert(1 == DancingFoxes::minimalDays
+      ({ "NNY",
+         "NNY",
+         "YYN" }));
+
+      assert(-1 == DancingFoxes::minimalDays
+      ({ "NNNNN",
+         "NNYYY",
+         "NYNYY",
+         "NYYNY",
+         "NYYYN" }));
+
+      assert(2 == DancingFoxes::minimalDays
+      ({ "NNYYNN",
+         "NNNNYY",
+         "YNNNYN",
+         "YNNNNY",
+         "NYYNNN",
+         "NYNYNN" }));
+
+      assert(3 == DancingFoxes::minimalDays
+      ({ "NNYNNNNYN",
+         "NNNNYNYNN",
+         "YNNYNYNNN",
+         "NNYNYNYYN",
+         "NYNYNNNNY",
+         "NNYNNNYNN",
+         "NYNYNYNNN",
+         "YNNYNNNNY",
+         "NNNNYNNYN" }));
+
+      assert(0 == DancingFoxes::minimalDays({ "NY", "YN" }));
    }
 }

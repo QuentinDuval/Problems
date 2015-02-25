@@ -12,5 +12,6 @@ namespace prob
       static void familyTests();
       static void hexagonalBoardTests();
       static void egalitarianismTests();
+      static void dancingFoxesTests();
    };
 }
