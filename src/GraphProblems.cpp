@@ -388,7 +388,7 @@ namespace prob
             friendGraph[i].push_back(j);
       }
 
-      //Compute the max difference as the length of the longest path in the graph
+      //Compute the max difference as the longest shortest path in the graph
       size_t maxDifference = 0;
       for (size_t v = 0; v < friendGraph.size(); ++v)
       {
