@@ -340,19 +340,22 @@ namespace prob
       {
          std::queue<size_t> queue;
          m_distanceTo[vertex] = 0;
+         m_marked[vertex] = true;
          queue.push(vertex);
 
          while (!queue.empty())
          {
             size_t curr = queue.front();
             queue.pop();
-            m_marked[curr] = true;
 
             for (size_t adj : m_graph[curr])
-            if (!m_marked[adj])
             {
+               if (m_marked[adj])
+                  continue;
+               
                m_distanceTo[adj] = m_distanceTo[curr] + 1;
                queue.push(adj);
+               m_marked[adj] = true;
             }
          }
       }
@@ -386,11 +389,17 @@ namespace prob
       }
 
       //Compute the max difference
-      EgalitarianismBFS bfs(friendGraph);
-      bfs.searchFrom(0);
-      if (!bfs.isConnected())
-         return -1;
+      size_t maxDifference = 0;
+      for (size_t v = 0; v < friendGraph.size(); ++v)
+      {
+         EgalitarianismBFS bfs(friendGraph);
+         bfs.searchFrom(v);
+         if (!bfs.isConnected())
+            return -1;
 
-      return bfs.maxDistance() * diff;
+         size_t maxDist = bfs.maxDistance() * diff;
+         maxDifference = std::max(maxDifference, maxDist);
+      }
+      return maxDifference;
    }
 }
