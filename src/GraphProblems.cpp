@@ -239,7 +239,7 @@ namespace prob
       }
 
       //What we need to find is cycles between the parents
-      //If the cycles are made of an event number of parents, then we cannot have a family tree
+      //If the cycles are made of an impair number of parents, then we cannot have a family tree
       for (int v = 0; v < parentRelations.size(); ++v)
       {
          bool impairCycle = false;
