@@ -35,6 +35,84 @@ namespace prob
 
 
    //--------------------------------------------------------------------------
+   // SUB STRING SEARCH
+   //--------------------------------------------------------------------------
+
+   std::string::size_type SubStringSearch::boyerMooreSearch(std::string const& text, std::string const& pattern)
+   {
+      if (pattern.empty() || text.empty())
+         return std::string::npos;
+
+      int tLen = text.size();
+      int pLen = pattern.size();
+
+      std::vector<int> lastOccur(UCHAR_MAX + 1, -1);
+      for (int i = 0; i < pLen; ++i)
+         lastOccur[pattern[i] - CHAR_MIN] = i;
+
+      for (int start = 0; start < tLen - pLen + 1;)
+      {
+         int j = pLen - 1;
+         for (; 0 <= pLen; --j)
+         {
+            if (pattern[j] != text[start + j])
+               break;
+            if (j == 0)
+               return start;
+         }
+
+         int offset = pLen - lastOccur[pattern[j] - CHAR_MIN];
+         start += offset;
+      }
+
+      return std::string::npos;
+   }
+
+   std::string::size_type SubStringSearch::kmpSearch(std::string const& text, std::string const& pattern)
+   {
+      if (pattern.empty() || text.empty())
+         return std::string::npos;
+
+      int tLen = text.size();
+      int pLen = pattern.size();
+      int radix = UCHAR_MAX + 1;
+
+      std::vector<int> nextState(radix * (pLen + 1), 0);
+      nextState[pattern[0] - CHAR_MIN] = 1;
+
+      int fail = 0;
+      for (int curr = 1; curr <= pLen; ++curr)
+      {
+         for (int c = 0; c < radix; ++c)
+         {
+            //Go to the state to which we would have had to backtracked
+            //Re-read the start of the pattern + the new character
+            nextState.at(c + curr * radix) = nextState.at(c + fail * radix);
+         }
+
+         int c = pattern[curr] - CHAR_MIN;
+         nextState.at(c + curr * radix) = curr + 1;
+
+         //Fail state is the state to which we would have been if we had backtracked
+         //Reading the [1..curr] first caracters of the pattern
+         fail = nextState.at(c + fail * radix);
+      }
+
+      //Represents the number of char matched
+      int state = 0; 
+      for (int i = 0; i < tLen; ++i)
+      {
+         char c = text[i];
+         state = nextState.at(c - CHAR_MIN + state * radix);
+         if (state == pLen)
+            return i - pLen + 1;
+
+      }
+      return std::string::npos;
+   }
+
+
+   //--------------------------------------------------------------------------
    // DOUBLE LETTERS
    //--------------------------------------------------------------------------
 
