@@ -423,7 +423,7 @@ namespace prob
          }
       }
 
-      //Ford-Fulkerson to get the minimum distance
+      //Floyd-Warshall to get the minimum distance
       for (size_t k = 0; k < count; ++k)
       {
          for (size_t i = 0; i < count; ++i)
