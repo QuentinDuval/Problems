@@ -239,7 +239,7 @@ namespace prob
       }
 
       //What we need to find is cycles between the parents
-      //If the cycles are made of an impair number of parents, then we cannot have a family tree
+      //If the cycles are made of an event number of parents, then we cannot have a family tree
       for (int v = 0; v < parentRelations.size(); ++v)
       {
          bool impairCycle = false;
@@ -340,22 +340,19 @@ namespace prob
       {
          std::queue<size_t> queue;
          m_distanceTo[vertex] = 0;
-         m_marked[vertex] = true;
          queue.push(vertex);
 
          while (!queue.empty())
          {
             size_t curr = queue.front();
             queue.pop();
+            m_marked[curr] = true;
 
             for (size_t adj : m_graph[curr])
+            if (!m_marked[adj])
             {
-               if (m_marked[adj])
-                  continue;
-               
                m_distanceTo[adj] = m_distanceTo[curr] + 1;
                queue.push(adj);
-               m_marked[adj] = true;
             }
          }
       }
@@ -368,6 +365,16 @@ namespace prob
       size_t maxDistance() const
       {
          return *std::max_element(begin(m_distanceTo), end(m_distanceTo));
+      }
+
+      size_t hasPathTo(size_t destination) const
+      {
+         return m_marked[destination];
+      }
+
+      size_t distanceTo(size_t destination) const
+      {
+         return m_distanceTo[destination];
       }
 
    private:
@@ -388,19 +395,13 @@ namespace prob
             friendGraph[i].push_back(j);
       }
 
-      //Compute the max difference as the longest shortest path in the graph
-      size_t maxDifference = 0;
-      for (size_t v = 0; v < friendGraph.size(); ++v)
-      {
-         EgalitarianismBFS bfs(friendGraph);
-         bfs.searchFrom(v);
-         if (!bfs.isConnected())
-            return -1;
+      //Compute the max difference
+      EgalitarianismBFS bfs(friendGraph);
+      bfs.searchFrom(0);
+      if (!bfs.isConnected())
+         return -1;
 
-         size_t maxDist = bfs.maxDistance() * diff;
-         maxDifference = std::max(maxDifference, maxDist);
-      }
-      return maxDifference;
+      return bfs.maxDistance() * diff;
    }
 
 
@@ -413,33 +414,30 @@ namespace prob
       //Building the friendship graph
       size_t count = friendship.size();
       const int outOfReach = count;
-      std::vector<int> adjMatrix(count * count, outOfReach);
+      std::vector<std::vector<size_t>> adjList(count);
       for (size_t i = 0; i < count; ++i)
       {
          for (size_t j = 0; j < count; ++j)
          {
             if (friendship[i][j] == 'Y')
-               adjMatrix[i + j * count] = 1;
-         }
-      }
-
-      //Ford-Fulkerson to get the minimum distance
-      for (size_t k = 0; k < count; ++k)
-      {
-         for (size_t i = 0; i < count; ++i)
-         {
-            for (size_t j = 0; j < count; ++j)
-            {
-               int newDist = adjMatrix[i + k * count] + adjMatrix[k + j * count];
-               adjMatrix[i + j * count] = std::min(adjMatrix[i + j * count], newDist);
-            }
+               adjList[i].push_back(j);
          }
       }
 
       //Return the best distance between Fox Ciel (index 0) and Fox Jiro (index 1)
-      int minDist = adjMatrix[count];
-      if (minDist == outOfReach)
+      EgalitarianismBFS bfs(adjList);
+      bfs.searchFrom(0);
+      if (!bfs.hasPathTo(1))
          return -1;
-      return minDist - 1; //First day does not count
+
+      int days = 0;
+      double distance = bfs.distanceTo(1);
+      while (distance > 1)
+      {
+         int num = (distance + 1) / 3;
+         days++;
+         distance -= num;
+      }
+      return days;
    }
 }

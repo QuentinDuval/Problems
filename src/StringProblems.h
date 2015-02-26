@@ -26,6 +26,14 @@ namespace prob
    };
 
 
+   /**  */
+   struct SubStringSearch
+   {
+      static std::string::size_type boyerMooreSearch(std::string const& text, std::string const& pattern);
+      static std::string::size_type kmpSearch(std::string const& text, std::string const& pattern);
+   };
+
+
    /**
    * Eliminate double letters starting from the leftmost occurence.
    * Repeat as long as double letters can be found and return if the string is empty.
