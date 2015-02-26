@@ -11,7 +11,6 @@ namespace prob
    void StringProblemsTests::allTests()
    {
       testWordSplit();
-      subStringSearchTests();
       doubleLetterTests();
       parenthesesCombinationNbTests();
       bracketExpressionsTests();
@@ -36,25 +35,6 @@ namespace prob
 
       assert(true == split.splitInWords("splitintoword").empty());
       assert(4 == split.splitInWords("splitintowords").size());
-   }
-
-   //--------------------------------------------------------------------------
-
-   template<typename Algo>
-   void subStringSearchTest(Algo algo)
-   {
-      assert(std::string::npos == algo("", "sub-string"));
-      assert(std::string::npos == algo("substring search into words", ""));
-      assert(std::string::npos == algo("substring search into words", "sub-string"));
-
-      assert(0 == algo("substring search into words", "substring"));
-      assert(10 == algo("substring search into words", "search"));
-   }
-
-   void StringProblemsTests::subStringSearchTests()
-   {
-      subStringSearchTest(SubStringSearch::boyerMooreSearch);
-      subStringSearchTest(SubStringSearch::kmpSearch);
    }
 
    //--------------------------------------------------------------------------

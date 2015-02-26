@@ -8,7 +8,6 @@ namespace prob
       static void allTests();
 
       static void testWordSplit();
-      static void subStringSearchTests();
       static void doubleLetterTests();
       static void parenthesesCombinationNbTests();
       static void bracketExpressionsTests();
