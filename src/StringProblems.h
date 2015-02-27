@@ -167,4 +167,13 @@ namespace prob
    {
       static int numberToTakeOut(std::string const& diskNames, std::string const& searchingDisk);
    };
+
+   /**
+    * TemplateMatching
+    * http://community.topcoder.com/stat?c=problem_statement&pm=9943
+    */
+   struct TemplateMatching
+   {
+      static std::string bestMatch(std::string const& text, std::string const& prefix, std::string const& suffix);
+   };
 }

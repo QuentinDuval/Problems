@@ -25,6 +25,7 @@ namespace prob
       internetSecurityTests();
       busAwaitingTests();
       searchDisksTests();
+      templateMatchingTests();
    }
 
    //--------------------------------------------------------------------------
@@ -288,5 +289,17 @@ namespace prob
       assert(2 == SearchDisks::numberToTakeOut("beatles queen abba", "beatles"));
       assert(1 == SearchDisks::numberToTakeOut("a b c", "b"));
       assert(11 == SearchDisks::numberToTakeOut("t k o h z s v r i c e d n f a m u w p g j q x y l", "f"));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::templateMatchingTests()
+   {
+      assert("something" == TemplateMatching::bestMatch("something", "awesome", "ingenious"));
+      assert("a" == TemplateMatching::bestMatch("havka", "eto", "papstvo"));
+      assert("abrac" == TemplateMatching::bestMatch("abracadabra", "habrahabr", "bracket"));
+      assert("ippi" == TemplateMatching::bestMatch("mississippi", "promise", "piccolo"));
+      assert("a a" == TemplateMatching::bestMatch("a a a a a a", "a a", "a"));
+      assert("b" == TemplateMatching::bestMatch("ab", "b", "a"));
    }
 }

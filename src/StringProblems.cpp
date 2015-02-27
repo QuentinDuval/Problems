@@ -699,4 +699,61 @@ namespace prob
       }
       return -1;
    }
+
+
+   //--------------------------------------------------------------------------
+   // TEMPLATE MATCHING
+   //--------------------------------------------------------------------------
+
+   static int getSuffixScore(std::string const& text, std::string const& suffix)
+   {
+      int count = 0;
+      for (int c = 0; c < text.size(); ++c)
+      {
+         int len = text.size() - c;
+         std::string textEnd = text.substr(c, std::string::npos);
+         std::string sufStart = suffix.substr(0, len);
+         if (textEnd == sufStart)
+            return len;
+      }
+      return 0;
+   }
+
+   std::string TemplateMatching::bestMatch(std::string const& text, std::string const& prefix, std::string const& suffix)
+   {
+      int bestScore = 0;
+      int bestPrefix = 0;
+      std::string bestMatch;
+
+      for (int len = 1; len <= text.size(); ++len)
+      {
+         for (int start = 0; start < text.size() - len + 1; ++start)
+         {
+            std::string subText = text.substr(start, len);
+            int prefixScore = getSuffixScore(prefix, subText);
+            int suffixScore = getSuffixScore(subText, suffix);
+            int newScore = prefixScore + suffixScore;
+
+            if (bestScore < newScore)
+            {
+               bestScore = newScore;
+               bestPrefix = prefixScore;
+               bestMatch = subText;
+            }
+            else if (bestScore == newScore)
+            {
+               if (prefixScore > bestPrefix)
+               {
+                  bestPrefix = prefixScore;
+                  bestMatch = subText;
+               }
+               else if (bestMatch.empty() || bestMatch > subText)
+               {
+                  bestMatch = subText;
+               }
+            }
+         }
+      }
+      return bestMatch;
+   }
 }
