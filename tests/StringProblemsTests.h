@@ -24,5 +24,6 @@ namespace prob
       static void busAwaitingTests();
       static void searchDisksTests();
       static void templateMatchingTests();
+      static void sortBooksTests();
    };
 }

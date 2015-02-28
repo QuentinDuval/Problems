@@ -785,7 +785,7 @@ namespace prob
    bool SortBooks::qualifyAsTitle(std::string const& field)
    {
       std::vector<std::string> words = splitWords(field);
-      if (3 <= words.size())
+      if (3 < words.size())
          return true;
 
       static std::vector<std::string> searched = { "the", "and", "of" };
@@ -806,6 +806,8 @@ namespace prob
          if (s.at(i) == ' ') words.emplace_back();
          else words.back().push_back(s.at(i));
       }
+      auto last = std::remove_if(begin(words), end(words), [](std::string const& s){ return s.empty(); });
+      words.erase(last, end(words));
       return words;
    }
 }

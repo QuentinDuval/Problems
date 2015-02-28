@@ -26,6 +26,7 @@ namespace prob
       busAwaitingTests();
       searchDisksTests();
       templateMatchingTests();
+      sortBooksTests();
    }
 
    //--------------------------------------------------------------------------
@@ -301,5 +302,62 @@ namespace prob
       assert("ippi" == TemplateMatching::bestMatch("mississippi", "promise", "piccolo"));
       assert("a a" == TemplateMatching::bestMatch("a a a a a a", "a a", "a"));
       assert("b" == TemplateMatching::bestMatch("ab", "b", "a"));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::sortBooksTests()
+   {
+      auto res = SortBooks::checkManually(
+         { "J R R Tolkien", "THE Jungle BOOK" },
+         { "THE HOBBIT", "RUDYARD KIPLING" });
+      assert(equal(std::vector<size_t>{ 0 }, res));
+
+      res = SortBooks::checkManually(
+      { "Scaramouche", "Dan Brown", "War and Peace" },
+      { "Rafael Sabatini", "The Da Vinci Code", "Leo Tolstoy" });
+      assert(equal(std::vector<size_t>{ 0 }, res));
+
+      res = SortBooks::checkManually(
+         { "Lost     Horizon" },
+         { "James Hilton" });
+      assert(equal(std::vector<size_t>{ 0 }, res));
+
+      res = SortBooks::checkManually(
+      { "andy rooney", "joe lofthouse", "Theodore Taylor" },
+      { "love of life", "the arrest", "Softly Wandering" });
+      assert(equal(std::vector<size_t>{ 2 }, res));
+
+      res = SortBooks::checkManually(
+      { "Aesop", "Little Women", "Hans Christian Anderson", "The Arabian Nights",
+      "Peter Christian Asbornsen", "Mr Poppers Penguins", "Enid Bagnold", "Miss Hickory",
+      "Sir James Barrie", "The Wizard of OZ", "Ludwig Bemelmans", "The Five Chinese Brothers",
+      "Edith Nesbit Bland", "The Enchanted Castle", "Edith Nesbit Bland",
+      "Five Children and It", "Michael Bond", "The Children of Green Knowe",
+      "James Boyd", "Caddie Woodlawn", "Walter Brooks", "The Runaway Bunny",
+      "Margaret Wise Brown", "Big Red Barn", "Jean De Brunhoff",
+      "Old Mother West Wind", "Frances Hodgson Burnett", "A Little Princess",
+      "Frances Hodgson Burnett", "Mike Mulligan and His Steam Shovel",
+      "Virginia Lee Burton", "The Enormous Egg", "Eleanor Cameron",
+      "The Happy Orpheline", "Natalie Savage Carlson", "Through the Looking Glass",
+      "Miguel Cervantes", "Secret of the Andes", "Beverly Cleary", "Henry Huggins",
+      "Elizabeth Coatsworth", "The Adventures of Pinocchio", "Barbara Cooney",
+      "The Little Lame Prince", "Paul Creswick", "The Courage of Sarah Noble",
+      "Alice Dagliesh" },
+      { "Aesops Fables", "Louisa May Alcott", "Fairy Tales", "Hans Christian Anderson",
+      "East of the Sun and West of the Moon", "Richard and Florence Atwater",
+      "National Velvet", "Carolyn Bailey", "Peter Pan", "Frank L Baum", "Madeline",
+      "Claire Huchet Bishop", "The Railway Children", "Edith Nesbit Bland",
+      "The Story of the Treasure Seekers", "Edith Nesbit Bland", "A Bear Called Paddington",
+      "Lucy Boston", "Drums", "Carol Rylie Brink", "Freddy the Detective",
+      "Margaret Wise Brown", "The Little Fur Family", "Moon Goodnight", "The Story of Babar",
+      "Thornton W Burgess", "Little Lord Fauntleroy", "Frances Hodgson Burnett",
+      "The Secret Garden", "Virginia Lee Burton", "The Little House", "Oliver Butterworth",
+      "The Wonderful Flight to the Mushroom Planet", "Natalie Savage Carlson",
+      "The Family Under the Bridge", "Lewis Carroll", "Don Quixote", "Ann Nolan Clark",
+      "Beezus and Ramona", "Beverly Cleary", "The Cat Who Went to Heaven", "Carlo Collodi",
+      "Chanticleer and the Fox", "Dinah Mulock Craik", "Robin Hood", "Alice Dagliesh",
+      "The Bears on Hemlock Mountain" });
+      assert(equal(std::vector<size_t>{0, 1, 2, 6, 7, 8, 10, 18, 19, 23, 26, 27, 36, 39, 44 }, res));
    }
 }
