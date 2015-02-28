@@ -72,4 +72,56 @@ namespace prob
          std::reverse(start, end(str));
       }
    }
+
+   //--------------------------------------------------------------------------
+
+   static void permutationsRec(std::string& str, std::string::iterator current, std::vector<std::string>& output)
+   {
+      if (current == end(str))
+         return;
+
+      if (1 == std::distance(current, end(str)))
+      {
+         output.push_back(str);
+         return;
+      }
+
+      for (auto it = current; it != end(str); ++it)
+      {
+         std::swap(*it, *current);
+         permutationsRec(str, current + 1, output);
+         std::swap(*it, *current);
+      }
+   }
+
+   std::vector<std::string> permutations(std::string const& s)
+   {
+      std::string str(s);
+      std::vector<std::string> result;
+      permutationsRec(str, begin(str), result);
+      return result;
+   }
+
+   //--------------------------------------------------------------------------
+
+   static std::vector<std::string> combinationsRec(std::string::const_iterator first, std::string::const_iterator last)
+   {
+      std::vector<std::string> results;
+      if (first == last)
+         return results;
+
+      results.emplace_back(1, *first);
+      auto recResults = combinationsRec(first + 1, last);
+      for (auto& s : recResults)
+      {
+         results.push_back(s);
+         results.push_back(*first + s);
+      }
+      return results;
+   }
+
+   std::vector<std::string> combinations(std::string const& str)
+   {
+      return combinationsRec(begin(str), end(str));
+   }
 }

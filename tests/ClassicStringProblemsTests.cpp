@@ -13,6 +13,8 @@ namespace prob
       firstNonRepeatedCharTests();
       removeCharsTests();
       reverseWordsTests();
+      permutationsTests();
+      combinationsTests();
    }
 
    //--------------------------------------------------------------------------
@@ -41,5 +43,23 @@ namespace prob
       std::string s("Let us reverse this sentence nicely.");
       reverseWords(s);
       assert("nicely. sentence this reverse us Let" == s);
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicStringProblemsTests::permutationsTests()
+   {
+      auto res = permutations("abc");
+      assert(6 == res.size());
+      for (auto& s : res)
+         std::cout << s << std::endl;
+   }
+
+   void ClassicStringProblemsTests::combinationsTests()
+   {
+      auto res = combinations("abc");
+      assert(7 == res.size());
+      for (auto& s : res)
+         std::cout << s << std::endl;
    }
 }

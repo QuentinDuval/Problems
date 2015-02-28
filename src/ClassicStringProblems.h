@@ -15,4 +15,8 @@ namespace prob
 
    /** Reverse the words making the string */
    void reverseWords(std::string& str);
+
+   /** Return all the permutations / combinations of a string */
+   std::vector<std::string> permutations(std::string const& str);
+   std::vector<std::string> combinations(std::string const& str);
 }
