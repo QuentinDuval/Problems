@@ -1,5 +1,6 @@
 #include "ClassicDPProblemsTests.h"
 #include "ClassicNumericProblemsTests.h"
+#include "ClassicStringProblemsTests.h"
 #include "EightQueens.h"
 #include "GraphProblemsTests.h"
 #include "NumericProblemsTests.h"
@@ -17,6 +18,8 @@ int main()
 
    ClassicDPProblemsTests::allTests();
    ClassicNumericProblemsTests::allTests();
+   ClassicStringProblemsTests::allTests();
+
    GraphProblemsTests::allTests();
    NumericProblemsTests::allTests();
    OptimizationProblemsTests::allTests();
