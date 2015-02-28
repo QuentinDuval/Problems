@@ -775,12 +775,37 @@ namespace prob
       return ambigious;
    }
 
+   static bool equalNoCase(std::string const& lhs, std::string const& rhs)
+   {
+      if (lhs.size() != rhs.size()) return false;
+      return std::equal(begin(lhs), end(lhs), begin(rhs),
+         [](char l, char r) { return ::tolower(l) == ::tolower(r); });
+   }
+
    bool SortBooks::qualifyAsTitle(std::string const& field)
    {
-      if (2 < std::count_if(begin(field), end(field), ' ')) return true;
-      if (std::string::npos != field.find("the")) return true;
-      if (std::string::npos != field.find("and")) return true;
-      if (std::string::npos != field.find("of")) return true;
+      std::vector<std::string> words = splitWords(field);
+      if (3 <= words.size())
+         return true;
+
+      static std::vector<std::string> searched = { "the", "and", "of" };
+      for (auto& w : words)
+      {
+         auto it = std::find_if(begin(searched), end(searched), [&](std::string const& s) { return equalNoCase(w, s); });
+         if (end(searched) != it)
+            return true;
+      }
       return false;
+   }
+
+   std::vector<std::string> SortBooks::splitWords(std::string const& s)
+   {
+      std::vector<std::string> words(1, "");
+      for (size_t i = 0; i < s.size(); ++i)
+      {
+         if (s.at(i) == ' ') words.emplace_back();
+         else words.back().push_back(s.at(i));
+      }
+      return words;
    }
 }

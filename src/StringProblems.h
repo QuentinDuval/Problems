@@ -185,5 +185,6 @@ namespace prob
    {
       static std::vector<size_t> checkManually(std::vector<std::string> const& firstFields, std::vector<std::string> const& secondFields);
       static bool qualifyAsTitle(std::string const& field);
+      static std::vector<std::string> splitWords(std::string const& s);
    };
 }
