@@ -176,4 +176,14 @@ namespace prob
    {
       static std::string bestMatch(std::string const& text, std::string const& prefix, std::string const& suffix);
    };
+
+   /**
+    * SortBooks
+    * http://community.topcoder.com/stat?c=problem_statement&pm=4557
+    */
+   struct SortBooks
+   {
+      static std::vector<size_t> checkManually(std::vector<std::string> const& firstFields, std::vector<std::string> const& secondFields);
+      static bool qualifyAsTitle(std::string const& field);
+   };
 }

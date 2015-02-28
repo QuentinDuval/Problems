@@ -756,4 +756,31 @@ namespace prob
       }
       return bestMatch;
    }
+
+
+   //--------------------------------------------------------------------------
+   // SORT BOOKS
+   //--------------------------------------------------------------------------
+
+   std::vector<size_t> SortBooks::checkManually(std::vector<std::string> const& firstFields, std::vector<std::string> const& secondFields)
+   {
+      std::vector<size_t> ambigious;
+      for (size_t i = 0; i < firstFields.size(); ++i)
+      {
+         bool is1Title = qualifyAsTitle(firstFields[i]);
+         bool is2Title = qualifyAsTitle(secondFields[i]);
+         if (is1Title == is2Title)
+            ambigious.push_back(i);
+      }
+      return ambigious;
+   }
+
+   bool SortBooks::qualifyAsTitle(std::string const& field)
+   {
+      if (2 < std::count_if(begin(field), end(field), ' ')) return true;
+      if (std::string::npos != field.find("the")) return true;
+      if (std::string::npos != field.find("and")) return true;
+      if (std::string::npos != field.find("of")) return true;
+      return false;
+   }
 }
