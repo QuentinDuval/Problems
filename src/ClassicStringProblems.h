@@ -12,4 +12,7 @@ namespace prob
    /** Remove some characters from a string */
    void removeChars(std::string& str, std::string const& toRemove);
    void removeCharsManual(std::string& str, std::string const& toRemove);
+
+   /** Reverse the words making the string */
+   void reverseWords(std::string& str);
 }

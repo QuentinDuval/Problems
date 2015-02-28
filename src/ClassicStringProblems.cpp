@@ -24,6 +24,8 @@ namespace prob
       return std::make_pair(false, ' ');
    }
 
+   //--------------------------------------------------------------------------
+
    void removeChars(std::string& str, std::string const& toRemove)
    {
       std::unordered_set<char> charSet;
@@ -48,5 +50,26 @@ namespace prob
          ++valid;
       }
       str.erase(valid, end(str));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void reverseWords(std::string& str)
+   {
+      std::reverse(begin(str), end(str));
+      auto start = begin(str);
+      for (auto last = begin(str); last != end(str); ++last)
+      {
+         if (*last == ' ')
+         {
+            std::reverse(start, last);
+            start = last + 1;
+         }
+      }
+
+      if (start != end(str))
+      {
+         std::reverse(start, end(str));
+      }
    }
 }

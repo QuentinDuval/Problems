@@ -12,6 +12,7 @@ namespace prob
    {
       firstNonRepeatedCharTests();
       removeCharsTests();
+      reverseWordsTests();
    }
 
    //--------------------------------------------------------------------------
@@ -31,5 +32,14 @@ namespace prob
       std::string s("harbor");
       removeCharsManual(s, "aeiouy");
       assert("hrbr" == s);
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicStringProblemsTests::reverseWordsTests()
+   {
+      std::string s("Let us reverse this sentence nicely.");
+      reverseWords(s);
+      assert("nicely. sentence this reverse us Let" == s);
    }
 }

@@ -9,5 +9,6 @@ namespace prob
 
       static void firstNonRepeatedCharTests();
       static void removeCharsTests();
-   };
+      static void reverseWordsTests();
+   }; 
 }
