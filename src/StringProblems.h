@@ -187,4 +187,13 @@ namespace prob
       static bool qualifyAsTitle(std::string const& field);
       static std::vector<std::string> splitWords(std::string const& s);
    };
+
+   /**
+    * SerialNumbers
+    * http://community.topcoder.com/stat?c=problem_statement&pm=8171
+    */
+   struct SerialNumbers
+   {
+      static std::vector<std::string> sortSerials(std::vector<std::string> const& serialNbs);
+   };
 }

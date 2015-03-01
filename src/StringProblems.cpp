@@ -810,4 +810,29 @@ namespace prob
       words.erase(last, end(words));
       return words;
    }
+
+
+   //--------------------------------------------------------------------------
+   // SERIAL NUMBERS
+   //--------------------------------------------------------------------------
+
+   static int sumDigits(std::string const& s)
+   {
+      int sum = 0;
+      for (char c : s)
+      {
+         if (::isdigit(c))
+            sum += c - '0';
+      }
+      return sum;
+   }
+
+   std::vector<std::string> SerialNumbers::sortSerials(std::vector<std::string> const& serialNbs)
+   {
+      std::vector<std::string> sorted(serialNbs);
+      std::sort(begin(sorted), end(sorted));
+      std::stable_sort(begin(sorted), end(sorted), comparingWith(sumDigits));
+      std::stable_sort(begin(sorted), end(sorted), comparingWith([](std::string const& s) { return s.size(); }));
+      return sorted;
+   }
 }

@@ -27,6 +27,7 @@ namespace prob
       searchDisksTests();
       templateMatchingTests();
       sortBooksTests();
+      serialNumbersTests();
    }
 
    //--------------------------------------------------------------------------
@@ -359,5 +360,22 @@ namespace prob
       "Chanticleer and the Fox", "Dinah Mulock Craik", "Robin Hood", "Alice Dagliesh",
       "The Bears on Hemlock Mountain" });
       assert(equal(std::vector<size_t>{0, 1, 2, 6, 7, 8, 10, 18, 19, 23, 26, 27, 36, 39, 44 }, res));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::serialNumbersTests()
+   {
+      auto res = SerialNumbers::sortSerials({ "ABCD", "145C", "A", "A910", "Z321" });
+      assert(equal(std::vector<std::string>{"A", "ABCD", "Z321", "145C", "A910" }, res));
+
+      res = SerialNumbers::sortSerials({ "Z19", "Z20" });
+      assert(equal(std::vector<std::string>{ "Z20", "Z19" }, res));
+
+      res = SerialNumbers::sortSerials({ "34H2BJS6N", "PIM12MD7RCOLWW09", "PYF1J14TF", "FIPJOTEA5" });
+      assert(equal(std::vector<std::string>{"FIPJOTEA5", "PYF1J14TF", "34H2BJS6N", "PIM12MD7RCOLWW09" }, res));
+
+      res = SerialNumbers::sortSerials({ "ABCDE", "BCDEF", "ABCDA", "BAAAA", "ACAAA" });
+      assert(equal(std::vector<std::string>{"ABCDA", "ABCDE", "ACAAA", "BAAAA", "BCDEF" }, res));
    }
 }
