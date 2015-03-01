@@ -920,4 +920,54 @@ namespace prob
       auto maxIt = std::max_element(begin(votes), end(votes), comparingWith(GetFirst()));
       return maxIt != end(votes) ? maxIt->second : "";
    }
+
+
+   //--------------------------------------------------------------------------
+   // DOWNLOADING FILES
+   //--------------------------------------------------------------------------
+
+   struct Task
+   {
+      Task() = default;
+      Task(int bw, double rem) : m_bandwidth(bw), m_remaining(rem) {}
+
+      void addBandwidth(double excessBandwidth)
+      {
+         m_remaining *= m_bandwidth / (m_bandwidth + excessBandwidth);
+         m_bandwidth += excessBandwidth;
+      }
+
+      int m_bandwidth;
+      double m_remaining;
+   };
+
+   static Task parseTask(std::string const& taskStr)
+   {
+      auto space = taskStr.find(' ');
+      auto bandwidth = taskStr.substr(0, space);
+      auto remTime = taskStr.substr(space + 1);
+      return Task{ atoi(bandwidth.c_str()), atof(remTime.c_str()) };
+   }
+
+   double DownloadingFiles::actualTime(std::vector<std::string> const& taskStrings)
+   {
+      std::vector<Task> tasks(taskStrings.size());
+      std::transform(begin(taskStrings), end(taskStrings), begin(tasks), parseTask);
+      auto less = [](Task const& lhs, Task const& rhs) { return lhs.m_remaining < rhs.m_remaining; };
+
+      double excessBandwidth = 0.;
+      for (auto it = begin(tasks); it != end(tasks); ++it)
+      {
+         it->addBandwidth(excessBandwidth);
+         auto min = std::min_element(it, end(tasks), less);
+         std::swap(*min, *it);
+
+         excessBandwidth = it->m_bandwidth;
+         std::for_each(it + 1, end(tasks), [&](Task& t) { t.m_remaining -= it->m_remaining; });
+      }
+
+      double timeSpent = 0.;
+      for (auto const& t : tasks) timeSpent += t.m_remaining;
+      return timeSpent;
+   }
 }

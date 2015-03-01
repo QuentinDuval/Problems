@@ -224,4 +224,14 @@ namespace prob
    {
       static std::string bestQuote(std::vector<std::string> const& quotes);
    };
+
+   /**
+   * DownloadingFiles
+   * http://community.topcoder.com/stat?c=problem_statement&pm=8400
+   */
+   struct DownloadingFiles
+   {
+      static double actualTime(std::vector<std::string> const& taskStrings);
+   };
+
 }

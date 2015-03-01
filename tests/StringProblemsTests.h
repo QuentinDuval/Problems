@@ -29,5 +29,6 @@ namespace prob
       static void tournamentsAmbiguityNumberTests();
       static void joshStringTests();
       static void quoteContestTests();
+      static void downloadingFilesTests();
    };
 }
