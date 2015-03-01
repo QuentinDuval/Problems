@@ -206,4 +206,14 @@ namespace prob
    {
       static int scrutinizeTable(std::vector<std::string> const& table);
    };
+
+   /**
+    * JoshString
+    * http://community.topcoder.com/stat?c=problem_statement&pm=8094
+    */
+   struct JoshString
+   {
+      static bool isJoshString(std::string const& str);
+   };
+
 }

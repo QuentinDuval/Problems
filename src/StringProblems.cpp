@@ -870,4 +870,30 @@ namespace prob
       }
       return ambiguityCount;
    }
+
+
+   //--------------------------------------------------------------------------
+   // JOSH STRING
+   //--------------------------------------------------------------------------
+
+   static bool isPrime(int n)
+   {
+      int max = static_cast<int>(sqrt(n)) + 1;
+      for (int i = 2; i <= max; ++i)
+      {
+         if (n % i == 0)
+            return false;
+      }
+      return true;
+   }
+
+   bool JoshString::isJoshString(std::string const& str)
+   {
+      int sumLetters = 0;
+      for (char c : str)
+      {
+         sumLetters += c - 'a' + 1;
+      }
+      return isPrime(sumLetters);
+   }
 }

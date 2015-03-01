@@ -27,5 +27,6 @@ namespace prob
       static void sortBooksTests();
       static void serialNumbersTests();
       static void tournamentsAmbiguityNumberTests();
+      static void joshStringTests();
    };
 }

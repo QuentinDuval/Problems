@@ -29,6 +29,7 @@ namespace prob
       sortBooksTests();
       serialNumbersTests();
       tournamentsAmbiguityNumberTests();
+      joshStringTests();
    }
 
    //--------------------------------------------------------------------------
@@ -412,5 +413,16 @@ namespace prob
          "-010-----011--0--0",
          "11010110100-010--0",
          "1-01-0010--00-111-" }));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::joshStringTests()
+   {
+      assert(true == JoshString::isJoshString("bad"));
+      assert(false == JoshString::isJoshString("badbad"));
+      assert(false == JoshString::isJoshString("abcdefghijklmnopqrstuvwxyz"));
+      assert(true == JoshString::isJoshString("abcdefghijklmnopqrstuvwxyzaa"));
+      assert(true == JoshString::isJoshString("asdjkhqwaieyajhdjsahjquawyhasdhwauyashjzxdf"));
    }
 }
