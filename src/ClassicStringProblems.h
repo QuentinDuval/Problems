@@ -19,4 +19,7 @@ namespace prob
    /** Return all the permutations / combinations of a string */
    std::vector<std::string> permutations(std::string const& str);
    std::vector<std::string> combinations(std::string const& str);
+
+   /** Return all possible string representing a give phone nb */
+   std::vector<std::string> phoneWords(std::string const& phoneNb);
 }

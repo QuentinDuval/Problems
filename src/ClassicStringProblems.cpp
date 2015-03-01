@@ -3,8 +3,10 @@
 #include "utils/Functors.h"
 #include "utils/Matrix.h"
 
+#include <array>
 #include <iterator>
 #include <set>
+#include <unordered_map>
 #include <unordered_set>
 
 
@@ -123,5 +125,60 @@ namespace prob
    std::vector<std::string> combinations(std::string const& str)
    {
       return combinationsRec(begin(str), end(str));
+   }
+
+   //--------------------------------------------------------------------------
+
+   static char getCharKey(int telephoneKey, int index)
+   {
+      static std::unordered_map<int, std::vector<char>> charMap = {
+            { 2, { 'A', 'B', 'C' } },
+            { 3, { 'D', 'E', 'F' } },
+            { 4, { 'G', 'H', 'I' } },
+            { 5, { 'J', 'K', 'L' } },
+            { 6, { 'M', 'N', 'O' } },
+            { 7, { 'P', 'R', 'S' } },
+            { 8, { 'T', 'U', 'V' } },
+            { 9, { 'W', 'X', 'Y' } }
+      };
+      return charMap[telephoneKey][index - 1];
+   }
+
+   static std::vector<char> representents(char digit)
+   {
+      static std::array<char, 8> withLetters = { '2', '3', '4', '5', '6', '7', '8', '9' };
+      if (end(withLetters) == std::find(begin(withLetters), end(withLetters), digit))
+         return std::vector<char>(1, digit);
+
+      std::vector<char> repr(3);
+      for (int i : { 1, 2, 3})
+      {
+         repr[i - 1] = getCharKey(digit - '0', i);
+      }
+      return repr;
+   }
+
+   static void phoneWords(std::string const& phoneNb, std::string& partialWord, size_t curr, std::vector<std::string>& words)
+   {
+      if (curr == phoneNb.size())
+      {
+         words.push_back(partialWord);
+         return;
+      }
+
+      for (char c : representents(phoneNb[curr]))
+      {
+         partialWord.push_back(c);
+         phoneWords(phoneNb, partialWord, curr + 1, words);
+         partialWord.pop_back();
+      }
+   }
+
+   std::vector<std::string> phoneWords(std::string const& phoneNb)
+   {
+      std::vector<std::string> words;
+      std::string partialWord;
+      phoneWords(phoneNb, partialWord, 0, words);
+      return words;
    }
 }
