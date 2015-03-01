@@ -242,4 +242,13 @@ namespace prob
    {
       static std::string removeDuplicates(std::string const& str);
    };
+
+   /**
+    * TheLargestString
+    * http://community.topcoder.com/stat?c=problem_statement&pm=12494
+    */
+   struct TheLargestString
+   {
+      static std::string find(std::string const& s, std::string const& t);
+   };
 }

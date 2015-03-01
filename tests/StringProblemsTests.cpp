@@ -34,6 +34,7 @@ namespace prob
       quoteContestTests();
       downloadingFilesTests();
       uniqueTests();
+      theLargestStringTests();
    }
 
    //--------------------------------------------------------------------------
@@ -461,5 +462,15 @@ namespace prob
       assert("ardvk" == Unique::removeDuplicates("aardvark"));
       assert("x" == Unique::removeDuplicates("xxxxx"));
       assert("topcder" == Unique::removeDuplicates("topcoder"));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::theLargestStringTests()
+   {
+      assert("by" == TheLargestString::find("ab", "zy"));
+      assert("cbaaaa" == TheLargestString::find("abacaba", "zzzaaaa"));
+      assert("xx" == TheLargestString::find("x", "x"));
+      assert("bbbbbbbbbbbbbbbbbbaaab" == TheLargestString::find("abbabbabbababaaaabbababab", "bababbaabbbababbbbababaab"));
    }
 }

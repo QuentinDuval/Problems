@@ -31,5 +31,6 @@ namespace prob
       static void quoteContestTests();
       static void downloadingFilesTests();
       static void uniqueTests();
+      static void theLargestStringTests();
    };
 }

@@ -988,4 +988,41 @@ namespace prob
       }
       return filtered;
    }
+
+
+   //--------------------------------------------------------------------------
+   // THE LARGEST STRING
+   //--------------------------------------------------------------------------
+
+   std::string TheLargestString::find(std::string const& s, std::string const& t)
+   {
+      using Pair = std::pair<char, char>;
+      using Pairs = std::vector<Pair>;
+      using PairIt = Pairs::iterator;
+
+      Pairs pairs(s.size());
+      for (size_t i = 0; i < s.size(); ++i)
+         pairs[i] = std::make_pair(s[i], t[i]);
+
+      std::vector<PairIt> selected;
+      auto maxIt = std::max_element(begin(pairs), end(pairs));
+      selected.push_back(maxIt);
+      const char lowerBound = maxIt->second; //The first selected character of t is a lower bound for chars in s
+
+      for (auto it = maxIt + 1; it != end(pairs); it = maxIt + 1)
+      {
+         maxIt = std::max_element(it, end(pairs));
+         if (maxIt->first < lowerBound)
+            break;
+         selected.push_back(maxIt);
+      }
+
+      std::string result(selected.size() * 2, ' ');
+      for (size_t i = 0; i < selected.size(); ++i)
+      {
+         result[i] = selected[i]->first;
+         result[selected.size() + i] = selected[i]->second;
+      }
+      return result;
+   }
 }
