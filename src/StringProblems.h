@@ -196,4 +196,14 @@ namespace prob
    {
       static std::vector<std::string> sortSerials(std::vector<std::string> const& serialNbs);
    };
+
+
+   /**
+    * TournamentsAmbiguityNumber
+    * http://community.topcoder.com/stat?c=problem_statement&pm=7600
+    */
+   struct TournamentsAmbiguityNumber
+   {
+      static int scrutinizeTable(std::vector<std::string> const& table);
+   };
 }

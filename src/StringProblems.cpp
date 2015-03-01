@@ -835,4 +835,39 @@ namespace prob
       std::stable_sort(begin(sorted), end(sorted), comparingWith([](std::string const& s) { return s.size(); }));
       return sorted;
    }
+
+
+   //--------------------------------------------------------------------------
+   // TOURNAMENTS AMBIGUITY NUMBER
+   //--------------------------------------------------------------------------
+
+   int countWinCycle(std::vector<std::string> const& table, int winner, int looser)
+   {
+      int count = 0;
+      for (int p = 0; p < table.size(); ++p)
+      {
+         if (winner == p || looser == p)
+            continue;
+
+         if ((table[looser][p] == '1') && (table[p][winner] == '1'))
+            ++count;
+      }
+      return count;
+   }
+
+   int TournamentsAmbiguityNumber::scrutinizeTable(std::vector<std::string> const& table)
+   {
+      int ambiguityCount = 0;
+      for (int p1 = 0; p1 < table.size(); ++p1)
+      {
+         for (int p2 = p1 + 1; p2 < table.size(); ++p2)
+         {
+            if (table[p1][p2] == '1')
+               ambiguityCount += countWinCycle(table, p1, p2);
+            else if (table[p1][p2] == '0')
+               ambiguityCount += countWinCycle(table, p2, p1);
+         }
+      }
+      return ambiguityCount;
+   }
 }

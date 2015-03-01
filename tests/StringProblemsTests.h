@@ -26,5 +26,6 @@ namespace prob
       static void templateMatchingTests();
       static void sortBooksTests();
       static void serialNumbersTests();
+      static void tournamentsAmbiguityNumberTests();
    };
 }
