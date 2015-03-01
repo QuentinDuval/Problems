@@ -30,6 +30,7 @@ namespace prob
       serialNumbersTests();
       tournamentsAmbiguityNumberTests();
       joshStringTests();
+      quoteContestTests();
    }
 
    //--------------------------------------------------------------------------
@@ -424,5 +425,15 @@ namespace prob
       assert(false == JoshString::isJoshString("abcdefghijklmnopqrstuvwxyz"));
       assert(true == JoshString::isJoshString("abcdefghijklmnopqrstuvwxyzaa"));
       assert(true == JoshString::isJoshString("asdjkhqwaieyajhdjsahjquawyhasdhwauyashjzxdf"));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::quoteContestTests()
+   {
+      assert("secondquote" == QuoteContest::bestQuote({ "4 1 firstquote", "10 2 secondquote", "1 5 thirdquote" }));
+      assert("nocodecanbreakme" == QuoteContest::bestQuote({ "13 5 nocodecanbreakme", "10 6 iamthebest", "13 2 trytochallengeme" }));
+      assert("aboutthechallenge" == QuoteContest::bestQuote({ "1 1 justdoit", "1 2 thewinnertakeitall", "1 4 aboutthechallenge" }));
+      assert("theworstquoteintheworld" == QuoteContest::bestQuote({ "1 1 theworstquoteintheworld" }));
    }
 }

@@ -896,4 +896,28 @@ namespace prob
       }
       return isPrime(sumLetters);
    }
+
+
+   //--------------------------------------------------------------------------
+   // QUOTE CONTEST
+   //--------------------------------------------------------------------------
+
+   std::pair<int, std::string> splitVote(std::string const& str)
+   {
+      auto space1 = str.find(' ');
+      auto space2 = str.find(' ', space1 + 1);
+      auto vote1 = str.substr(0, space1);
+      auto vote2 = str.substr(space1 + 1, space2 - space1 - 1);
+
+      int count = atoi(vote1.c_str()) + atoi(vote2.c_str());
+      return std::make_pair(count, str.substr(space2 + 1));
+   }
+
+   std::string QuoteContest::bestQuote(std::vector<std::string> const& quotes)
+   {
+      std::vector<std::pair<int, std::string>> votes(quotes.size());
+      std::transform(begin(quotes), end(quotes), begin(votes), splitVote);
+      auto maxIt = std::max_element(begin(votes), end(votes), comparingWith(GetFirst()));
+      return maxIt != end(votes) ? maxIt->second : "";
+   }
 }

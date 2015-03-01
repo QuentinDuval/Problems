@@ -216,4 +216,12 @@ namespace prob
       static bool isJoshString(std::string const& str);
    };
 
+   /**
+   * QuoteContest
+   * http://community.topcoder.com/stat?c=problem_statement&pm=7594
+   */
+   struct QuoteContest
+   {
+      static std::string bestQuote(std::vector<std::string> const& quotes);
+   };
 }
