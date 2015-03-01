@@ -994,35 +994,48 @@ namespace prob
    // THE LARGEST STRING
    //--------------------------------------------------------------------------
 
+   struct LargestStringState
+   {
+      LargestStringState(std::string const& l, std::string const& r)
+         : m_left(l), m_right(r), m_total(l + r) {}
+
+      std::string m_left;
+      std::string m_right;
+      std::string m_total;
+
+      bool operator< (LargestStringState const& other) const
+      {
+         return m_total < other.m_total;
+      }
+   };
+
    std::string TheLargestString::find(std::string const& s, std::string const& t)
    {
-      using Pair = std::pair<char, char>;
-      using Pairs = std::vector<Pair>;
-      using PairIt = Pairs::iterator;
-
-      Pairs pairs(s.size());
-      for (size_t i = 0; i < s.size(); ++i)
+      size_t n = s.size();
+      std::vector<std::pair<char, char>> pairs(n);
+      for (size_t i = 0; i < n; ++i)
          pairs[i] = std::make_pair(s[i], t[i]);
 
-      std::vector<PairIt> selected;
-      auto maxIt = std::max_element(begin(pairs), end(pairs));
-      selected.push_back(maxIt);
-      const char lowerBound = maxIt->second; //The first selected character of t is a lower bound for chars in s
-
-      for (auto it = maxIt + 1; it != end(pairs); it = maxIt + 1)
+      //Dynamic programming - looks like the increasing sub-sequence
+      char lastFirst = CHAR_MIN;
+      std::vector<LargestStringState> bests;
+      for (int i = s.size() - 1; i >= 0; --i)
       {
-         maxIt = std::max_element(it, end(pairs));
-         if (maxIt->first < lowerBound)
-            break;
-         selected.push_back(maxIt);
+         if (s[i] < lastFirst) //Will never improve
+            continue;
+
+         LargestStringState best(std::string(1, s[i]), std::string(1, t[i]));
+         for (auto& b : bests)
+         {
+            LargestStringState newState(s[i] + b.m_left, t[i] + b.m_right);
+            best = std::max(best, newState);
+         }
+         bests.push_back(best);
+         lastFirst = s[i];
       }
 
-      std::string result(selected.size() * 2, ' ');
-      for (size_t i = 0; i < selected.size(); ++i)
-      {
-         result[i] = selected[i]->first;
-         result[selected.size() + i] = selected[i]->second;
-      }
-      return result;
+      //Return the best solution
+      auto maxSolution = std::max_element(begin(bests), end(bests));
+      return maxSolution->m_total;
    }
 }
