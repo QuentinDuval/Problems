@@ -33,6 +33,7 @@ namespace prob
       joshStringTests();
       quoteContestTests();
       downloadingFilesTests();
+      uniqueTests();
    }
 
    //--------------------------------------------------------------------------
@@ -443,12 +444,22 @@ namespace prob
 
    void StringProblemsTests::downloadingFilesTests()
    {
-      //assert(43.0 == DownloadingFiles::actualTime({ "3 57", "2 22" }));
-      //assert(1043.0 == DownloadingFiles::actualTime({ "3 1057", "2 1022" }));
-      //assert(2500.0 == DownloadingFiles::actualTime({ "25 1000", "5 5000", "10 5000" }));
-      //assert(27.5 == DownloadingFiles::actualTime({ "1 10", "1 20", "2 40" }));
+      assert(43.0 == DownloadingFiles::actualTime({ "3 57", "2 22" }));
+      assert(1043.0 == DownloadingFiles::actualTime({ "3 1057", "2 1022" }));
+      assert(2500.0 == DownloadingFiles::actualTime({ "25 1000", "5 5000", "10 5000" }));
+      assert(27.5 == DownloadingFiles::actualTime({ "1 10", "1 20", "2 40" }));
       assert(equalWithDelta(4414.542662116041,
          DownloadingFiles::actualTime({ "6 88", "39 7057", "63 2502", "45 2285", "28 8749", "62 3636", "1 5546", "49 5741" })
          , 1e-6));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::uniqueTests()
+   {
+      assert("ban" == Unique::removeDuplicates("banana"));
+      assert("ardvk" == Unique::removeDuplicates("aardvark"));
+      assert("x" == Unique::removeDuplicates("xxxxx"));
+      assert("topcder" == Unique::removeDuplicates("topcoder"));
    }
 }

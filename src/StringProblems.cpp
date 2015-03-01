@@ -970,4 +970,22 @@ namespace prob
       for (auto const& t : tasks) timeSpent += t.m_remaining;
       return timeSpent;
    }
+
+
+   //--------------------------------------------------------------------------
+   // UNIQUE
+   //--------------------------------------------------------------------------
+
+   std::string Unique::removeDuplicates(std::string const& str)
+   {
+      std::vector<char> found(UCHAR_MAX + 1, false);
+      std::string filtered;
+      for (char c : str)
+      {
+         if (found[c - CHAR_MIN]) continue;
+         filtered += c;
+         found[c - CHAR_MIN] = true;
+      }
+      return filtered;
+   }
 }

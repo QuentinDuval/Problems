@@ -234,4 +234,12 @@ namespace prob
       static double actualTime(std::vector<std::string> const& taskStrings);
    };
 
+   /**
+    * Unique
+    * http://community.topcoder.com/stat?c=problem_statement&pm=13067
+    */
+   struct Unique
+   {
+      static std::string removeDuplicates(std::string const& str);
+   };
 }

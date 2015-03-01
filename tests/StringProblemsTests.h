@@ -30,5 +30,6 @@ namespace prob
       static void joshStringTests();
       static void quoteContestTests();
       static void downloadingFilesTests();
+      static void uniqueTests();
    };
 }
