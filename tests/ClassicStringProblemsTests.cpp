@@ -15,6 +15,7 @@ namespace prob
       reverseWordsTests();
       permutationsTests();
       combinationsTests();
+      phoneWordsTests();
    }
 
    //--------------------------------------------------------------------------
@@ -61,5 +62,14 @@ namespace prob
       assert(7 == res.size());
       for (auto& s : res)
          std::cout << s << std::endl;
+   }
+
+   //--------------------------------------------------------------------------
+
+   void ClassicStringProblemsTests::phoneWordsTests()
+   {
+      std::string phoneNb("866-2665");
+      auto res = phoneWords(phoneNb);
+      assert(end(res) != std::find(begin(res), end(res), "TOO-COOL"));
    }
 }

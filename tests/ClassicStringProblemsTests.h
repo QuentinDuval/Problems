@@ -12,5 +12,6 @@ namespace prob
       static void reverseWordsTests();
       static void permutationsTests();
       static void combinationsTests();
+      static void phoneWordsTests();
    }; 
 }
