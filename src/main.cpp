@@ -2,6 +2,7 @@
 #include "ClassicNumericProblemsTests.h"
 #include "ClassicStringProblemsTests.h"
 #include "EightQueens.h"
+#include "EnumerationProblemsTests.h"
 #include "GraphProblemsTests.h"
 #include "NumericProblemsTests.h"
 #include "OptimizationProblemsTests.h"
@@ -20,6 +21,7 @@ int main()
    ClassicNumericProblemsTests::allTests();
    ClassicStringProblemsTests::allTests();
 
+   EnumerationProblemsTests::allTests();
    GraphProblemsTests::allTests();
    NumericProblemsTests::allTests();
    OptimizationProblemsTests::allTests();
