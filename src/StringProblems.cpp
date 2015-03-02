@@ -46,7 +46,7 @@ namespace prob
       int tLen = text.size();
       int pLen = pattern.size();
 
-      std::vector<int> lastOccur(UCHAR_MAX + 1, -1);
+      std::vector<int> lastOccur(UCHAR_MAX + 1, pLen);
       for (int i = 0; i < pLen; ++i)
          lastOccur[pattern[i] - CHAR_MIN] = i;
 
@@ -62,7 +62,10 @@ namespace prob
          }
 
          int offset = pLen - lastOccur[pattern[j] - CHAR_MIN];
-         start += offset;
+         if (offset > j)
+            start += j - offset;
+         else
+            start++;
       }
 
       return std::string::npos;
