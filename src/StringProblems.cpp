@@ -61,11 +61,8 @@ namespace prob
                return start;
          }
 
-         int offset = pLen - lastOccur[pattern[j] - CHAR_MIN];
-         if (offset > j)
-            start += j - offset;
-         else
-            start++;
+         int offset = j - lastOccur[pattern[j] - CHAR_MIN];
+         start += std::max(1, offset);
       }
 
       return std::string::npos;
