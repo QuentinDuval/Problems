@@ -1038,4 +1038,34 @@ namespace prob
       auto maxSolution = std::max_element(begin(bests), end(bests));
       return maxSolution->m_total;
    }
+
+
+   //--------------------------------------------------------------------------
+   // LARGEST SUBSEQUENCE
+   //--------------------------------------------------------------------------
+
+   std::string LargestSubsequence::getLargest(std::string const& str)
+   {
+      if (str.empty())
+         return "";
+
+      int n = str.size();
+      char bestStart = CHAR_MIN;
+      std::vector<std::string> bestSubseq;
+
+      for (int i = n - 1; i >= 0; --i)
+      {
+         if (str[i] < bestStart)
+            continue;
+
+         bestStart = str[i];
+         std::string best(1, str[i]);
+         for (auto const& s : bestSubseq)
+            best = std::max(best, str[i] + s);
+
+         bestSubseq.push_back(best);
+      }
+
+      return *std::max_element(begin(bestSubseq), end(bestSubseq));
+   }
 }

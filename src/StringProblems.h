@@ -251,4 +251,13 @@ namespace prob
    {
       static std::string find(std::string const& s, std::string const& t);
    };
+
+   /**
+    * LargestSubsequence
+    * http://community.topcoder.com/stat?c=problem_statement&pm=11471
+    */
+   struct LargestSubsequence
+   {
+      static std::string getLargest(std::string const& str);
+   };
 }
