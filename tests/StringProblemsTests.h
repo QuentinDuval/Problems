@@ -32,5 +32,6 @@ namespace prob
       static void downloadingFilesTests();
       static void uniqueTests();
       static void theLargestStringTests();
+      static void largestSubsequenceTests();
    };
 }

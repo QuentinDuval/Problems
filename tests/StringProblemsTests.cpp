@@ -35,6 +35,7 @@ namespace prob
       downloadingFilesTests();
       uniqueTests();
       theLargestStringTests();
+      largestSubsequenceTests();
    }
 
    //--------------------------------------------------------------------------
@@ -472,5 +473,15 @@ namespace prob
       assert("cbaaaa" == TheLargestString::find("abacaba", "zzzaaaa"));
       assert("xx" == TheLargestString::find("x", "x"));
       assert("bbbbbbbbbbbbbbbbbbaaab" == TheLargestString::find("abbabbabbababaaaabbababab", "bababbaabbbababbbbababaab"));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::largestSubsequenceTests()
+   {
+      assert("tt" == LargestSubsequence::getLargest("test"));
+      assert("a" == LargestSubsequence::getLargest("a"));
+      assert("xple" == LargestSubsequence::getLargest("example"));
+      assert("zyog" == LargestSubsequence::getLargest("aquickbrownfoxjumpsoverthelazydog"));
    }
 }
