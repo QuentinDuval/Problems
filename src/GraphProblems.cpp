@@ -56,8 +56,8 @@ namespace prob
          for (size_t i = 0; i < m_cityCount; ++i)
             for (size_t j = 0; j < m_cityCount; ++j)
             {
-            shortestPaths[index(i, j)] = distances[i][j] - '0';
-            nextOnPath[index(i, j)].insert(j);
+               shortestPaths[index(i, j)] = distances[i][j] - '0';
+               nextOnPath[index(i, j)].insert(j);
             }
 
          //Compute the shortest paths and keep track of possible paths (floyd-warshall)
@@ -87,7 +87,7 @@ namespace prob
          for (size_t i = 0; i < m_cityCount; ++i)
             for (size_t j = 0; j < m_cityCount; ++j)
             {
-            incrementAlongPaths(nextOnPath, i, j);
+               incrementAlongPaths(nextOnPath, i, j);
             }
 
          //Sum the length of the segments that risk to be used more than threshold times
@@ -95,8 +95,8 @@ namespace prob
          for (size_t i = 0; i < m_cityCount; ++i)
             for (size_t j = 0; j < m_cityCount; ++j)
             {
-            if (safeThreshold <= m_pathMaxCount[index(i, j)])
-               toRebuild += distances[i][j] - '0';
+               if (safeThreshold <= m_pathMaxCount[index(i, j)])
+                  toRebuild += distances[i][j] - '0';
             }
          return toRebuild;
       }
