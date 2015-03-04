@@ -1049,23 +1049,16 @@ namespace prob
       if (str.empty())
          return "";
 
-      int n = str.size();
       char bestStart = CHAR_MIN;
-      std::vector<std::string> bestSubseq;
-
-      for (int i = n - 1; i >= 0; --i)
+      std::string best;
+      for (int i = str.size() - 1; i >= 0; --i)
       {
          if (str[i] < bestStart)
             continue;
 
          bestStart = str[i];
-         std::string best(1, str[i]);
-         for (auto const& s : bestSubseq)
-            best = std::max(best, str[i] + s);
-
-         bestSubseq.push_back(best);
+         best = str[i] + best;
       }
-
-      return *std::max_element(begin(bestSubseq), end(bestSubseq));
+      return best;
    }
 }
