@@ -36,6 +36,7 @@ namespace prob
       uniqueTests();
       theLargestStringTests();
       largestSubsequenceTests();
+      ellysSortingTrimmerTests();
    }
 
    //--------------------------------------------------------------------------
@@ -483,5 +484,18 @@ namespace prob
       assert("a" == LargestSubsequence::getLargest("a"));
       assert("xple" == LargestSubsequence::getLargest("example"));
       assert("zyog" == LargestSubsequence::getLargest("aquickbrownfoxjumpsoverthelazydog"));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::ellysSortingTrimmerTests()
+   {
+      assert("AAAAA" == EllysSortingTrimmer::getMin("ABRACADABRA", 5));
+      assert("EIP" == EllysSortingTrimmer::getMin("ESPRIT", 3));
+      assert("AABGINZ" == EllysSortingTrimmer::getMin("BAZINGA", 7));
+      assert("ABCDEFGHIJKLM" == EllysSortingTrimmer::getMin("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 13));
+      assert("ABCDEFGHIJKLM" == EllysSortingTrimmer::getMin("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 13));
+      assert("AAAAAAAAABBDDDDDDDEEI" == EllysSortingTrimmer::getMin("AAAWDIUAOIWDESBEAIWODJAWDBPOAWDUISAWDOOPAWD", 21));
+      assert("CDT" == EllysSortingTrimmer::getMin("TOPCODER", 3));
    }
 }

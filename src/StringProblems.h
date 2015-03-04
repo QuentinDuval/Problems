@@ -260,4 +260,14 @@ namespace prob
    {
       static std::string getLargest(std::string const& str);
    };
+
+
+   /**
+    * EllysSortingTrimmer
+    * http://community.topcoder.com/stat?c=problem_statement&pm=12971
+    */
+   struct EllysSortingTrimmer
+   {
+      static std::string getMin(std::string const& input, int len);
+   };
 }

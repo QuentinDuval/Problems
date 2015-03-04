@@ -1061,4 +1061,26 @@ namespace prob
       }
       return best;
    }
+
+
+   //--------------------------------------------------------------------------
+   // ELLYS SORTING TRIMMER
+   //--------------------------------------------------------------------------
+
+   static std::string applyDevice(std::string const& s, int start, int len)
+   {
+      std::string out = s.substr(0, start + len);
+      std::sort(begin(out) + start, end(out));
+      return out;
+   }
+
+   std::string EllysSortingTrimmer::getMin(std::string const& input, int len)
+   {
+      std::string sorted = applyDevice(input, input.size() - len, len);
+      if (sorted.size() == len)
+         return sorted;
+
+      sorted = applyDevice(sorted, sorted.size() - len - 1, len);
+      return getMin(sorted, len);
+   }
 }
