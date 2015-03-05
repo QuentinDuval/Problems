@@ -8,5 +8,6 @@ namespace prob
       static void allTests();
 
       static void theNumberGameTests();
+      static void fixedDiceGameDiv1Tests();
    };
 }
