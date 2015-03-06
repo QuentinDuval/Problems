@@ -50,7 +50,7 @@ namespace prob
 
    struct DiceValues
    {
-      using Values = std::map<int, int>;
+      using Values = std::map<int, long long>;
 
       /**
       * Return the possible dice values, each values associated with the number of ways we can get it
