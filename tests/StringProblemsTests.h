@@ -35,5 +35,6 @@ namespace prob
       static void largestSubsequenceTests();
       static void ellysSortingTrimmerTests();
       static void theBestNameTests();
+      static void stringFragmentationTests();
    };
 }

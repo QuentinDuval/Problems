@@ -1114,4 +1114,62 @@ namespace prob
       std::stable_sort(start, end(names), reverseComparison(comparingWith(nameWeight)));
       return names;
    }
+
+   //--------------------------------------------------------------------------
+   // StringFragmentation
+   //--------------------------------------------------------------------------
+
+   std::vector<int> getWordSizes(std::string const& text)
+   {
+      std::vector<int> sizes;
+      auto it = begin(text);
+      while (it != end(text))
+      {
+         auto next = std::find(it, end(text), ' ');
+         sizes.push_back(std::distance(it, next));
+         it = (next == end(text)) ? next : next + 1;
+      }
+      return sizes;
+   }
+
+   bool textDoesFit(std::vector<int> const& words, int maxLines, int maxPerLine)
+   {
+      int lineCount = 0;
+      int charCount = 0;
+      for (int w : words)
+      {
+         if (w > maxPerLine)
+            return false;
+
+         if (charCount + w <= maxPerLine)
+         {
+            charCount += w + 1;
+            continue;
+         }
+
+         ++lineCount;
+         if (lineCount >= maxLines)
+            return false;
+         charCount = w + 1;
+
+      }
+      return true;
+   }
+
+   int StringFragmentation::largestFontSize(std::string const& text, int width, int height)
+   {
+      //Pre-process the string to extract the sizes of the words
+      std::vector<int> words = getWordSizes(text);
+
+      //Try to fit the words, decreasing the size gradually
+      const int upperBound = height / 2;
+      for (int size = upperBound; size > 7; --size)
+      {
+         const int maxLines = height / (2 * size);
+         const int maxPerLine = width / (size + 2);
+         if (textDoesFit(words, maxLines, maxPerLine))
+            return size;
+      }
+      return -1;
+   }
 }

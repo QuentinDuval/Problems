@@ -279,4 +279,13 @@ namespace prob
    {
       static std::vector<std::string> sort(std::vector<std::string> const&);
    };
+
+   /**
+    * StringFragmentation
+    * http://community.topcoder.com/stat?c=problem_statement&pm=8087
+    */
+   struct StringFragmentation
+   {
+      static int largestFontSize(std::string const& text, int width, int height);
+   };
 }

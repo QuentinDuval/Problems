@@ -38,6 +38,7 @@ namespace prob
       largestSubsequenceTests();
       ellysSortingTrimmerTests();
       theBestNameTests();
+      stringFragmentationTests();
    }
 
    //--------------------------------------------------------------------------
@@ -515,5 +516,17 @@ namespace prob
 
       res = TheBestName::sort({ "BATMAN", "SUPERMAN", "SPIDERMAN", "TERMINATOR" });
       assert(equal(std::vector<std::string>({ "TERMINATOR", "SUPERMAN", "SPIDERMAN", "BATMAN" }), res));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::stringFragmentationTests()
+   {
+      assert(9 ==    StringFragmentation::largestFontSize("ONE TWO THREE FOUR FIVE", 150, 40));
+      assert(10 ==   StringFragmentation::largestFontSize("ONE TWO THREE FOUR FIVE", 150, 60));
+      assert(28 ==   StringFragmentation::largestFontSize("ONE TWO THREE FOUR FIVE", 150, 10000));
+      assert(1250 == StringFragmentation::largestFontSize("ONE TWO THREE FOUR FIVE", 10000, 10000));
+      assert(-1 ==   StringFragmentation::largestFontSize("ONE TWO THREE FOUR FIVE", 50, 50));
+      assert(-1 ==   StringFragmentation::largestFontSize("A", 9, 14));
    }
 }
