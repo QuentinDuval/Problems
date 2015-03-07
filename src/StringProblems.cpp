@@ -236,7 +236,7 @@ namespace prob
    bool TaroString::getAnswer(std::string const& s)
    {
       std::string cleanedS = s;
-      eraseIf(cleanedS, [](char c){ return c != 'C' && c != 'A' && c != 'T'; });
+      utils::eraseIf(cleanedS, [](char c){ return c != 'C' && c != 'A' && c != 'T'; });
       return cleanedS == "CAT";
    }
 
@@ -304,7 +304,7 @@ namespace prob
          return 0;
 
       if (depth == 4)
-         return maxBy(pricedRequests, comparingWith(GetSecond()))->second;
+         return utils::maxBy(pricedRequests, utils::comparingWith(utils::GetSecond()))->second;
 
       std::set<int> addrParts;
       for (auto& r : pricedRequests)
@@ -472,8 +472,8 @@ namespace prob
    {
       //Start by sorting the inputs (and moving back to 0-based index)
       std::vector<std::pair<int, char>> knownPositions;
-      zipWith(positions, values, std::back_inserter(knownPositions), [](int i, char c) { return std::make_pair(i - 1, c); });
-      sortBy(knownPositions, comparingWith(GetFirst()));
+      utils::zipWith(positions, values, std::back_inserter(knownPositions), [](int i, char c) { return std::make_pair(i - 1, c); });
+      utils::sortBy(knownPositions, utils::comparingWith(utils::GetFirst()));
 
       //What is before and after, known positions does not increase (we can always find a unique solution)
       int n = 1;
@@ -831,8 +831,8 @@ namespace prob
    {
       std::vector<std::string> sorted(serialNbs);
       std::sort(begin(sorted), end(sorted));
-      std::stable_sort(begin(sorted), end(sorted), comparingWith(sumDigits));
-      std::stable_sort(begin(sorted), end(sorted), comparingWith([](std::string const& s) { return s.size(); }));
+      std::stable_sort(begin(sorted), end(sorted), utils::comparingWith(sumDigits));
+      std::stable_sort(begin(sorted), end(sorted), utils::comparingWith([](std::string const& s) { return s.size(); }));
       return sorted;
    }
 
@@ -917,7 +917,7 @@ namespace prob
    {
       std::vector<std::pair<int, std::string>> votes(quotes.size());
       std::transform(begin(quotes), end(quotes), begin(votes), splitVote);
-      auto maxIt = std::max_element(begin(votes), end(votes), comparingWith(GetFirst()));
+      auto maxIt = std::max_element(begin(votes), end(votes), utils::comparingWith(utils::GetFirst()));
       return maxIt != end(votes) ? maxIt->second : "";
    }
 
@@ -1111,7 +1111,7 @@ namespace prob
 
       //Sort the rest of the list
       std::sort(start, end(names));
-      std::stable_sort(start, end(names), reverseComparison(comparingWith(nameWeight)));
+      std::stable_sort(start, end(names), utils::reverseComparison(utils::comparingWith(nameWeight)));
       return names;
    }
 

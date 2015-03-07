@@ -92,8 +92,8 @@ namespace prob
    int JanuszTheBusinessman::minPromotions(std::vector<int> const& arrivals, std::vector<int> const& departures)
    {
       Durations durations(arrivals.size());
-      zipWith(arrivals, departures, begin(durations), MakePair());
-      sortBy(durations, comparingWith(GetFirst()));
+      utils::zipWith(arrivals, departures, begin(durations), utils::MakePair());
+      utils::sortBy(durations, utils::comparingWith(utils::GetFirst()));
 
       int promotionCount = 0;
       std::vector<bool> satisfied(durations.size(), false);
@@ -181,13 +181,13 @@ namespace prob
          searched.insert(label);
 
       //Order group by decreasing order
-      auto sizeComparison = comparingWith([](std::set<int> const& s) { return s.size(); });
+      auto sizeComparison = utils::comparingWith([](std::set<int> const& s) { return s.size(); });
 
       //Greedy approach
       int count = 0;
       while (!searched.empty())
       {
-         eraseIf(groups, [](std::set<int> const& s) { return s.empty(); });
+         utils::eraseIf(groups, [](std::set<int> const& s) { return s.empty(); });
          auto it = maxBy(groups, sizeComparison);
          if (it == end(groups))
             return -1;

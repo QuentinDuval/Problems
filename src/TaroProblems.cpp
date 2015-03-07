@@ -83,14 +83,14 @@ namespace prob
       {
          /** Sorting the trees by decreasing growth */
          Trees trees(initialHeights.size());
-         zipWith(initialHeights, treeGrowth, begin(trees), MakePair());
-         std::sort(begin(trees), end(trees), reverseComparison(comparingWith(GetSecond())));
+         utils::zipWith(initialHeights, treeGrowth, begin(trees), utils::MakePair());
+         std::sort(begin(trees), end(trees), utils::reverseComparison(utils::comparingWith(utils::GetSecond())));
 
          /** Sorting the devices by increasing size */
          sort(devices.begin(), devices.end());
 
          size_t treeCount = trees.size();
-         Matrix<size_t> solutions(treeCount + 1, devices.size() + 1, 1e9);
+         utils::Matrix<size_t> solutions(treeCount + 1, devices.size() + 1, 1e9);
          solutions.at(0, 0) = 0;
 
          for (size_t day = 0; day < T; day++)

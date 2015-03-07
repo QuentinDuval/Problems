@@ -14,7 +14,7 @@ namespace prob
       , m_backtrackCount(0)
    {}
 
-   Matrix<size_t> const& SudokuPuzzle::puzzle() const
+   utils::Matrix<size_t> const& SudokuPuzzle::puzzle() const
    {
       return m_matrix;
    }
@@ -36,8 +36,8 @@ namespace prob
       //Remove from the lines
       for (size_t i = 0; i < PUZZLE_SIZE; ++i)
       {
-         erase(choices, m_matrix.at(x, i));
-         erase(choices, m_matrix.at(i, y));
+         utils::erase(choices, m_matrix.at(x, i));
+         utils::erase(choices, m_matrix.at(i, y));
       }
 
       //Remove from the square
@@ -45,7 +45,7 @@ namespace prob
       size_t sy = squareCoord(y);
       for (size_t i = sx; i < sx + SQUARE_SIZE; ++i)
          for (size_t j = sy; j < sy + SQUARE_SIZE; ++j)
-            erase(choices, m_matrix.at(i, j));
+            utils::erase(choices, m_matrix.at(i, j));
 
       return choices;
    }
@@ -53,7 +53,7 @@ namespace prob
    bool SudokuPuzzle::solve()
    {
       std::vector<std::pair<size_t, size_t>> toFill;
-      Matrix<Choices> choices(PUZZLE_SIZE, PUZZLE_SIZE);
+      utils::Matrix<Choices> choices(PUZZLE_SIZE, PUZZLE_SIZE);
 
       for (size_t y = 0; y < PUZZLE_SIZE; ++y)
       {
@@ -68,7 +68,7 @@ namespace prob
          }
       }
 
-      sortBy(toFill, comparingWith([&](Coord const& c) { return choices.at(c.first, c.second).size(); }));
+      utils::sortBy(toFill, utils::comparingWith([&](Coord const& c) { return choices.at(c.first, c.second).size(); }));
       return solve(begin(toFill), end(toFill));
    }
 

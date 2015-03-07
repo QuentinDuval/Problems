@@ -29,8 +29,8 @@ namespace prob
       using Inputs = std::vector<double>;
       using InputIt = Inputs::const_iterator;
 
-      static Range<InputIt> maxSum(Inputs const&);
-      static Range<InputIt> maxProduct(Inputs const&);
+      static utils::Range<InputIt> maxSum(Inputs const&);
+      static utils::Range<InputIt> maxProduct(Inputs const&);
    };
 
 
@@ -97,7 +97,7 @@ namespace prob
     */
    struct CollectingApples
    {
-      static size_t findMax(Matrix<size_t> const& field);
+      static size_t findMax(utils::Matrix<size_t> const& field);
    };
 
 

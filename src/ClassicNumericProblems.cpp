@@ -43,9 +43,9 @@ namespace prob
          return minPair;
 
       std::vector<Point> sortedPoints(ps);
-      sortBy(sortedPoints, comparingWith(GetFirst()));
+      utils::sortBy(sortedPoints, utils::comparingWith(utils::GetFirst()));
 
-      auto compareY = comparingWith(GetSecond());
+      auto compareY = utils::comparingWith(utils::GetSecond());
       std::multiset<Point, decltype(compareY)> closest(compareY);
       closest.insert(sortedPoints[0]);
       double minDist = std::numeric_limits<double>::max();
@@ -109,7 +109,8 @@ namespace prob
       }
 
       //Sort by x coordinate, but by type too as start should be considered before vertical lines, and ends after
-      sortBy(events, comparingWith([](IntersectionEvent const& e) { return std::make_pair(e.m_xCoord, e.m_type); }));
+      utils::sortBy(events, utils::comparingWith(
+         [](IntersectionEvent const& e) { return std::make_pair(e.m_xCoord, e.m_type); }));
 
       std::set<double> validHLines;
       std::vector<Point> intersections;

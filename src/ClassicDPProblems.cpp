@@ -1,12 +1,14 @@
 #include "ClassicDPProblems.h"
+#include "utils/Algorithms.h"
 #include "utils/Matrix.h"
+#include <algorithm>
 
 
 namespace prob
 {
    size_t binomialCoeff(size_t k, size_t n)
    {
-      Matrix<size_t> m(n + 1, n + 1, 1);
+      utils::Matrix<size_t> m(n + 1, n + 1, 1);
       for (size_t i = 1; i <= n; ++i)
          for (size_t j = 1; j < i && j <= k; ++j)
             m.at(j, i) = m.at(j - 1, i - 1) + m.at(j, i - 1);
@@ -21,7 +23,7 @@ namespace prob
       if (a.empty()) return b.size();
       if (b.empty()) return a.size();
 
-      Matrix<size_t> distances(a.size() + 1, b.size() + 1);
+      utils::Matrix<size_t> distances(a.size() + 1, b.size() + 1);
       for (size_t i = 0; i < a.size(); ++i)
       {
          for (size_t j = 0; j < b.size(); ++j)
@@ -146,7 +148,7 @@ namespace prob
    * )
    * --------------------------------------------------------------------------
    */
-   Range<MaxContiguous::InputIt> MaxContiguous::maxSum(std::vector<double> const& inputs)
+   utils::Range<MaxContiguous::InputIt> MaxContiguous::maxSum(std::vector<double> const& inputs)
    {
       double maxValue = 0;
       InputIt maxBeg = begin(inputs);
@@ -175,20 +177,20 @@ namespace prob
          }
       }
 
-      return makeRange(maxBeg, maxEnd);
+      return utils::makeRange(maxBeg, maxEnd);
    }
 
    //--------------------------------------------------------------------------
 
-   Range<MaxContiguous::InputIt> MaxContiguous::maxProduct(Inputs const& inputs)
+   utils::Range<MaxContiguous::InputIt> MaxContiguous::maxProduct(Inputs const& inputs)
    {
       Inputs logInputs(inputs.size());
-      transform(inputs, logInputs.begin(), [](double d) { return log(d); });
+      utils::transform(inputs, logInputs.begin(), [](double d) { return log(d); });
       auto result = maxSum(logInputs);
 
       auto b = begin(inputs) + std::distance(cbegin(logInputs), begin(result));
       auto e = begin(inputs) + std::distance(cbegin(logInputs), end(result));
-      return makeRange(b, e);
+      return utils::makeRange(b, e);
    }
 
    /**
@@ -218,8 +220,8 @@ namespace prob
       if (vs.empty()) return 0;
       if (vs.size() - 1 != cs.size()) return 0;
 
-      Matrix<size_t> trueNb (vs.size(), vs.size(), 0);
-      Matrix<size_t> falseNb(vs.size(), vs.size(), 0);
+      utils::Matrix<size_t> trueNb (vs.size(), vs.size(), 0);
+      utils::Matrix<size_t> falseNb(vs.size(), vs.size(), 0);
       for (size_t v = 0; v < vs.size(); ++v)
       {
          if (vs[v]) trueNb.at(v, v) = 1;
@@ -412,9 +414,9 @@ namespace prob
 
    //--------------------------------------------------------------------------
 
-   size_t CollectingApples::findMax(Matrix<size_t> const& field)
+   size_t CollectingApples::findMax(utils::Matrix<size_t> const& field)
    {
-      Matrix<size_t> bestCounts(field.width(), field.height(), 0);
+      utils::Matrix<size_t> bestCounts(field.width(), field.height(), 0);
       bestCounts.at(0, 0) = field.at(0, 0);
 
       for (size_t x = 0; x < field.width(); ++x)
@@ -437,8 +439,8 @@ namespace prob
       for (size_t i = 1; i < costs.size(); ++i)
          sumTo[i] = sumTo[i - 1] + costs[i];
 
-      Matrix<size_t> maxPartVal(costs.size(), partitionCount, 0);
-      Matrix<size_t> maxPartPoint(costs.size(), partitionCount);
+      utils::Matrix<size_t> maxPartVal(costs.size(), partitionCount, 0);
+      utils::Matrix<size_t> maxPartPoint(costs.size(), partitionCount);
 
       for (size_t i = 0; i < costs.size(); ++i)
          maxPartVal.at(i, 0) = sumTo[i];

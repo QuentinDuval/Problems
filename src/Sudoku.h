@@ -22,7 +22,7 @@ namespace prob
       ~SudokuPuzzle()= default;
 
       /** Access the underlying matrix */
-      Matrix<size_t> const& puzzle() const;
+      utils::Matrix<size_t> const& puzzle() const;
 
       /** Get the choices available at (x, y) */
       Choices choicesAt(size_t, size_t) const;
@@ -39,7 +39,7 @@ namespace prob
       bool solve(CoordIt, CoordIt);
 
    private:
-      Matrix<size_t> m_matrix;
+      utils::Matrix<size_t> m_matrix;
       size_t m_backtrackCount;
    };
 

@@ -32,7 +32,7 @@ namespace prob
    
    static bool kingsFactorizationTest(std::vector<long> const& given, long n, std::vector<long> const& expected)
    {
-      return equal(expected, TheKingsFactorization::getVector(n, given));
+      return utils::equal(expected, TheKingsFactorization::getVector(n, given));
    }
 
    void NumericProblemsTests::kingsFactorizationTests()

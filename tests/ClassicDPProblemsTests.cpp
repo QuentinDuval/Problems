@@ -72,14 +72,14 @@ namespace prob
    void ClassicDPProblemsTests::longestIncreasingSeqTest()
    {
       std::vector<double> increasingSeq = { 1, 2, 3, 4 };
-      assert(equal(increasingSeq, longestIncreasingSeq(increasingSeq)));
+      assert(utils::equal(increasingSeq, longestIncreasingSeq(increasingSeq)));
 
       std::vector<double> decreasingSeq = { 4, 3, 2, 1 };
       assert(1 == longestIncreasingSeq(decreasingSeq).size());
 
       std::vector<double> standardSeq = { 9, 1, 5, 2, 10, 4, 4, 5, -1, 11 };
       std::vector<double> expected = { 1, 2, 4, 4, 5, 11 };
-      assert(equal(expected, longestIncreasingSeq(standardSeq)));
+      assert(utils::equal(expected, longestIncreasingSeq(standardSeq)));
    }
 
    //--------------------------------------------------------------------------
@@ -97,14 +97,14 @@ namespace prob
    static void maxContiguousSumTest()
    {
       std::vector<double> allPositive(10, 1);
-      auto expected = makeRange(cbegin(allPositive), cend(allPositive));
+      auto expected = utils::makeRange(cbegin(allPositive), cend(allPositive));
       assert(expected == MaxContiguous::maxSum(allPositive));
 
       std::vector<double> allNegative(10, -1);
       assert(MaxContiguous::maxSum(allNegative).empty());
 
       std::vector<double> oscillator(10, -1);
-      generate(oscillator, -1., [](double d) { return -d; });
+      utils::generate(oscillator, -1., [](double d) { return -d; });
       assert(1 == MaxContiguous::maxSum(oscillator).size());
 
       std::vector<double> stdInputs = { 1, -1, 2, 3, 2, -7, 2, 5, -5, 10 };
@@ -185,31 +185,31 @@ namespace prob
    void ClassicDPProblemsTests::flowerGardenTests()
    {
       auto res0 = FlowerGarden::getOrdering({ 5, 4, 3, 2, 1 }, {1, 1, 1, 1, 1}, {365, 365, 365, 365, 365});
-      assert(equal(FlowerGarden::Ints{ 1, 2, 3, 4, 5 }, res0));
+      assert(utils::equal(FlowerGarden::Ints{ 1, 2, 3, 4, 5 }, res0));
 
       auto res1 = FlowerGarden::getOrdering({ 5, 4, 3, 2, 1 }, {1, 5, 10, 15, 20}, {4, 9, 14, 19, 24});
-      assert(equal(FlowerGarden::Ints{ 5, 4, 3, 2, 1 }, res1));
+      assert(utils::equal(FlowerGarden::Ints{ 5, 4, 3, 2, 1 }, res1));
 
       auto res2 = FlowerGarden::getOrdering({ 5, 4, 3, 2, 1 }, {1, 5, 10, 15, 20}, {5, 10, 15, 20, 25});
-      assert(equal(FlowerGarden::Ints{ 1, 2, 3, 4, 5 }, res2));
+      assert(utils::equal(FlowerGarden::Ints{ 1, 2, 3, 4, 5 }, res2));
 
       auto res3 = FlowerGarden::getOrdering({ 5, 4, 3, 2, 1 }, {1, 5, 10, 15, 20}, {5, 10, 14, 20, 25});
-      assert(equal(FlowerGarden::Ints{ 3, 4, 5, 1, 2 }, res3));
+      assert(utils::equal(FlowerGarden::Ints{ 3, 4, 5, 1, 2 }, res3));
 
       auto res4 = FlowerGarden::getOrdering({ 1, 2, 3, 4, 5, 6 }, {1, 3, 1, 3, 1, 3}, {2, 4, 2, 4, 2, 4});
-      assert(equal(FlowerGarden::Ints{ 2, 4, 6, 1, 3, 5 }, res4));
+      assert(utils::equal(FlowerGarden::Ints{ 2, 4, 6, 1, 3, 5 }, res4));
 
       auto res5 = FlowerGarden::getOrdering({ 3, 2, 5, 4 }, {1, 2, 11, 10}, {4, 3, 12, 13});
-      assert(equal(FlowerGarden::Ints{ 4, 5, 2, 3 }, res5));
+      assert(utils::equal(FlowerGarden::Ints{ 4, 5, 2, 3 }, res5));
    }
 
    //--------------------------------------------------------------------------
    
    void ClassicDPProblemsTests::collectingAppleTests()
    {
-      assert(3 == CollectingApples::findMax(Matrix<size_t>(2, 2, { 1, 1, 1, 1 })));
-      assert(4 == CollectingApples::findMax(Matrix<size_t>(2, 2, { 1, 2, 1, 1 })));
-      assert(11 == CollectingApples::findMax(Matrix<size_t>(4, 4, {
+      assert(3 == CollectingApples::findMax(utils::Matrix<size_t>(2, 2, { 1, 1, 1, 1 })));
+      assert(4 == CollectingApples::findMax(utils::Matrix<size_t>(2, 2, { 1, 2, 1, 1 })));
+      assert(11 == CollectingApples::findMax(utils::Matrix<size_t>(4, 4, {
          0, 2, 1, 1,
          0, 2, 1, 5,
          0, 2, 0, 0,

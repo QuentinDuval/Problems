@@ -95,8 +95,8 @@ namespace prob
 
       std::vector<std::string> toShow;
       auto result = Parentheses::combinationNb(4);
-      intersperse(result, std::back_inserter(toShow), ", ");
-      std::cout << sum(toShow, std::string("")) << std::endl;
+      utils::intersperse(result, std::back_inserter(toShow), ", ");
+      std::cout << utils::sum(toShow, std::string("")) << std::endl;
    }
 
    //--------------------------------------------------------------------------
@@ -222,7 +222,7 @@ namespace prob
       { "www.topcoder.com", "www.sindicate_of_evil.com", "www.happy_citizens.com" },
       { "hack encryption decryption internet algorithm", "signal interference evil snake poison algorithm", "flower baloon topcoder blue sky sea" },
       {"hack", "encryption", "decryption", "interference", "signal", "internet"}, 3);
-      assert(equal(InternetSecurity::Addresses{ "www.topcoder.com", "www.sindicate_of_evil.com" }, res));
+      assert(utils::equal(InternetSecurity::Addresses{ "www.topcoder.com", "www.sindicate_of_evil.com" }, res));
 
       res = InternetSecurity::determineWebsite(
       { "brokenlink", "flowerpower.net", "purchasedomain.com" },
@@ -236,14 +236,14 @@ namespace prob
       { "a bc def", "def ghij klmno" },
       { "a", "b", "c", "d", "e" },
       1);
-      assert(equal(InternetSecurity::Addresses{ "a..a.ab.", "...aa.b" }, res));
+      assert(utils::equal(InternetSecurity::Addresses{ "a..a.ab.", "...aa.b" }, res));
 
       res = InternetSecurity::determineWebsite(
       { "www.tsa.gov" },
       { "information assurance signal intelligence research" },
       { "signal", "assurance", "penguin" },
       2);
-      assert(equal(InternetSecurity::Addresses{ "www.tsa.gov" }, res));
+      assert(utils::equal(InternetSecurity::Addresses{ "www.tsa.gov" }, res));
    }
 
    //--------------------------------------------------------------------------
@@ -251,22 +251,22 @@ namespace prob
    void StringProblemsTests::kingSortTests()
    {
       auto res = KingSort::getSortedList({ "Louis IX", "Louis VIII" });
-      assert(equal(KingSort::KingNames{ "Louis VIII", "Louis IX" }, res));
+      assert(utils::equal(KingSort::KingNames{ "Louis VIII", "Louis IX" }, res));
 
       res = KingSort::getSortedList({ "Louis IX", "Philippe II" });
-      assert(equal(KingSort::KingNames{ "Louis IX", "Philippe II" }, res));
+      assert(utils::equal(KingSort::KingNames{ "Louis IX", "Philippe II" }, res));
 
       res = KingSort::getSortedList({ "Richard III", "Richard I", "Richard II" });
-      assert(equal(KingSort::KingNames{ "Richard I", "Richard II", "Richard III" }, res));
+      assert(utils::equal(KingSort::KingNames{ "Richard I", "Richard II", "Richard III" }, res));
 
       res = KingSort::getSortedList({ "John X", "John I", "John L", "John V" });
-      assert(equal(KingSort::KingNames{ "John I", "John V", "John X", "John L" }, res));
+      assert(utils::equal(KingSort::KingNames{ "John I", "John V", "John X", "John L" }, res));
 
       res = KingSort::getSortedList({ "Philippe VI", "Jean II", "Charles V", "Charles VI", "Charles VII", "Louis XI" });
-      assert(equal(KingSort::KingNames{ "Charles V", "Charles VI", "Charles VII", "Jean II", "Louis XI", "Philippe VI" }, res));
+      assert(utils::equal(KingSort::KingNames{ "Charles V", "Charles VI", "Charles VII", "Jean II", "Louis XI", "Philippe VI" }, res));
 
       res = KingSort::getSortedList({ "Philippe II", "Philip II" });
-      assert(equal(KingSort::KingNames{ "Philippe II", "Philip II" }, res));
+      assert(utils::equal(KingSort::KingNames{ "Philippe II", "Philip II" }, res));
    }
 
    //--------------------------------------------------------------------------
@@ -323,22 +323,22 @@ namespace prob
       auto res = SortBooks::checkManually(
          { "J R R Tolkien", "THE Jungle BOOK" },
          { "THE HOBBIT", "RUDYARD KIPLING" });
-      assert(equal(std::vector<size_t>{ 0 }, res));
+      assert(utils::equal(std::vector<size_t>{ 0 }, res));
 
       res = SortBooks::checkManually(
       { "Scaramouche", "Dan Brown", "War and Peace" },
       { "Rafael Sabatini", "The Da Vinci Code", "Leo Tolstoy" });
-      assert(equal(std::vector<size_t>{ 0 }, res));
+      assert(utils::equal(std::vector<size_t>{ 0 }, res));
 
       res = SortBooks::checkManually(
          { "Lost     Horizon" },
          { "James Hilton" });
-      assert(equal(std::vector<size_t>{ 0 }, res));
+      assert(utils::equal(std::vector<size_t>{ 0 }, res));
 
       res = SortBooks::checkManually(
       { "andy rooney", "joe lofthouse", "Theodore Taylor" },
       { "love of life", "the arrest", "Softly Wandering" });
-      assert(equal(std::vector<size_t>{ 2 }, res));
+      assert(utils::equal(std::vector<size_t>{ 2 }, res));
 
       res = SortBooks::checkManually(
       { "Aesop", "Little Women", "Hans Christian Anderson", "The Arabian Nights",
@@ -370,7 +370,7 @@ namespace prob
       "Beezus and Ramona", "Beverly Cleary", "The Cat Who Went to Heaven", "Carlo Collodi",
       "Chanticleer and the Fox", "Dinah Mulock Craik", "Robin Hood", "Alice Dagliesh",
       "The Bears on Hemlock Mountain" });
-      assert(equal(std::vector<size_t>{0, 1, 2, 6, 7, 8, 10, 18, 19, 23, 26, 27, 36, 39, 44 }, res));
+      assert(utils::equal(std::vector<size_t>{0, 1, 2, 6, 7, 8, 10, 18, 19, 23, 26, 27, 36, 39, 44 }, res));
    }
 
    //--------------------------------------------------------------------------
@@ -378,16 +378,16 @@ namespace prob
    void StringProblemsTests::serialNumbersTests()
    {
       auto res = SerialNumbers::sortSerials({ "ABCD", "145C", "A", "A910", "Z321" });
-      assert(equal(std::vector<std::string>{"A", "ABCD", "Z321", "145C", "A910" }, res));
+      assert(utils::equal(std::vector<std::string>{"A", "ABCD", "Z321", "145C", "A910" }, res));
 
       res = SerialNumbers::sortSerials({ "Z19", "Z20" });
-      assert(equal(std::vector<std::string>{ "Z20", "Z19" }, res));
+      assert(utils::equal(std::vector<std::string>{ "Z20", "Z19" }, res));
 
       res = SerialNumbers::sortSerials({ "34H2BJS6N", "PIM12MD7RCOLWW09", "PYF1J14TF", "FIPJOTEA5" });
-      assert(equal(std::vector<std::string>{"FIPJOTEA5", "PYF1J14TF", "34H2BJS6N", "PIM12MD7RCOLWW09" }, res));
+      assert(utils::equal(std::vector<std::string>{"FIPJOTEA5", "PYF1J14TF", "34H2BJS6N", "PIM12MD7RCOLWW09" }, res));
 
       res = SerialNumbers::sortSerials({ "ABCDE", "BCDEF", "ABCDA", "BAAAA", "ACAAA" });
-      assert(equal(std::vector<std::string>{"ABCDA", "ABCDE", "ACAAA", "BAAAA", "BCDEF" }, res));
+      assert(utils::equal(std::vector<std::string>{"ABCDA", "ABCDE", "ACAAA", "BAAAA", "BCDEF" }, res));
    }
 
    //--------------------------------------------------------------------------
@@ -506,16 +506,16 @@ namespace prob
    void StringProblemsTests::theBestNameTests()
    {
       auto res = TheBestName::sort({ "JOHN", "PETR", "ACRUSH" });
-      assert(equal(std::vector<std::string>({ "JOHN", "ACRUSH", "PETR" }), res));
+      assert(utils::equal(std::vector<std::string>({ "JOHN", "ACRUSH", "PETR" }), res));
 
       res = TheBestName::sort({ "GLUK", "MARGARITKA" });
-      assert(equal(std::vector<std::string>({ "MARGARITKA", "GLUK" }), res));
+      assert(utils::equal(std::vector<std::string>({ "MARGARITKA", "GLUK" }), res));
 
       res = TheBestName::sort({ "JOHN", "A", "AA", "AAA", "JOHN", "B", "BB", "BBB", "JOHN", "C", "CC", "CCC", "JOHN" });
-      assert(equal(std::vector<std::string>({ "JOHN", "JOHN", "JOHN", "JOHN", "CCC", "BBB", "CC", "BB", "AAA", "C", "AA", "B", "A" }), res));
+      assert(utils::equal(std::vector<std::string>({ "JOHN", "JOHN", "JOHN", "JOHN", "CCC", "BBB", "CC", "BB", "AAA", "C", "AA", "B", "A" }), res));
 
       res = TheBestName::sort({ "BATMAN", "SUPERMAN", "SPIDERMAN", "TERMINATOR" });
-      assert(equal(std::vector<std::string>({ "TERMINATOR", "SUPERMAN", "SPIDERMAN", "BATMAN" }), res));
+      assert(utils::equal(std::vector<std::string>({ "TERMINATOR", "SUPERMAN", "SPIDERMAN", "BATMAN" }), res));
    }
 
    //--------------------------------------------------------------------------
