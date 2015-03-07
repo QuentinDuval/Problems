@@ -37,6 +37,7 @@ namespace prob
       theLargestStringTests();
       largestSubsequenceTests();
       ellysSortingTrimmerTests();
+      theBestNameTests();
    }
 
    //--------------------------------------------------------------------------
@@ -497,5 +498,22 @@ namespace prob
       assert("ABCDEFGHIJKLM" == EllysSortingTrimmer::getMin("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 13));
       assert("AAAAAAAAABBDDDDDDDEEI" == EllysSortingTrimmer::getMin("AAAWDIUAOIWDESBEAIWODJAWDBPOAWDUISAWDOOPAWD", 21));
       assert("CDT" == EllysSortingTrimmer::getMin("TOPCODER", 3));
+   }
+
+   //--------------------------------------------------------------------------
+
+   void StringProblemsTests::theBestNameTests()
+   {
+      auto res = TheBestName::sort({ "JOHN", "PETR", "ACRUSH" });
+      assert(equal(std::vector<std::string>({ "JOHN", "ACRUSH", "PETR" }), res));
+
+      res = TheBestName::sort({ "GLUK", "MARGARITKA" });
+      assert(equal(std::vector<std::string>({ "MARGARITKA", "GLUK" }), res));
+
+      res = TheBestName::sort({ "JOHN", "A", "AA", "AAA", "JOHN", "B", "BB", "BBB", "JOHN", "C", "CC", "CCC", "JOHN" });
+      assert(equal(std::vector<std::string>({ "JOHN", "JOHN", "JOHN", "JOHN", "CCC", "BBB", "CC", "BB", "AAA", "C", "AA", "B", "A" }), res));
+
+      res = TheBestName::sort({ "BATMAN", "SUPERMAN", "SPIDERMAN", "TERMINATOR" });
+      assert(equal(std::vector<std::string>({ "TERMINATOR", "SUPERMAN", "SPIDERMAN", "BATMAN" }), res));
    }
 }

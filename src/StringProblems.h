@@ -270,4 +270,13 @@ namespace prob
    {
       static std::string getMin(std::string const& input, int len);
    };
+
+   /**
+    * TheBestName
+    * http://community.topcoder.com/stat?c=problem_statement&pm=8413
+    */
+   struct TheBestName
+   {
+      static std::vector<std::string> sort(std::vector<std::string> const&);
+   };
 }

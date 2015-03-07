@@ -1083,4 +1083,35 @@ namespace prob
       sorted = applyDevice(sorted, sorted.size() - len - 1, len);
       return getMin(sorted, len);
    }
+
+
+   //--------------------------------------------------------------------------
+   // TheBestName
+   //--------------------------------------------------------------------------
+
+   static int nameWeight(std::string const& str)
+   {
+      int w = 0;
+      for (char c : str)
+         w = w + c - 'A' + 1;
+      return w;
+   }
+
+   std::vector<std::string> TheBestName::sort(std::vector<std::string> const& unsortedNames)
+   {
+      //Move the Johns at the beginning
+      std::vector<std::string> names = unsortedNames;
+      auto start = begin(names);
+      for (auto it = begin(names); it != end(names); ++it)
+      {
+         if (*it != "JOHN") continue;
+         std::swap(*it, *start);
+         ++start;
+      }
+
+      //Sort the rest of the list
+      std::sort(start, end(names));
+      std::stable_sort(start, end(names), reverseComparison(comparingWith(nameWeight)));
+      return names;
+   }
 }
