@@ -13,5 +13,6 @@ namespace prob
       static void hexagonalBoardTests();
       static void egalitarianismTests();
       static void dancingFoxesTests();
+      static void maliciousPathTests();
    };
 }
